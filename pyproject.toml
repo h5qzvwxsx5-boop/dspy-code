@@ -80,6 +80,10 @@ dspy-code = "dspy_code.main:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["dspy_code"]
+exclude = [
+    "docs/",
+    "mkdocs.yml",
+]
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -89,6 +93,10 @@ include = [
     "LICENSE",
     "CHANGELOG.md",
     "pyproject.toml",
+]
+exclude = [
+    "docs/",
+    "mkdocs.yml",
 ]
 
 # Ruff configuration - Modern, fast linter and formatter
