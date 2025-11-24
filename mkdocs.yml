@@ -92,7 +92,7 @@ extra_css:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/superagentic-ai/dspy-code
+      link: https://github.com/SuperagenticAI/dspy-code
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/dspy-code/
 

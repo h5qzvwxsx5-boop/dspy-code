@@ -20,14 +20,14 @@ console = Console()
 def create_safe_spinner(spinner_name: str, text: str = "", style: str = "cyan") -> Spinner:
     """
     Safely create a Rich Spinner with fallback to 'dots' if spinner name is invalid.
-    
+
     This ensures compatibility across different Rich versions and PyPI installations.
-    
+
     Args:
         spinner_name: Name of the spinner to create
         text: Text to display with the spinner
         style: Style for the spinner
-        
+
     Returns:
         A valid Spinner instance (always succeeds, falls back to 'dots' if needed)
     """
@@ -236,7 +236,9 @@ class EnhancedThinkingAnimation:
         self.spinner_type = random.choice(spinner_types)
         # Use safe spinner creation (handles PyPI package compatibility)
         # This will always succeed, falling back to "dots" if spinner_type is invalid
-        self.spinner = create_safe_spinner(self.spinner_type, text=self.current_message, style="cyan")
+        self.spinner = create_safe_spinner(
+            self.spinner_type, text=self.current_message, style="cyan"
+        )
         self.live = None
         self.update_thread = None
         self.running = False
@@ -271,7 +273,7 @@ class EnhancedThinkingAnimation:
                 if self.live:
                     try:
                         self.live.update(self.spinner)
-                    except:
+                    except Exception:
                         pass
 
     def __enter__(self):
@@ -372,7 +374,6 @@ class ProgressiveThinkingAnimation:
                 stage_text.append("✓ ", style="green bold")
                 stage_text.append(stage, style="green dim")
             elif i == self.current_stage:
-                spinner = create_safe_spinner("dots", style="cyan")
                 stage_text.append("⟳ ", style="cyan bold")
                 stage_text.append(stage, style="cyan")
             else:
@@ -419,9 +420,8 @@ class ThinkingAnimation(EnhancedThinkingAnimation):
     """Backward compatible wrapper for ThinkingAnimation."""
 
 
-def get_random_thinking_message() -> str:
-    """Get a random thinking message (backward compatibility)."""
-    return get_random_llm_message()
+# Backward compatibility: get_random_thinking_message() without stage parameter
+# Use get_random_thinking_message(stage=1) instead
 
 
 def show_progress_animation(message: str, duration: float = 1.0):

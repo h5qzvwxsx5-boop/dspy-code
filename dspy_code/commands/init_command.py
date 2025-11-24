@@ -471,7 +471,7 @@ def _build_codebase_index(project_dir: Path, config_manager: ConfigManager) -> N
             progress.update(
                 task, description="🔍 Extracting code structure (classes, functions, signatures)..."
             )
-            index = rag.indexer.build_index()
+            rag.indexer.build_index()
 
             progress.update(task, description="💾 Saving index to cache...")
             time.sleep(0.3)

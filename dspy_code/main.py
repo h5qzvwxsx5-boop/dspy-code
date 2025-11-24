@@ -124,8 +124,7 @@ def check_safe_working_directory() -> None:
     # This allows development/testing from repository root
     user_dirs = [Path("/Users"), Path("/home")]
     is_in_user_dir = any(
-        cwd.is_relative_to(user_dir) if user_dir.exists() else False
-        for user_dir in user_dirs
+        cwd.is_relative_to(user_dir) if user_dir.exists() else False for user_dir in user_dirs
     )
 
     # Also allow if we're in the repository root (has dspy_code package)
@@ -201,10 +200,12 @@ def get_version():
     """Get the installed version of dspy-code."""
     try:
         import importlib.metadata
+
         return importlib.metadata.version("dspy-code")
     except importlib.metadata.PackageNotFoundError:
         # Fallback to __init__.py version if package not installed
         from . import __version__
+
         return __version__
 
 
@@ -242,9 +243,12 @@ def cli(verbose: bool, debug: bool, version: bool, skip_safety_check: bool):
     # Show version and exit if requested
     if version:
         from .core.version_checker import get_dspy_version
+
         dspy_code_version = get_version()
         dspy_version = get_dspy_version()
-        console.print(f"[bold cyan]DSPy Code[/bold cyan] version: [green]{dspy_code_version}[/green]")
+        console.print(
+            f"[bold cyan]DSPy Code[/bold cyan] version: [green]{dspy_code_version}[/green]"
+        )
         if dspy_version:
             console.print(f"[bold cyan]DSPy[/bold cyan] version: [green]{dspy_version}[/green]")
         else:

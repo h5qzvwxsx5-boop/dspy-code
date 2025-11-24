@@ -1151,6 +1151,116 @@ Your AI-powered DSPy development assistant. Build, optimize, and learn DSPy with
             ]
         )
 
+    def _generate_synthetic_examples(
+        self, task_description: str, num_examples: int
+    ) -> list[dict[str, Any]]:
+        """Generate synthetic training examples using LLM.
+
+        Args:
+            task_description: Description of the task
+            num_examples: Number of examples to generate
+
+        Returns:
+            List of example dictionaries with 'input' and 'output' keys
+        """
+        if not self.llm_connector or not self.llm_connector.current_model:
+            logger.warning("No LLM connected for data generation")
+            return []
+
+        try:
+            # Build prompt for data generation
+            prompt = (
+                f"Generate {num_examples} diverse, realistic training examples "
+                f"for: {task_description}\n\n"
+                "Requirements:\n"
+                "1. Create varied, realistic examples that cover different scenarios\n"
+                "2. Include edge cases and challenging examples\n"
+                "3. Make inputs natural and outputs accurate\n"
+                "4. Ensure diversity in topics, length, and complexity\n"
+                "5. Format as JSON array with 'input' and 'output' keys\n\n"
+                "Example format:\n"
+                '[{"input": "example input text", "output": "expected output"}]\n\n'
+                f"Task: {task_description}\n"
+                f"Number of examples: {num_examples}\n\n"
+                "Generate ONLY the JSON array, no explanations:"
+            )
+
+            # Generate with LLM
+            response = self.llm_connector.generate_response(
+                prompt=prompt,
+                system_prompt=(
+                    "You are a data generation expert. "
+                    "Generate high-quality, diverse training examples in JSON format."
+                ),
+                context={},
+            )
+
+            # Extract JSON from response
+            examples = self._extract_json_from_response(response)
+
+            if examples and isinstance(examples, list):
+                logger.info(f"Generated {len(examples)} examples")
+                return examples
+            else:
+                logger.warning("Failed to parse generated examples")
+                return []
+
+        except Exception as e:
+            logger.error(f"Data generation failed: {e}")
+            return []
+
+    def _extract_json_from_response(self, response: str) -> list[dict[str, Any]] | None:
+        """Extract JSON array from LLM response."""
+        import json
+        import re
+
+        try:
+            # Try to find JSON array in response
+            json_match = re.search(r"\[[\s\S]*\]", response)
+            if json_match:
+                json_str = json_match.group(0)
+                return json.loads(json_str)
+
+            # Try parsing entire response
+            return json.loads(response)
+
+        except json.JSONDecodeError:
+            logger.warning("Failed to parse JSON from response")
+            return None
+
+    def _show_example_samples(self, examples: list[dict[str, Any]], task_description: str = None):
+        """Display a sample of generated examples."""
+        from rich.table import Table
+
+        console.print()
+        console.print(f"[bold cyan]Generated Examples for: {task_description}[/bold cyan]")
+        console.print()
+
+        # Show first 5 examples in a table
+        table = Table(show_header=True, header_style="bold magenta")
+        table.add_column("Input", style="cyan", width=50)
+        table.add_column("Output", style="green", width=30)
+
+        for i, example in enumerate(examples[:5]):
+            input_text = str(example.get("input", ""))
+            output_text = str(example.get("output", ""))
+
+            # Truncate if too long
+            if len(input_text) > 100:
+                input_text = input_text[:97] + "..."
+            if len(output_text) > 50:
+                output_text = output_text[:47] + "..."
+
+            table.add_row(input_text, output_text)
+
+        console.print(table)
+
+        if len(examples) > 5:
+            console.print()
+            console.print(f"[dim]... and {len(examples) - 5} more examples[/dim]")
+
+        console.print()
+
     def _handle_optimize(self, user_input: str):
         """Handle optimization request via natural language - routes to /optimize command."""
         # Extract arguments from natural language
@@ -1389,11 +1499,6 @@ Your AI-powered DSPy development assistant. Build, optimize, and learn DSPy with
             "twostepadapter": "TwoStepAdapter",
             "two-step adapter": "TwoStepAdapter",
             "two step": "TwoStepAdapter",
-            # Concepts
-            "signature": "signature",
-            "signatures": "signature",
-            "module": "module",
-            "modules": "module",
             "rag": "rag",
             "retrieval": "rag",
             "retrieval augmented generation": "rag",
@@ -3154,18 +3259,18 @@ def _show_welcome_screen(console, context, config_manager):
     # Create beautiful gradient colors for the ASCII art (purple → pink → orange)
     # Using exact RGB colors matching the SVG gradient
     gradient_colors = [
-        (217, 70, 239),   # #d946ef - Deep purple - "DSPY" starts here
-        (217, 70, 239),   # #d946ef - Purple
-        (192, 38, 211),   # #c026d3 - Purple
-        (168, 85, 247),   # #a855f7 - Bright purple
-        (168, 85, 247),   # #a855f7 - Purple transitioning to pink
-        (236, 72, 153),   # #ec4899 - Pink
-        (236, 72, 153),   # #ec4899 - Bright pink - middle section
-        (244, 63, 94),    # #f43f5e - Pink
-        (244, 63, 94),    # #f43f5e - Pink transitioning to orange
-        (251, 146, 60),   # #fb923c - Orange - "CODE" section
-        (251, 146, 60),   # #fb923c - Bright orange
-        (251, 146, 60),   # #fb923c - Orange end
+        (217, 70, 239),  # #d946ef - Deep purple - "DSPY" starts here
+        (217, 70, 239),  # #d946ef - Purple
+        (192, 38, 211),  # #c026d3 - Purple
+        (168, 85, 247),  # #a855f7 - Bright purple
+        (168, 85, 247),  # #a855f7 - Purple transitioning to pink
+        (236, 72, 153),  # #ec4899 - Pink
+        (236, 72, 153),  # #ec4899 - Bright pink - middle section
+        (244, 63, 94),  # #f43f5e - Pink
+        (244, 63, 94),  # #f43f5e - Pink transitioning to orange
+        (251, 146, 60),  # #fb923c - Orange - "CODE" section
+        (251, 146, 60),  # #fb923c - Bright orange
+        (251, 146, 60),  # #fb923c - Orange end
     ]
 
     # Show ASCII art with gradient in a panel
@@ -3251,161 +3356,3 @@ def execute(verbose: bool = False, debug: bool = False):
     except Exception as e:
         logger.error(f"Failed to start interactive mode: {e}")
         raise DSPyCLIError(f"Failed to start interactive mode: {e}")
-        import re
-
-        # Extract number of examples
-        num_match = re.search(
-            r"(\d+)\s*(?:examples?|samples?|data points?)", user_input, re.IGNORECASE
-        )
-        num_examples = int(num_match.group(1)) if num_match else 20  # Default to 20
-
-        # Limit to reasonable range
-        num_examples = max(5, min(num_examples, 100))
-
-        # Extract task description
-        task_keywords = ["for", "about", "on", "regarding"]
-        task_description = None
-
-        for keyword in task_keywords:
-            if keyword in user_input.lower():
-                parts = user_input.lower().split(keyword, 1)
-                if len(parts) > 1:
-                    task_description = parts[1].strip()
-                    # Clean up
-                    task_description = re.sub(
-                        r"\d+\s*(?:examples?|samples?|data points?)", "", task_description
-                    ).strip()
-                    break
-
-        # If no task found, try to extract from common patterns
-        if not task_description:
-            # Look for task types
-            task_types = {
-                "sentiment": "sentiment analysis",
-                "classification": "text classification",
-                "question": "question answering",
-                "summarization": "text summarization",
-                "translation": "translation",
-                "email": "email classification",
-                "ner": "named entity recognition",
-                "qa": "question answering",
-            }
-
-            for key, value in task_types.items():
-                if key in user_input.lower():
-                    task_description = value
-                    break
-
-        return task_description, num_examples
-
-    def _generate_synthetic_examples(
-        self, task_description: str, num_examples: int
-    ) -> list[dict[str, Any]]:
-        """Generate synthetic training examples using LLM.
-
-        Args:
-            task_description: Description of the task
-            num_examples: Number of examples to generate
-
-        Returns:
-            List of example dictionaries with 'input' and 'output' keys
-        """
-        if not self.llm_connector or not self.llm_connector.current_model:
-            logger.warning("No LLM connected for data generation")
-            return []
-
-        try:
-            # Build prompt for data generation
-            prompt = f"""Generate {num_examples} diverse, realistic training examples for: {task_description}
-
-Requirements:
-1. Create varied, realistic examples that cover different scenarios
-2. Include edge cases and challenging examples
-3. Make inputs natural and outputs accurate
-4. Ensure diversity in topics, length, and complexity
-5. Format as JSON array with 'input' and 'output' keys
-
-Example format:
-[
-  {{"input": "example input text", "output": "expected output"}},
-  {{"input": "another input", "output": "another output"}},
-  ...
-]
-
-Task: {task_description}
-Number of examples: {num_examples}
-
-Generate ONLY the JSON array, no explanations:"""
-
-            # Generate with LLM
-            response = self.llm_connector.generate_response(
-                prompt=prompt,
-                system_prompt="You are a data generation expert. Generate high-quality, diverse training examples in JSON format.",
-                context={},
-            )
-
-            # Extract JSON from response
-            examples = self._extract_json_from_response(response)
-
-            if examples and isinstance(examples, list):
-                logger.info(f"Generated {len(examples)} examples")
-                return examples
-            else:
-                logger.warning("Failed to parse generated examples")
-                return []
-
-        except Exception as e:
-            logger.error(f"Data generation failed: {e}")
-            return []
-
-    def _extract_json_from_response(self, response: str) -> list[dict[str, Any]] | None:
-        """Extract JSON array from LLM response."""
-        import json
-        import re
-
-        try:
-            # Try to find JSON array in response
-            json_match = re.search(r"\[[\s\S]*\]", response)
-            if json_match:
-                json_str = json_match.group(0)
-                return json.loads(json_str)
-
-            # Try parsing entire response
-            return json.loads(response)
-
-        except json.JSONDecodeError:
-            logger.warning("Failed to parse JSON from response")
-            return None
-
-    def _show_example_samples(self, examples: list[dict[str, Any]], task_description: str = None):
-        """Display a sample of generated examples."""
-        from rich.table import Table
-
-        console.print()
-        console.print(f"[bold cyan]Generated Examples for: {task_description}[/bold cyan]")
-        console.print()
-
-        # Show first 5 examples in a table
-        table = Table(show_header=True, header_style="bold magenta")
-        table.add_column("Input", style="cyan", width=50)
-        table.add_column("Output", style="green", width=30)
-
-        for i, example in enumerate(examples[:5]):
-            input_text = str(example.get("input", ""))
-            output_text = str(example.get("output", ""))
-
-            # Truncate if too long
-            if len(input_text) > 100:
-                input_text = input_text[:97] + "..."
-            if len(output_text) > 50:
-                output_text = output_text[:47] + "..."
-
-            table.add_row(input_text, output_text)
-
-        console.print(table)
-
-        if len(examples) > 5:
-            console.print()
-            console.print(f"[dim]... and {len(examples) - 5} more examples[/dim]")
-
-        console.print()

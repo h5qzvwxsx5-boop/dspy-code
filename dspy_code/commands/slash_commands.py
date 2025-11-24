@@ -93,7 +93,6 @@ class SlashCommandHandler:
             "/history": self.cmd_history,
             "/clear": self.cmd_clear,
             "/save": self.cmd_save,
-            "/status": self.cmd_status,
             "/exit": self.cmd_exit,
             "/help": self.cmd_help,
             "/intro": self.cmd_intro,
@@ -320,7 +319,7 @@ class SlashCommandHandler:
             console.print()
             console.print("[dim]💡 Tip: Check provider docs for latest model names[/dim]")
 
-    def cmd_status(self, args: list):
+    def cmd_connection_status(self, args: list):
         """Show current connection status."""
         status = self.llm_connector.get_connection_status()
 
@@ -489,9 +488,8 @@ class SlashCommandHandler:
 
         # Model status
         if self.llm_connector and self.llm_connector.current_model:
-            console.print(
-                f"[cyan]🤖[/cyan] Connected Model: {self.llm_connector.current_model} ({self.llm_connector.model_type})"
-            )
+            model_info = f"{self.llm_connector.current_model} ({self.llm_connector.model_type})"
+            console.print(f"[cyan]🤖[/cyan] Connected Model: {model_info}")
         else:
             console.print(
                 "[yellow]⚠[/yellow] No model connected ([cyan]/connect[/cyan] to connect)"
@@ -4334,7 +4332,7 @@ answer = rag(question="What is quantum computing?")""",
         elif len(args) == 1:
             # Explain specific topic
             topic = args[0].lower()
-            
+
             # Handle plural/singular variations
             topic_aliases = {
                 "signatures": "signature",
@@ -4350,10 +4348,10 @@ answer = rag(question="What is quantum computing?")""",
                 "retrievers": "retriever",
                 "retriever": "retriever",
             }
-            
+
             # Check if topic has an alias
             normalized_topic = topic_aliases.get(topic, topic)
-            
+
             if normalized_topic in [k.lower() for k in explanations]:
                 # Find case-insensitive match
                 actual_key = next(k for k in explanations if k.lower() == normalized_topic)
