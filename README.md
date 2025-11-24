@@ -1,6 +1,12 @@
+<div align="center">
+
+<img src="docs/resource/dspy-code.png" alt="DSPy Code Logo" width="200"/>
+
 # DSPy Code
 
-**Claude Code for DSPy: AI-Powered Interactive Development Environment for DSPy**
+### 🚀 AI-Powered Interactive Development Environment for DSPy
+
+**Build, Optimize, and Deploy DSPy Applications with Natural Language**
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -10,9 +16,21 @@
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 
-*An interactive CLI tool for building, optimizing, and deploying DSPy applications*
+[📖 Documentation](https://superagenticai.github.io/dspy-code/) •
+[🚀 Quick Start](#-quick-start) •
+[💡 Examples](#-use-cases) •
+[🤝 Contributing](CONTRIBUTING.md)
 
-[📖 Documentation](https://superagenticai.github.io/dspy-code/)
+---
+
+### ⚡ Claude Code for DSPy 
+
+```bash
+pip install dspy-code
+dspy-code
+```
+
+**Ask in natural language** → **Get working DSPy code** → **Optimize with GEPA** → **Deploy**
 
 </div>
 
@@ -20,9 +38,23 @@
 
 ## ✨ What is DSPy Code?
 
+<div align="center">
+
+**The First Purpose-Built CLI for DSPy Development**
+
+</div>
+
 DSPy Code is an **interactive development environment** that transforms how you learn and build with DSPy. Built as an intelligent CLI tool, it provides natural language interactions, code generation, optimization workflows, and comprehensive validation, all designed specifically for DSPy development.
 
-**Learn as you build.** Whether you're a complete beginner or a DSPy expert, the CLI adapts to your level and guides you through every step.
+> 💡 **Learn as you build.** doesn't matter, you're a complete beginner or a DSPy expert, the CLI adapts to your level and guides you through every step.
+
+### 🎯 Perfect For:
+
+| 🎓 **Learning DSPy** | 🚀 **Building Projects** | ⚡ **Optimizing Code** |
+|---------------------|------------------------|----------------------|
+| Interactive Q&A about DSPy concepts | Generate complete DSPy applications | Real GEPA optimization workflows |
+| Built-in examples and templates | Natural language to code | Automated metric evaluation |
+| Step-by-step guidance | Code validation & best practices | Progress tracking & resumption |
 
 ## 🎯 Why DSPy Code?
 
@@ -414,16 +446,36 @@ DSPy Code is currently in **Beta** and under active development. While it's func
 
 ## 🙏 Acknowledgments
 
-Built with ❤️ by [Superagentic AI](https://super-agentic.ai)
+<div align="center">
+
+Built with ❤️ by **[Superagentic AI](https://super-agentic.ai)**
 
 Special thanks to the DSPy community and all contributors!
+
+</div>
 
 ---
 
 <div align="center">
 
-**[📖 Full Documentation](https://superagenticai.github.io/dspy-code/)**
+### 📚 Resources
 
-Made for the DSPy community
+**[📖 Documentation](https://superagenticai.github.io/dspy-code/)** •
+**[🐛 Issues](https://github.com/SuperagenticAI/dspy-code/issues)** •
+**[🤝 Contributing](CONTRIBUTING.md)**
+
+---
+
+### ⭐ Show Your Support
+
+If DSPy Code helps your workflow, give us a star! ⭐
+
+It helps others discover the project and motivates us to keep improving it.
+
+---
+
+<img src="docs/resource/dspy-code.png" alt="DSPy Code" width="100"/>
+
+**Made with 💜 for the DSPy community**
 
 </div>
