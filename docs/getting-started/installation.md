@@ -13,9 +13,9 @@ Before installing DSPy Code, make sure you have:
 
 !!! warning "CRITICAL: Create Virtual Environment IN Your Project"
     **For security and isolation, ALWAYS create your virtual environment INSIDE your project directory!**
-    
+
     This ensures:
-    
+
     - 🔒 All file scanning stays within your project
     - 📦 Complete project isolation
     - 🚀 Easy sharing and deployment
@@ -43,11 +43,11 @@ source .venv/bin/activate  # On macOS/Linux
 
 !!! success "Why .venv in the Project?"
     When you create the virtual environment inside your project:
-    
+
     - All packages install to `my-dspy-project/.venv/`
     - All dspy-code data goes to `my-dspy-project/.dspy_code/`
     - Everything stays in one place!
-    
+
     **Result**: One directory = one complete project
 
 ### Step 3: Install DSPy Code

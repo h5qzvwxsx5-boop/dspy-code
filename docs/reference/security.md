@@ -399,4 +399,3 @@ DSPy Code is designed to be **secure by default**:
 ---
 
 **Questions about security?** [Open an issue](https://github.com/SuperagenticAI/dspy-code/issues) or check our [FAQ](faq.md).
-

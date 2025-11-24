@@ -7,7 +7,6 @@ and optimizing DSPy components through natural language interactions.
 All commands are now SLASH COMMANDS in interactive mode!
 """
 
-import os
 import sys
 from pathlib import Path
 

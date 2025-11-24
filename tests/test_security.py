@@ -4,7 +4,6 @@ Security Tests
 Tests for file system safety measures and security protections.
 """
 
-import os
 import tempfile
 from pathlib import Path
 from unittest.mock import patch

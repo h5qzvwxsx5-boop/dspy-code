@@ -53,12 +53,12 @@ my-dspy-project/
 
 !!! success "Everything in One Place"
     Notice how **everything** is inside `my-dspy-project/`:
-    
+
     - Virtual environment (`.venv/`)
     - All packages (in `.venv/lib/`)
     - All caches (`.dspy_cache/`, `.dspy_code/`)
     - All your code (`generated/`, `modules/`, etc.)
-    
+
     **Result**: Delete `my-dspy-project/` and everything is gone!
 
 **Interactive prompts:**

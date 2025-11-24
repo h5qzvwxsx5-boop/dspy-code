@@ -579,7 +579,7 @@ class CodeIndexer:
                 if len(parts) <= 1:
                     logger.warning(f"🚨 BLOCKED: Path too close to home directory: {path}")
                     logger.warning(
-                        f"   Please run dspy-code from a project directory, not from ~/ or ~/subdir"
+                        "   Please run dspy-code from a project directory, not from ~/ or ~/subdir"
                     )
                     return False
 
