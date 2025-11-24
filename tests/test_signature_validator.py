@@ -5,8 +5,8 @@ Tests for DSPy signature validator.
 import ast
 
 import pytest
-from dspy_cli.validation.models import IssueSeverity
-from dspy_cli.validation.signature_validator import SignatureValidator
+from dspy_code.validation.models import IssueSeverity
+from dspy_code.validation.signature_validator import SignatureValidator
 
 
 class TestSignatureValidator:
@@ -156,7 +156,7 @@ class TestSignatureValidatorIntegration:
 
     def test_full_validation_with_signature(self):
         """Test full validation including signature checks."""
-        from dspy_cli.validation import DSPyValidator
+        from dspy_code.validation import DSPyValidator
 
         code = """
 import dspy
@@ -174,7 +174,7 @@ class EmailSignature(dspy.Signature):
 
     def test_validation_with_perfect_signature(self):
         """Test validation with perfect signature."""
-        from dspy_cli.validation import DSPyValidator
+        from dspy_code.validation import DSPyValidator
 
         code = '''
 import dspy

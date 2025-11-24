@@ -6,8 +6,8 @@ import tempfile
 from pathlib import Path
 
 import pytest
-from dspy_cli.core.exceptions import InsufficientDataError
-from dspy_cli.optimization import (
+from dspy_code.core.exceptions import InsufficientDataError
+from dspy_code.optimization import (
     DataCollector,
     Example,
     OptimizationWorkflowManager,

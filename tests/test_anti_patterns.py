@@ -5,8 +5,8 @@ Tests for DSPy Anti-Pattern Detector
 import ast
 
 import pytest
-from dspy_cli.validation.anti_patterns import AntiPatternDetector
-from dspy_cli.validation.models import IssueCategory, IssueSeverity
+from dspy_code.validation.anti_patterns import AntiPatternDetector
+from dspy_code.validation.models import IssueCategory, IssueSeverity
 
 
 @pytest.fixture

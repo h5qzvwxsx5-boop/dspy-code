@@ -7,8 +7,8 @@ import tempfile
 from pathlib import Path
 
 import pytest
-from dspy_cli.core.exceptions import ImportError, InvalidFormatError
-from dspy_cli.export import ExportImportHandler, PackageBuilder, PackageMetadata
+from dspy_code.core.exceptions import ImportError, InvalidFormatError
+from dspy_code.export import ExportImportHandler, PackageBuilder, PackageMetadata
 
 
 @pytest.fixture

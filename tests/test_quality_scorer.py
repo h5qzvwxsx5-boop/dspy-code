@@ -3,8 +3,8 @@ Tests for DSPy Quality Scorer
 """
 
 import pytest
-from dspy_cli.validation.models import IssueCategory, IssueSeverity, ValidationIssue
-from dspy_cli.validation.quality_scorer import QualityScorer
+from dspy_code.validation.models import IssueCategory, IssueSeverity, ValidationIssue
+from dspy_code.validation.quality_scorer import QualityScorer
 
 
 @pytest.fixture

@@ -8,10 +8,10 @@ import tempfile
 from pathlib import Path
 
 import pytest
-from dspy_cli.execution import ExecutionEngine
-from dspy_cli.export import ExportImportHandler, PackageBuilder, PackageMetadata
-from dspy_cli.optimization import Example, OptimizationWorkflowManager
-from dspy_cli.session import SessionStateManager
+from dspy_code.execution import ExecutionEngine
+from dspy_code.export import ExportImportHandler, PackageBuilder, PackageMetadata
+from dspy_code.optimization import Example, OptimizationWorkflowManager
+from dspy_code.session import SessionStateManager
 
 
 class MockSession:

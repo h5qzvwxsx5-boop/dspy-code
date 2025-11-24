@@ -5,8 +5,8 @@ Tests for DSPy predictor validator.
 import ast
 
 import pytest
-from dspy_cli.validation.models import IssueSeverity
-from dspy_cli.validation.predictor_validator import PredictorValidator
+from dspy_code.validation.models import IssueSeverity
+from dspy_code.validation.predictor_validator import PredictorValidator
 
 
 class TestPredictorValidator:
@@ -159,7 +159,7 @@ class TestPredictorValidatorIntegration:
 
     def test_full_validation_with_predictors(self):
         """Test full validation including predictor checks."""
-        from dspy_cli.validation import DSPyValidator
+        from dspy_code.validation import DSPyValidator
 
         code = '''
 import dspy
@@ -183,7 +183,7 @@ class EmailClassifier(dspy.Module):
 
     def test_validation_with_good_predictor_usage(self):
         """Test validation with proper predictor usage."""
-        from dspy_cli.validation import DSPyValidator
+        from dspy_code.validation import DSPyValidator
 
         code = '''
 import dspy

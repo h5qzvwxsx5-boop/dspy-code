@@ -8,8 +8,8 @@ from datetime import datetime
 from pathlib import Path
 
 import pytest
-from dspy_cli.core.exceptions import SessionNotFoundError
-from dspy_cli.session import SessionInfo, SessionState, SessionStateManager
+from dspy_code.core.exceptions import SessionNotFoundError
+from dspy_code.session import SessionInfo, SessionState, SessionStateManager
 
 
 class MockSession:

@@ -3,8 +3,8 @@ Tests for DSPy Learning Integration
 """
 
 import pytest
-from dspy_cli.validation.learning_integration import LearningIntegration, LearningResource
-from dspy_cli.validation.models import IssueCategory, IssueSeverity, ValidationIssue
+from dspy_code.validation.learning_integration import LearningIntegration, LearningResource
+from dspy_code.validation.models import IssueCategory, IssueSeverity, ValidationIssue
 
 
 @pytest.fixture

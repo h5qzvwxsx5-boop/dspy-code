@@ -3,8 +3,8 @@ Tests for DSPy Auto-Fixer
 """
 
 import pytest
-from dspy_cli.validation.auto_fixer import AutoFixer, CodeFix
-from dspy_cli.validation.models import IssueCategory, IssueSeverity, ValidationIssue
+from dspy_code.validation.auto_fixer import AutoFixer, CodeFix
+from dspy_code.validation.models import IssueCategory, IssueSeverity, ValidationIssue
 
 
 @pytest.fixture

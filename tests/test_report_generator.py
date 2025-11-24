@@ -3,14 +3,14 @@ Tests for Validation Report Generator
 """
 
 import pytest
-from dspy_cli.validation.models import (
+from dspy_code.validation.models import (
     IssueCategory,
     IssueSeverity,
     ValidationIssue,
     ValidationReport,
 )
-from dspy_cli.validation.quality_scorer import QualityMetrics
-from dspy_cli.validation.report_generator import ReportGenerator
+from dspy_code.validation.quality_scorer import QualityMetrics
+from dspy_code.validation.report_generator import ReportGenerator
 from rich.console import Console
 
 

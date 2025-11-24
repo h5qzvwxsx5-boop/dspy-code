@@ -3,8 +3,8 @@ Unit tests for execution engine.
 """
 
 import pytest
-from dspy_cli.core.exceptions import CodeValidationError
-from dspy_cli.execution import ExecutionEngine
+from dspy_code.core.exceptions import CodeValidationError
+from dspy_code.execution import ExecutionEngine
 
 
 @pytest.fixture

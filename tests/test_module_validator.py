@@ -5,8 +5,8 @@ Tests for DSPy module validator.
 import ast
 
 import pytest
-from dspy_cli.validation.models import IssueSeverity
-from dspy_cli.validation.module_validator import ModuleValidator
+from dspy_code.validation.models import IssueSeverity
+from dspy_code.validation.module_validator import ModuleValidator
 
 
 class TestModuleValidator:
@@ -206,7 +206,7 @@ class TestModuleValidatorIntegration:
 
     def test_full_validation_with_module(self):
         """Test full validation including module checks."""
-        from dspy_cli.validation import DSPyValidator
+        from dspy_code.validation import DSPyValidator
 
         code = """
 import dspy
@@ -227,7 +227,7 @@ class EmailClassifier(dspy.Module):
 
     def test_validation_with_perfect_module(self):
         """Test validation with perfect module."""
-        from dspy_cli.validation import DSPyValidator
+        from dspy_code.validation import DSPyValidator
 
         code = '''
 import dspy
