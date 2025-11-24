@@ -13,13 +13,17 @@ hide:
   </div>
   <div class="hero-content">
     <div class="hero-top">
+      <div style="text-align: center; margin-bottom: 2em;">
+        <img src="resource/dspy-code.png" alt="DSPy Code Logo" style="width: 140px; margin-bottom: 1em;">
+        <br/>
+        <img src="resource/dspy-code-banner.png" alt="DSPy Code Banner" style="width: 600px; max-width: 90%; margin: 0 auto 1em;">
+        <br/>
+        <img src="resource/dspy-code-text.svg" alt="DSPy Code" style="width: 400px; max-width: 80%; margin: 0 auto;">
+      </div>
+
       <h1 class="hero-title gradient-text-purple-pink-orange">
         Welcome to DSPy Code
       </h1>
-
-      <div class="hero-logo">
-        <img src="resource/dspy-code.png" alt="DSPy Code Logo" class="animated-logo">
-      </div>
 
       <h2 class="hero-subtitle gradient-text-purple-pink-orange">
         Comprehensive CLI to Optimize Your DSPy Code
@@ -65,6 +69,17 @@ hide:
       </div>
     </div>
   </div>
+</div>
+
+---
+
+<div style="background: rgba(147, 51, 234, 0.1); border-left: 4px solid #9333ea; padding: 1em 1.5em; margin: 2em 0; border-radius: 8px; font-size: 0.95em; line-height: 1.6;">
+  <p style="margin: 0; color: var(--md-default-fg-color--light);">
+    <strong style="color: var(--md-default-fg-color);">💡 Note:</strong> DSPy Code is in its <strong>initial release</strong> and under <strong>active development</strong>.
+    The quality and effectiveness of generated code depends on several factors: the <strong>language model</strong> you connect,
+    <strong>MCP (Model Context Protocol) servers</strong> you integrate, and the <strong>context</strong> you provide to DSPy Code.
+    We're continuously improving based on community feedback.
+  </p>
 </div>
 
 ---

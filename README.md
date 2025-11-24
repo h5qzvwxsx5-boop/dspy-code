@@ -1,12 +1,20 @@
 <div align="center">
 
-<img src="docs/resource/dspy-code.png" alt="DSPy Code Logo" width="200"/>
+<img src="docs/resource/dspy-code.png" alt="DSPy Code Logo" width="140"/>
 
-# DSPy Code
+<br/>
 
-### 🚀 AI-Powered Interactive Development Environment for DSPy
+<img src="docs/resource/dspy-code-banner.png" alt="DSPy Code" width="600"/>
 
-**Build, Optimize, and Deploy DSPy Applications with Natural Language**
+<br/>
+
+<img src="docs/resource/dspy-code-text.svg" alt="DSPy Code" width="400"/>
+
+<br/>
+
+### 🚀 Your AI-Powered DSPy Development Assistant
+
+**Build, Optimize, and Deploy DSPy Applications with Natural Language. Think of it as Claude Code for DSPy**
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -23,7 +31,7 @@
 
 ---
 
-### ⚡ Claude Code for DSPy 
+### ⚡ Claude Code for DSPy
 
 ```bash
 pip install dspy-code
@@ -33,6 +41,8 @@ dspy-code
 **Ask in natural language** → **Get working DSPy code** → **Optimize with GEPA** → **Deploy**
 
 </div>
+
+> **💡 Note:** DSPy Code is in its **initial release** and under **active development**. The quality and effectiveness of generated code depends on several factors: the **language model** you connect, **MCP (Model Context Protocol) servers** you integrate, and the **context** you provide to DSPy Code. We're continuously improving based on community feedback.
 
 ---
 

@@ -57,9 +57,15 @@ def create_gradient_text(text: str, colors: list) -> Text:
             color_float = position * (len(colors) - 1)
             color_index = int(color_float)
 
-            # Get the color
+            # Get the color (supports both named colors and RGB tuples)
             color = colors[min(color_index, len(colors) - 1)]
-            result.append(char, style=f"bold {color}")
+            if isinstance(color, tuple):
+                # RGB tuple format: (r, g, b) - Rich uses rgb(r,g,b) format
+                r, g, b = color
+                result.append(char, style=f"bold rgb({r},{g},{b})")
+            else:
+                # Named color string
+                result.append(char, style=f"bold {color}")
 
             char_index += 1
 

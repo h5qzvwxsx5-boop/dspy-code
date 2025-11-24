@@ -12,7 +12,7 @@ theme:
   logo: resource/dspy-code.png
   favicon: resource/dspy-code.png
   palette:
-    # Light mode
+    # Light mode (default)
     - scheme: default
       primary: deep purple
       accent: indigo

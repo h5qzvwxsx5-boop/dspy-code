@@ -120,7 +120,38 @@ def check_safe_working_directory() -> None:
     if is_in_temp:
         return
 
-    # Check if running from system directories
+    # Allow user directories (e.g., /Users/username/... or /home/username/...)
+    # This allows development/testing from repository root
+    user_dirs = [Path("/Users"), Path("/home")]
+    is_in_user_dir = any(
+        cwd.is_relative_to(user_dir) if user_dir.exists() else False
+        for user_dir in user_dirs
+    )
+
+    # Also allow if we're in the repository root (has dspy_code package)
+    is_repo_root = (cwd / "dspy_code").exists() and (cwd / "dspy_code" / "__init__.py").exists()
+
+    # If we're in a user directory or repo root, allow it (but still check for specific system dirs)
+    if is_in_user_dir or is_repo_root:
+        # Still block if we're in specific dangerous system subdirectories
+        dangerous_system_dirs = [Path("/System"), Path("/Library"), Path("/usr")]
+        for sys_dir in dangerous_system_dirs:
+            if cwd == sys_dir or (cwd.is_relative_to(sys_dir) and not is_in_user_dir):
+                console.print()
+                console.print(
+                    Panel.fit(
+                        "[bold red]🚨 CRITICAL ERROR[/bold red]\n\n"
+                        f"You cannot run dspy-code from system directory: [cyan]{cwd}[/cyan]\n\n"
+                        "This could damage your system. Please run from a user project directory.",
+                        title="❌ System Directory",
+                        border_style="red",
+                    )
+                )
+                sys.exit(1)
+        # User directory or repo root is safe
+        return
+
+    # Check if running from root or other system directories (not in user dirs)
     system_dirs = [Path("/"), Path("/System"), Path("/Library"), Path("/usr")]
     for sys_dir in system_dirs:
         if cwd == sys_dir or cwd.is_relative_to(sys_dir):
@@ -166,16 +197,32 @@ def check_safe_working_directory() -> None:
         sys.exit(1)
 
 
+def get_version():
+    """Get the installed version of dspy-code."""
+    try:
+        import importlib.metadata
+        return importlib.metadata.version("dspy-code")
+    except importlib.metadata.PackageNotFoundError:
+        # Fallback to __init__.py version if package not installed
+        from . import __version__
+        return __version__
+
+
 @click.command()
 @click.option("--verbose", "-v", is_flag=True, help="Enable verbose output")
 @click.option("--debug", is_flag=True, help="Enable debug mode")
+@click.option(
+    "--version",
+    is_flag=True,
+    help="Show version information and exit",
+)
 @click.option(
     "--skip-safety-check",
     is_flag=True,
     hidden=True,
     help="Skip directory safety check (not recommended)",
 )
-def cli(verbose: bool, debug: bool, skip_safety_check: bool):
+def cli(verbose: bool, debug: bool, version: bool, skip_safety_check: bool):
     """
     DSPy Code - Interactive DSPy Development Environment
 
@@ -192,6 +239,18 @@ def cli(verbose: bool, debug: bool, skip_safety_check: bool):
     DSPy Code adapts to YOUR installed DSPy version and gives you access
     to all DSPy features through natural language.
     """
+    # Show version and exit if requested
+    if version:
+        from .core.version_checker import get_dspy_version
+        dspy_code_version = get_version()
+        dspy_version = get_dspy_version()
+        console.print(f"[bold cyan]DSPy Code[/bold cyan] version: [green]{dspy_code_version}[/green]")
+        if dspy_version:
+            console.print(f"[bold cyan]DSPy[/bold cyan] version: [green]{dspy_version}[/green]")
+        else:
+            console.print("[yellow]DSPy is not installed[/yellow]")
+        sys.exit(0)
+
     # SECURITY: Check if running from safe directory
     if not skip_safety_check:
         check_safe_working_directory()

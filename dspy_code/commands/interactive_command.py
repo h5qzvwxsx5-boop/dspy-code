@@ -3127,13 +3127,14 @@ if __name__ == "__main__":
 
 
 def _show_welcome_screen(console, context, config_manager):
-    """Show enhanced welcome screen with colorful ASCII art and feature overview."""
+    """Show simple welcome screen with ASCII art."""
     from rich.align import Align
     from rich.box import DOUBLE
     from rich.panel import Panel
     from rich.text import Text
 
     from ..core.version_checker import display_version_info
+    from ..ui.welcome import DSPY_ASCII_ART, create_gradient_text
 
     console.print()
 
@@ -3141,141 +3142,68 @@ def _show_welcome_screen(console, context, config_manager):
     display_version_info(console, show_warning=True)
     console.print()
 
-    # Colorful ASCII Art Banner with Gradient (from ui/welcome.py)
-    DSPY_ASCII_ART = """
-   ██████╗ ███████╗██████╗ ██╗   ██╗     ██████╗ ██████╗ ██████╗ ███████╗
-   ██╔══██╗██╔════╝██╔══██╗╚██╗ ██╔╝    ██╔════╝██╔═══██╗██╔══██╗██╔════╝
-   ██║  ██║███████╗██████╔╝ ╚████╔╝     ██║     ██║   ██║██║  ██║█████╗
-   ██║  ██║╚════██║██╔═══╝   ╚██╔╝      ██║     ██║   ██║██║  ██║██╔══╝
-   ██████╔╝███████║██║        ██║       ╚██████╗╚██████╔╝██████╔╝███████╗
-   ╚═════╝ ╚══════╝╚═╝        ╚═╝        ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝
-"""
-
-    # Create gradient colors (rainbow effect)
+    # Create beautiful gradient colors for the ASCII art (purple → pink → orange)
+    # Using exact RGB colors matching the SVG gradient
     gradient_colors = [
-        "cyan",
-        "bright_cyan",
-        "blue",
-        "bright_blue",
-        "magenta",
-        "bright_magenta",
-        "red",
-        "bright_red",
-        "yellow",
-        "bright_yellow",
+        (217, 70, 239),   # #d946ef - Deep purple - "DSPY" starts here
+        (217, 70, 239),   # #d946ef - Purple
+        (192, 38, 211),   # #c026d3 - Purple
+        (168, 85, 247),   # #a855f7 - Bright purple
+        (168, 85, 247),   # #a855f7 - Purple transitioning to pink
+        (236, 72, 153),   # #ec4899 - Pink
+        (236, 72, 153),   # #ec4899 - Bright pink - middle section
+        (244, 63, 94),    # #f43f5e - Pink
+        (244, 63, 94),    # #f43f5e - Pink transitioning to orange
+        (251, 146, 60),   # #fb923c - Orange - "CODE" section
+        (251, 146, 60),   # #fb923c - Bright orange
+        (251, 146, 60),   # #fb923c - Orange end
     ]
 
-    # Apply gradient to ASCII art
-    ascii_text = Text()
-    all_chars = [c for c in DSPY_ASCII_ART if c not in ("\n", " ")]
-    total_chars = len(all_chars)
-    char_index = 0
-
-    for char in DSPY_ASCII_ART:
-        if char == "\n":
-            ascii_text.append("\n")
-        elif char == " ":
-            ascii_text.append(" ")
-        else:
-            position = char_index / max(total_chars - 1, 1)
-            color_float = position * (len(gradient_colors) - 1)
-            color_index = int(color_float)
-            color = gradient_colors[min(color_index, len(gradient_colors) - 1)]
-            ascii_text.append(char, style=f"bold {color}")
-            char_index += 1
-
-    # Show colorful ASCII art in a panel
+    # Show ASCII art with gradient in a panel
+    ascii_text = create_gradient_text(DSPY_ASCII_ART, gradient_colors)
     ascii_panel = Panel(
-        Align.center(ascii_text), border_style="bright_cyan", box=DOUBLE, padding=(1, 4)
+        Align.center(ascii_text), border_style="bright_magenta", box=DOUBLE, padding=(1, 4)
     )
     console.print(ascii_panel)
 
-    # Colorful subtitle (matching original gradient style)
-    subtitle = Text()
-    subtitle.append("✨ ", style="bright_yellow")
-    subtitle.append("Your ", style="white")
-    subtitle.append("A", style="bright_cyan")
-    subtitle.append("I", style="bright_blue")
-    subtitle.append("-", style="white")
-    subtitle.append("P", style="bright_magenta")
-    subtitle.append("o", style="bright_red")
-    subtitle.append("w", style="bright_yellow")
-    subtitle.append("e", style="bright_green")
-    subtitle.append("r", style="bright_cyan")
-    subtitle.append("e", style="bright_blue")
-    subtitle.append("d", style="bright_magenta")
-    subtitle.append(" DSPy Development ", style="white")
-    subtitle.append("A", style="bright_red")
-    subtitle.append("s", style="bright_yellow")
-    subtitle.append("s", style="bright_green")
-    subtitle.append("i", style="bright_cyan")
-    subtitle.append("s", style="bright_blue")
-    subtitle.append("t", style="bright_magenta")
-    subtitle.append("a", style="bright_red")
-    subtitle.append("n", style="bright_yellow")
-    subtitle.append("t", style="bright_green")
-    subtitle.append(": ", style="white")
-    subtitle.append("C", style="bright_cyan")
-    subtitle.append("l", style="bright_blue")
-    subtitle.append("a", style="bright_magenta")
-    subtitle.append("u", style="bright_red")
-    subtitle.append("d", style="bright_yellow")
-    subtitle.append("e", style="bright_green")
-    subtitle.append(" ", style="white")
-    subtitle.append("C", style="bright_cyan")
-    subtitle.append("o", style="bright_blue")
-    subtitle.append("d", style="bright_magenta")
-    subtitle.append("e", style="bright_red")
-    subtitle.append(" ", style="white")
-    subtitle.append("f", style="bright_yellow")
-    subtitle.append("o", style="bright_green")
-    subtitle.append("r", style="bright_cyan")
-    subtitle.append(" ", style="white")
-    subtitle.append("D", style="bright_blue")
-    subtitle.append("S", style="bright_magenta")
-    subtitle.append("P", style="bright_red")
-    subtitle.append("y", style="bright_yellow")
-    subtitle.append(" ✨", style="bright_yellow")
-    console.print(Align.center(subtitle))
+    # Simple welcome message with purple-pink-orange gradient
+    welcome_text = Text()
+    welcome_text.append("✨ ", style="bright_magenta")
+    welcome_text.append("Welcome to ", style="white")
+    welcome_text.append("D", style="magenta")
+    welcome_text.append("S", style="bright_magenta")
+    welcome_text.append("P", style="red")
+    welcome_text.append("y", style="bright_red")
+    welcome_text.append(" ", style="white")
+    welcome_text.append("C", style="yellow")
+    welcome_text.append("o", style="bright_yellow")
+    welcome_text.append("d", style="yellow")
+    welcome_text.append("e", style="bright_red")
+    welcome_text.append(" ✨", style="bright_magenta")
+
+    console.print(Align.center(welcome_text))
     console.print()
 
-    # Project Context (if initialized)
-    if context and context.is_initialized:
-        console.print(
-            f"[bold green]📁[/bold green] Project: [bold cyan]{context.name}[/bold cyan] | Use Case: [yellow]{context.use_case}[/yellow]"
-        )
-        console.print()
+    # Model info
+    model_name = "Not configured"
+    if config_manager:
+        try:
+            config = config_manager.get_config()
+            if config and "model" in config:
+                model_name = config.get("model", {}).get("name", "Not configured")
+        except Exception:
+            pass
 
-    # Minimal Key Commands
-    console.print("[bold yellow]⚡ Get Started:[/bold yellow]")
-    console.print()
-    console.print("  [cyan]/intro[/cyan]    - Complete guide & all features")
-    console.print("  [cyan]/init[/cyan]     - Initialize your project")
-    console.print("  [cyan]/demo[/cyan]     - See it in action")
-    console.print("  [cyan]/help[/cyan]     - View all commands")
-    console.print()
-    console.print("[dim]💬 Or just describe what you want to build in natural language![/dim]")
-    console.print()
-
-    # Status tip
-    if not config_manager.is_project_initialized():
-        console.print(
-            "[yellow]💡[/yellow] New here? Try [cyan]/demo[/cyan] or [cyan]/init[/cyan] to get started"
-        )
-    elif not config_manager.config.default_model:
-        console.print(
-            "[yellow]💡[/yellow] Tip: Connect a model with [cyan]/connect ollama llama3.1:8b[/cyan]"
-        )
+    model_info = Text()
+    model_info.append("🤖 Model: ", style="dim")
+    model_info.append(
+        model_name, style="bold green" if model_name != "Not configured" else "bold yellow"
+    )
+    console.print(Align.center(model_info))
     console.print()
 
-    # Ready prompt
-    ready = Text()
-    ready.append("🚀 ", style="bold")
-    ready.append("Ready! ", style="bold green")
-    ready.append("New here? Try ", style="dim")
-    ready.append("/intro", style="bold cyan")
-    ready.append(" for the complete guide!", style="dim")
-    console.print(ready)
+    # Minimal help
+    console.print("[dim]Type /help for commands or describe what you want to build[/dim]")
     console.print()
 
 
