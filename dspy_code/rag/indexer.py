@@ -53,14 +53,14 @@ class CodeIndexer:
         """Initialize the code indexer.
 
         Args:
-            cache_dir: Directory for caching index (defaults to ~/.dspy_cli/cache/codebase_index)
+            cache_dir: Directory for caching index (defaults to .dspy_code/cache/codebase_index in CWD)
             config_manager: Configuration manager for reading settings
         """
         self.config_manager = config_manager
 
-        # Set up cache directory
+        # Set up cache directory - ALWAYS in CWD for security and isolation
         if cache_dir is None:
-            cache_dir = Path.home() / ".dspy_cli" / "cache" / "codebase_index"
+            cache_dir = Path.cwd() / ".dspy_code" / "cache" / "codebase_index"
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
 
@@ -139,13 +139,17 @@ class CodeIndexer:
 
         # 2. Index user's project code (their DSPy programs)
         try:
-            project_root = Path.cwd()
+            project_root = Path.cwd().resolve()
 
-            # Check if we have read access to current directory
-            if not os.access(project_root, os.R_OK):
+            # SECURITY: Check if current directory is safe to scan
+            if not self._is_safe_to_scan(project_root):
+                logger.warning("🚨 Current directory is not safe to scan!")
+                logger.warning("   Please cd into a specific project directory.")
+                logger.warning("   Never run dspy-code from ~/ or system directories!")
+            elif not os.access(project_root, os.R_OK):
                 logger.warning(f"No read permission for current directory: {project_root}")
             else:
-                # Look for common DSPy project directories
+                # Look for common DSPy project directories (ONLY direct children, no recursion)
                 for dir_name in [
                     "generated",
                     "modules",
@@ -156,13 +160,19 @@ class CodeIndexer:
                 ]:
                     try:
                         project_code_dir = project_root / dir_name
+
+                        # SECURITY: Verify it's actually a child of project_root
+                        if not project_code_dir.resolve().is_relative_to(project_root):
+                            logger.warning(f"⚠️  Skipping {dir_name}: not in project directory")
+                            continue
+
                         if project_code_dir.exists() and project_code_dir.is_dir():
                             # Check read permission
                             if not os.access(project_code_dir, os.R_OK):
                                 logger.debug(f"No read permission for {project_code_dir}")
                                 continue
 
-                            # Check if it has Python files
+                            # Check if it has Python files (only direct children, no rglob!)
                             py_files = list(project_code_dir.glob("*.py"))
                             if py_files:
                                 codebases[f"user_project_{dir_name}"] = project_code_dir
@@ -173,11 +183,11 @@ class CodeIndexer:
                         logger.debug(f"Cannot access {dir_name}: {e}")
                         continue
 
-                # Also check root directory for Python files (but exclude common non-project files)
+                # Also check root directory for Python files (ONLY direct children, no recursion!)
                 try:
                     root_py_files = [
                         f
-                        for f in project_root.glob("*.py")
+                        for f in project_root.glob("*.py")  # NOT rglob!
                         if f.name not in ["setup.py", "conftest.py"]
                         and not f.name.startswith("test_")
                     ]
@@ -462,8 +472,25 @@ class CodeIndexer:
         elements = []
         file_count = 0
 
-        # Find all Python files
-        for py_file in path.rglob("*.py"):
+        # SECURITY: Resolve to absolute path and validate it's safe to scan
+        path = path.resolve()
+        if not self._is_safe_to_scan(path):
+            logger.warning(f"⚠️  Skipping unsafe path: {path}")
+            return (
+                CodebaseInfo(
+                    name=name,
+                    path=str(path),
+                    version=None,
+                    file_count=0,
+                    element_count=0,
+                    last_indexed=datetime.now(),
+                ),
+                [],
+            )
+
+        # Find all Python files with depth limit
+        max_depth = 10  # Prevent infinite recursion
+        for py_file in self._safe_rglob(path, "*.py", max_depth=max_depth):
             # Skip excluded files
             if self.should_exclude(py_file, path):
                 logger.debug(f"Excluding {py_file}")
@@ -490,6 +517,146 @@ class CodeIndexer:
         logger.info(f"Indexed {name}: {file_count} files, {len(elements)} elements")
 
         return info, elements
+
+    def _is_safe_to_scan(self, path: Path) -> bool:
+        """Check if a path is safe to scan (not user home directories, system dirs, etc.).
+
+        Args:
+            path: Path to check
+
+        Returns:
+            True if safe to scan, False otherwise
+        """
+        path = path.resolve()
+        home = Path.home().resolve()
+
+        # CRITICAL: Never scan user home directories or parent directories
+        # This prevents accessing iCloud, Photos, Documents, etc.
+        dangerous_dirs = [
+            home,
+            home.parent,  # /Users
+            Path("/"),
+            Path("/System"),
+            Path("/Library"),
+            Path("/Applications"),
+            Path("/private"),
+            Path("/usr"),
+        ]
+
+        for dangerous in dangerous_dirs:
+            if path == dangerous:
+                logger.warning(f"🚨 BLOCKED: Refusing to scan dangerous directory: {path}")
+                return False
+
+        # Special check for /var and /private subdirectories but allow temp directories
+        # /var/folders/ and /private/var/folders/ is where macOS temp dirs live
+        var_path = Path("/var")
+        if path == var_path or path == Path("/private/var"):
+            logger.warning(f"🚨 BLOCKED: Refusing to scan dangerous directory: {path}")
+            return False
+
+        # Block other paths under /private except temp dirs
+        private_path = Path("/private")
+        if path.is_relative_to(private_path):
+            # Allow temp directories
+            if not (
+                path.is_relative_to(Path("/private/tmp"))
+                or path.is_relative_to(Path("/private/var/folders"))
+            ):
+                logger.warning(f"🚨 BLOCKED: Refusing to scan directory under /private: {path}")
+                return False
+
+        # CRITICAL: If scanning user's project, it must be in a subdirectory of home, not home itself
+        # This prevents scanning entire home directory if they run dspy-code from ~/
+        if path.is_relative_to(home):
+            # It's under home directory - check if it's a proper project directory
+            # Must be at least 2 levels deep from home (e.g., ~/projects/myproject)
+            try:
+                relative = path.relative_to(home)
+                parts = relative.parts
+
+                # If it's a direct child of home or home itself, reject
+                if len(parts) <= 1:
+                    logger.warning(f"🚨 BLOCKED: Path too close to home directory: {path}")
+                    logger.warning(
+                        f"   Please run dspy-code from a project directory, not from ~/ or ~/subdir"
+                    )
+                    return False
+
+                # Check if it's in a known dangerous subdirectory of home
+                first_part = parts[0].lower()
+                dangerous_home_dirs = [
+                    "desktop",
+                    "documents",
+                    "downloads",
+                    "pictures",
+                    "photos",
+                    "movies",
+                    "music",
+                    "library",
+                    "icloud",
+                    "public",
+                    "applications",
+                    "dropbox",
+                    "google drive",
+                    "onedrive",
+                ]
+
+                if first_part in dangerous_home_dirs:
+                    logger.warning(f"🚨 BLOCKED: Refusing to scan {first_part} directory: {path}")
+                    return False
+
+            except ValueError:
+                pass  # Not relative to home, which is fine
+
+        return True
+
+    def _safe_rglob(self, path: Path, pattern: str, max_depth: int = 10) -> list[Path]:
+        """Safely glob files with depth limit and boundary checks.
+
+        Args:
+            path: Base path to search
+            pattern: Glob pattern (e.g., "*.py")
+            max_depth: Maximum directory depth to traverse
+
+        Returns:
+            List of matching file paths
+        """
+        results = []
+        base_depth = len(path.resolve().parts)
+
+        try:
+            for item in path.rglob(pattern):
+                # Check depth - calculate relative depth from base
+                try:
+                    relative = item.resolve().relative_to(path.resolve())
+                    # Depth is number of parent directories in the relative path
+                    depth = len(relative.parts) - 1  # -1 because the file itself doesn't count
+                    if depth > max_depth:
+                        continue
+                except ValueError:
+                    # Item is outside base path, skip it
+                    logger.warning(f"⚠️  Skipping file outside base path: {item}")
+                    continue
+
+                # SECURITY: Ensure file is actually within the base path
+                # This prevents symlink attacks
+                try:
+                    item.resolve().relative_to(path.resolve())
+                except ValueError:
+                    logger.warning(f"⚠️  Skipping file outside base path: {item}")
+                    continue
+
+                # Check permissions before adding
+                if not os.access(item, os.R_OK):
+                    continue
+
+                results.append(item)
+
+        except (PermissionError, OSError) as e:
+            logger.warning(f"Error scanning {path}: {e}")
+
+        return results
 
     def _get_package_version(self, package_name: str) -> str | None:
         """Get the version of an installed package."""

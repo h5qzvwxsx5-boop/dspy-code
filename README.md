@@ -12,7 +12,7 @@
 
 *An interactive CLI tool for building, optimizing, and deploying DSPy applications*
 
-[📖 Documentation](https://superagenticai.github.io/dspy-code/) • [🚀 Quick Start](#-quick-start) • [💬 GitHub Discussions](https://github.com/SuperagenticAI/dspy-code/discussions)
+[📖 Documentation](https://superagenticai.github.io/dspy-code/)
 
 </div>
 
@@ -20,7 +20,7 @@
 
 ## ✨ What is DSPy Code?
 
-DSPy Code is an **interactive development environment** that transforms how you learn and build with DSPy. Built as an intelligent CLI tool, it provides natural language interactions, code generation, optimization workflows, and comprehensive validation—all designed specifically for DSPy development.
+DSPy Code is an **interactive development environment** that transforms how you learn and build with DSPy. Built as an intelligent CLI tool, it provides natural language interactions, code generation, optimization workflows, and comprehensive validation, all designed specifically for DSPy development.
 
 **Learn as you build.** Whether you're a complete beginner or a DSPy expert, the CLI adapts to your level and guides you through every step.
 
@@ -77,21 +77,77 @@ DSPy Code is a **purpose-built development environment** that embeds DSPy expert
 
 ### Installation
 
+**⚠️ CRITICAL: Always create your virtual environment INSIDE your project directory!**
+
 ```bash
-# Install from PyPI
+# 1. Create a project directory
+mkdir my-dspy-project
+cd my-dspy-project
+
+# 2. Create virtual environment IN this directory (not elsewhere!)
+python -m venv .venv
+
+# 3. Activate it
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# 4. Install dspy-code (installs into .venv/ in your project)
 pip install dspy-code
 
-# DSPy is installed as a dependency
-# You can also install it separately: pip install dspy
+# 5. Run dspy-code (everything stays in this directory!)
+dspy-code
 ```
 
-### Your First Program (3 minutes)
+**Why virtual environment IN your project directory?**
+- 🔒 **Security**: All file scanning stays within your project directory
+- 📦 **Isolation**: Your project dependencies are self-contained
+- 🚀 **Portability**: Share your project by zipping the entire directory
+- 🎯 **Simplicity**: Everything in one place - no scattered files
+- 🧹 **Clean**: Delete the project folder to remove everything
+
+### Project Structure
+
+When you follow this setup, your project will be fully self-contained:
+
+```
+my-dspy-project/          # Your CWD
+├── .venv/                # Virtual environment (packages installed here)
+├── .dspy_cache/          # DSPy's LLM response cache
+├── .dspy_code/           # dspy-code's internal data
+│   ├── cache/            # RAG index cache
+│   ├── sessions/         # Session state
+│   ├── optimization/     # GEPA workflow data
+│   └── history.txt       # Command history
+├── generated/            # Your generated code
+├── modules/              # Your modules
+├── signatures/           # Your signatures
+└── dspy_config.yaml      # Your config
+```
+
+**Everything in one directory!** Delete the folder, and it's all gone. Zip it, and share with others.
+
+**Never run dspy-code from:**
+- ❌ Your home directory (`~/`)
+- ❌ Desktop, Documents, Downloads, or Pictures folders
+- ❌ System directories
+- ❌ With a virtual environment outside your project
+
+**Never do this:**
+```bash
+# ❌ DON'T: Virtual env outside project
+cd ~/
+python -m venv my_global_venv
+
+# ❌ DON'T: System-wide installation
+pip install dspy-code
+```
+
+### Your First Program (5 minutes)
 
 ```bash
-# Start the interactive CLI
+# From your project directory with activated venv:
 dspy-code
 
-# Initialize your project
+# Initialize your project (creates config and scans your environment)
 /init
 
 # Connect to a model (example with Ollama)
@@ -366,7 +422,7 @@ Special thanks to the DSPy community and all contributors!
 
 <div align="center">
 
-**[📖 Full Documentation](https://superagenticai.github.io/dspy-code/)** • **[🚀 Get Started](#-quick-start)** • **[💬 GitHub Discussions](https://github.com/SuperagenticAI/dspy-code/discussions)**
+**[📖 Full Documentation](https://superagenticai.github.io/dspy-code/)**
 
 Made for the DSPy community
 

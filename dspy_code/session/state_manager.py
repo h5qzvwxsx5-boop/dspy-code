@@ -75,8 +75,8 @@ class SessionStateManager:
         """
         self.config_manager = config_manager
 
-        # Session directory in user home
-        self.session_dir = Path.home() / ".dspy_cli" / "sessions"
+        # Session directory in CWD for isolation and portability
+        self.session_dir = Path.cwd() / ".dspy_code" / "sessions"
         self.session_dir.mkdir(parents=True, exist_ok=True)
 
         # Auto-save state

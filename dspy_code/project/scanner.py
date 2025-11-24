@@ -110,7 +110,10 @@ class ProjectScanner:
         )
 
     def _get_all_files(self, path: Path) -> list[str]:
-        """Get all files in directory (excluding hidden and common ignore patterns)."""
+        """Get all files in directory (excluding hidden and common ignore patterns).
+
+        SECURITY: Only scans within the specified path with depth limit.
+        """
         files = []
         ignore_patterns = {
             "__pycache__",
@@ -125,12 +128,33 @@ class ProjectScanner:
             "*.pyc",
         }
 
+        # SECURITY: Resolve path and enforce depth limit
+        path = path.resolve()
+        max_depth = 10  # Prevent deep recursion
+        base_depth = len(path.parts)
+
         try:
             for item in path.rglob("*"):
+                # SECURITY: Check depth limit
+                if len(item.parts) - base_depth > max_depth:
+                    continue
+
+                # SECURITY: Ensure item is actually within base path (prevent symlink attacks)
+                try:
+                    item.resolve().relative_to(path)
+                except ValueError:
+                    # Item is outside base path (e.g., symlink to another location)
+                    continue
+
                 if item.is_file():
                     # Skip ignored patterns
                     if any(pattern in str(item) for pattern in ignore_patterns):
                         continue
+
+                    # Check read permission
+                    if not os.access(item, os.R_OK):
+                        continue
+
                     files.append(str(item.relative_to(path)))
         except PermissionError:
             pass

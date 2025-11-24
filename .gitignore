@@ -154,6 +154,10 @@ cython_debug/
 dspy_config.yaml
 *.log
 
+# dspy-code internal directories (all data in CWD)
+.dspy_code/
+.dspy_cache/
+
 # Environment variables and secrets
 .env
 .env.*
@@ -190,3 +194,7 @@ $RECYCLE.BIN/
 
 # Linux
 .directory
+
+# Docs
+# docs/
+# mkdocs.yml

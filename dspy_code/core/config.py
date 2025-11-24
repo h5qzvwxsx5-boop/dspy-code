@@ -44,7 +44,7 @@ class CodebaseRAGConfig:
 
     enabled: bool = True
     codebases: list[str] = field(default_factory=lambda: ["dspy-cli", "dspy", "gepa"])
-    cache_dir: str | None = None  # Defaults to ~/.dspy_cli/cache/codebase_index
+    cache_dir: str | None = None  # Defaults to .dspy_code/cache/codebase_index in CWD
     max_cache_size_mb: int = 100
     index_refresh_days: int = 7
     use_tfidf: bool = True

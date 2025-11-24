@@ -30,7 +30,7 @@ class CodebaseRAG:
 
         Args:
             config_manager: Configuration manager
-            cache_dir: Cache directory (defaults to ~/.dspy_cli/cache/codebase_index)
+            cache_dir: Cache directory (defaults to .dspy_code/cache/codebase_index in CWD)
         """
         self.config_manager = config_manager
         self.enabled = self._is_enabled()

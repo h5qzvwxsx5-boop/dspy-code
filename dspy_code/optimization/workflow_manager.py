@@ -92,8 +92,8 @@ class OptimizationWorkflowManager:
         self.current_workflow: OptimizationWorkflow | None = None
         self.data_collector = DataCollector()
 
-        # Workflow storage
-        self.workflow_dir = Path.home() / ".dspy_cli" / "optimization"
+        # Workflow storage in CWD for isolation and portability
+        self.workflow_dir = Path.cwd() / ".dspy_code" / "optimization"
         self.workflow_dir.mkdir(parents=True, exist_ok=True)
 
     def start_optimization(self, module_code: str, budget: str = "medium") -> OptimizationWorkflow:

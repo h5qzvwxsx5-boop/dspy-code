@@ -28,7 +28,8 @@ class ExportImportHandler:
             config_manager: Optional configuration manager
         """
         self.config_manager = config_manager
-        self.export_dir = Path.home() / ".dspy_cli" / "exports"
+        # Export directory in CWD for isolation and portability
+        self.export_dir = Path.cwd() / ".dspy_code" / "exports"
         self.export_dir.mkdir(parents=True, exist_ok=True)
 
     def export_code(self, code: str, format: str, output_path: Path) -> None:

@@ -271,7 +271,7 @@ codebase_rag:
     - dspy
     - gepa
 
-  # Cache directory (null for default: ~/.dspy_cli/cache/codebase_index)
+  # Cache directory (null for default: .dspy_code/cache/codebase_index in CWD)
   cache_dir: null
 
   # Maximum cache size in MB

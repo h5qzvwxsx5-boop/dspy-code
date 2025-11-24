@@ -12,10 +12,11 @@ from rich.text import Text
 
 console = Console()
 
-# Command history storage (persists across calls)
+# Command history storage (persists across calls within this project)
 _command_history: list[str] = []
 _history_index: int = -1
-_history_file = Path.home() / ".dspy_code_history"
+# History file in CWD for project-specific command history
+_history_file = Path.cwd() / ".dspy_code" / "history.txt"
 
 
 # Load history from file on module import
@@ -36,6 +37,8 @@ def _load_history():
 def _save_history():
     """Save command history to file."""
     try:
+        # Ensure directory exists
+        _history_file.parent.mkdir(parents=True, exist_ok=True)
         with open(_history_file, "w", encoding="utf-8") as f:
             for item in _command_history:
                 f.write(f"{item}\n")
