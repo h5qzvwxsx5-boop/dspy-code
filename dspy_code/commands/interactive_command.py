@@ -1303,6 +1303,7 @@ Your AI-powered DSPy development assistant. Build, optimize, and learn DSPy with
 
         # IMPORTANT: If the request contains code generation keywords, it's NOT an explanation request
         # This prevents false positives like "write signature for X" being treated as "explain X"
+        # But we need to be careful - questions about signatures/modules should still work
         code_gen_keywords = [
             "write",
             "create",
@@ -1312,11 +1313,14 @@ Your AI-powered DSPy development assistant. Build, optimize, and learn DSPy with
             "design",
             "code",
             "program",
-            "module",
-            "signature",
-            "class",
         ]
-        if any(keyword in user_input_lower for keyword in code_gen_keywords):
+        # Only filter if it's clearly a code generation request (has action verb + topic)
+        # Questions like "how do signatures work" should NOT be filtered
+        is_code_gen = any(keyword in user_input_lower for keyword in code_gen_keywords) and not any(
+            question_word in user_input_lower
+            for question_word in ["how", "what", "explain", "tell", "describe", "show me"]
+        )
+        if is_code_gen:
             # This should have been caught by intent detection, but if it got here, redirect to code generation
             logger.debug(
                 "Explain handler detected code generation keywords, redirecting to code generation"
@@ -1331,6 +1335,11 @@ Your AI-powered DSPy development assistant. Build, optimize, and learn DSPy with
 
         # Map natural language to known topics
         topic_mappings = {
+            # Concepts - handle both singular and plural
+            "signature": "signature",
+            "signatures": "signature",
+            "module": "module",
+            "modules": "module",
             # Predictors
             "predict": "Predict",
             "predictor": "Predict",
@@ -1728,7 +1737,7 @@ Be conversational, helpful, and use the context to provide accurate information.
                 if any(
                     word in user_lower for word in ["gepa", "optimize", "optimization", "genetic"]
                 ):
-                    specific_queries.append("GEPA genetic prompt evolution optimization")
+                    specific_queries.append("GEPA Genetic Pareto optimization")
                 if any(word in user_lower for word in ["chain", "thought", "reasoning", "cot"]):
                     specific_queries.append("dspy.ChainOfThought reasoning")
                 if any(word in user_lower for word in ["signature", "input", "output", "field"]):

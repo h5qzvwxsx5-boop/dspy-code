@@ -163,7 +163,7 @@ Run a DSPy program in a sandboxed environment.
 
 ### `/optimize` - Optimize with GEPA
 
-Optimize a DSPy program using the Genetic Prompt Evolution Algorithm.
+Optimize a DSPy program using GEPA (Genetic Pareto).
 
 **Usage:**
 ```

@@ -70,7 +70,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 mkdir my-dspy-project
 cd my-dspy-project
 python -m venv .venv          # Creates .venv IN project
-source .venv/bin/activate
+source .venv/bin/activate  # For fish: source .venv/bin/activate.fish
 pip install dspy-code dspy
 dspy-code                      # Everything stays in my-dspy-project/
 ```

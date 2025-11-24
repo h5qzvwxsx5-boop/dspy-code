@@ -98,7 +98,7 @@ def sentiment_accuracy(example, prediction, trace=None):
 
 def optimize_with_gepa(module: dspy.Module, examples: list[dspy.Example]):
     """
-    Optimize the module using GEPA (Genetic Evolution for Prompt Adaptation).
+    Optimize the module using GEPA (Genetic Pareto).
 
     GEPA will:
     - Analyze the module structure

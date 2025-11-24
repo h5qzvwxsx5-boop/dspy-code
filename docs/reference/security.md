@@ -65,7 +65,7 @@ cd my-dspy-project
 python -m venv .venv
 
 # 3. Activate it
-source .venv/bin/activate
+source .venv/bin/activate  # For fish: source .venv/bin/activate.fish
 
 # 4. Install dspy-code (goes into .venv/ here)
 pip install dspy-code
@@ -190,7 +190,7 @@ Recommended actions:
 1. Create a dedicated project directory
 2. Navigate to it: cd ~/my-dspy-project
 3. Create virtual environment: python -m venv .venv
-4. Activate it: source .venv/bin/activate
+4. Activate it: source .venv/bin/activate  # For fish: source .venv/bin/activate.fish
 5. Install dspy-code: pip install dspy-code
 6. Then run: dspy-code
 
@@ -260,7 +260,7 @@ dspy-code
 # ✅ Good - venv inside project
 cd ~/projects/my-project
 python -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate  # For fish: source .venv/bin/activate.fish
 dspy-code
 ```
 

@@ -337,7 +337,7 @@ class ChainOfThought(Predict):
 
 ### GEPA Overview
 
-GEPA (Genetic Prompt Evolution Algorithm) optimizes DSPy programs by:
+GEPA (Genetic Pareto) optimizes DSPy programs by:
 
 1. **Evaluation**: Test current performance
 2. **Reflection**: Analyze failures

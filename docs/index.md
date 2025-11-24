@@ -26,31 +26,31 @@ hide:
       </h1>
 
       <h2 class="hero-subtitle gradient-text-purple-pink-orange">
-        Comprehensive CLI to Optimize Your DSPy Code
+        Develop DSPy Applications • Optimize with GEPA
       </h2>
     </div>
 
     <div class="hero-middle">
       <p class="hero-description">
-        Your AI-Powered DSPy Development Assistant: Claude Code for DSPy
+        The Complete Platform for Building and Optimizing DSPy Applications
       </p>
 
       <div class="hero-features">
         <div class="feature-item">
-          <span class="feature-icon">✨</span>
-          <span class="feature-text">Natural Language</span>
-        </div>
-        <div class="feature-item">
-          <span class="feature-icon">🔗</span>
-          <span class="feature-text">MCP Client</span>
+          <span class="feature-icon">🏗️</span>
+          <span class="feature-text">Develop</span>
         </div>
         <div class="feature-item">
           <span class="feature-icon">🧬</span>
-          <span class="feature-text">GEPA Optimization</span>
+          <span class="feature-text">Optimize</span>
         </div>
         <div class="feature-item">
-          <span class="feature-icon">🧠</span>
-          <span class="feature-text">Codebase RAG</span>
+          <span class="feature-icon">🚀</span>
+          <span class="feature-text">Deploy</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📚</span>
+          <span class="feature-text">Learn</span>
         </div>
       </div>
     </div>
@@ -86,14 +86,47 @@ hide:
 
 ## 🎯 What is DSPy Code?
 
-<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2em; border-radius: 10px; color: white; margin: 2em 0;">
-  <h3 style="color: white; margin-top: 0;">Comprehensive CLI to Optimize Your DSPy Code - The Living Playbook</h3>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; margin: 2em 0;">
+
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2em; border-radius: 10px; color: white;">
+  <h3 style="color: white; margin-top: 0;">🏗️ Develop DSPy Applications</h3>
   <p style="font-size: 1.1em; line-height: 1.8;">
-    DSPy Code is an <strong>interactive development environment</strong> that transforms how you learn and build with DSPy.
-    No need to read docs, books, or tutorials. Just enter the CLI, start building, ask questions, and get answers from your actual code in natural language.
+    Build, learn, and create DSPy programs with natural language.
+    Generate signatures, modules, and complete applications with
+    AI-powered assistance.
   </p>
-  <p style="font-size: 1.1em; line-height: 1.8; margin-bottom: 0;">
-    <strong>Learn as you build.</strong> Whether you're a complete beginner or a DSPy expert, the CLI adapts to your level and guides you through every step.
+  <ul style="color: white; padding-left: 1.5em;">
+    <li>Natural language to code</li>
+    <li>Codebase understanding</li>
+    <li>Validation & best practices</li>
+    <li>20+ templates</li>
+  </ul>
+</div>
+
+<div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 2em; border-radius: 10px; color: white;">
+  <h3 style="color: white; margin-top: 0;">🧬 Optimize with GEPA</h3>
+  <p style="font-size: 1.1em; line-height: 1.8;">
+    Transform your DSPy code into production-ready applications using
+    GEPA (Genetic Pareto). Automatically improve accuracy
+    and achieve better performance.
+  </p>
+  <ul style="color: white; padding-left: 1.5em;">
+    <li>Real GEPA execution</li>
+    <li>Automated metrics</li>
+    <li>Prompt evolution</li>
+    <li>Production-ready code</li>
+  </ul>
+</div>
+
+</div>
+
+<div style="background: rgba(147, 51, 234, 0.1); padding: 2em; border-radius: 10px; margin: 2em 0; text-align: center;">
+  <h3 style="margin-top: 0;">The Complete Workflow</h3>
+  <div style="font-size: 1.2em; font-weight: bold; color: var(--md-default-fg-color);">
+    Develop → Validate → Optimize with GEPA → Deploy
+  </div>
+  <p style="margin-bottom: 0;">
+    From idea to production-ready DSPy application in one platform
   </p>
 </div>
 
@@ -125,9 +158,49 @@ hide:
 
 ---
 
+## 🔄 Complete Development + Optimization Workflow
+
+<div class="grid cards" markdown>
+
+-   :material-code-tags:{ .lg .middle style="color: #7c3aed;" } **Phase 1: Development**
+
+    Build your DSPy application from scratch or enhance existing code.
+
+    **Steps:**
+    1. `/init` - Initialize project
+    2. Natural language commands to generate code
+    3. `/validate` - Ensure best practices
+    4. Test and iterate
+
+    [Start Developing →](getting-started/quick-start.md){ .md-button }
+
+-   :material-trending-up:{ .lg .middle style="color: #ec4899;" } **Phase 2: Optimization**
+
+    Optimize your working code with GEPA for production.
+
+    **Steps:**
+    1. `/data` - Generate training examples
+    2. `/optimize` - Run GEPA optimization
+    3. `/eval` - Evaluate improvements
+    4. `/export` - Package for deployment
+
+    [Start Optimizing →](guide/optimization.md){ .md-button }
+
+</div>
+
+<div style="background: linear-gradient(90deg, #9333ea, #ec4899, #f97316); padding: 2em; border-radius: 12px; margin: 2em 0; color: white; text-align: center;">
+  <h3 style="color: white; margin-top: 0;">🎯 The Result</h3>
+  <p style="font-size: 1.2em; margin-bottom: 0;">
+    Production-ready DSPy applications with optimized performance,
+    evolved prompts, and documented improvements
+  </p>
+</div>
+
+---
+
 ## 🚀 Use Cases: When to Use DSPy Code
 
-### 1. Starting a New DSPy Project
+### 1. 🏗️ Starting a New DSPy Project
 
 **Perfect for:**
 
@@ -154,7 +227,37 @@ dspy-code
 
 ---
 
-### 2. Adding DSPy to Existing Projects
+### 2. 🧬 Optimizing DSPy Programs with GEPA
+
+**Perfect for:**
+- Improving accuracy of existing programs
+- Automatic prompt engineering
+- Production optimization
+
+**What you get:**
+```bash
+# Generate training data
+→ Generate 100 examples for sentiment analysis
+
+# Optimize automatically
+/optimize my_program.py training_data.jsonl
+```
+
+✅ Real GEPA execution (not just code generation)  
+✅ Automated metric functions  
+✅ Progress tracking & resumption  
+✅ Production-ready optimized code  
+✅ Performance improvements documented  
+
+**Real results:** 75% → 92% accuracy automatically!
+
+**Example:** "My sentiment analyzer is 75% accurate. Optimize it with GEPA to reach 90%+"
+
+[Learn GEPA Optimization →](guide/optimization.md){ .md-button .md-button--primary }
+
+---
+
+### 3. Adding DSPy to Existing Projects
 
 **Perfect for:**
 
@@ -182,7 +285,7 @@ dspy-code
 
 ---
 
-### 3. Learning DSPy (No Docs Required!)
+### 4. Learning DSPy (No Docs Required!)
 
 **Perfect for:**
 
@@ -209,7 +312,7 @@ The CLI answers using **YOUR installed DSPy version** and provides working code 
 
 ---
 
-### 4. Connecting to MCP Servers for Powerful DSPy Programs
+### 5. Connecting to MCP Servers for Powerful DSPy Programs
 
 **DSPy Code is an MCP Client!**
 
@@ -237,35 +340,6 @@ Connect to any MCP (Model Context Protocol) server to supercharge your DSPy prog
 **Example:** "Build a RAG system that uses MCP to query my company's database and generate answers."
 
 [Learn MCP Integration →](advanced/mcp-integration.md){ .md-button }
-
----
-
-### 5. Optimizing DSPy Programs with GEPA
-
-**Perfect for:**
-
-- Improving accuracy of existing programs
-- Automatic prompt engineering
-- Production optimization
-
-**What you get:**
-
-```bash
-# Generate training data
-→ Generate 100 examples for sentiment analysis
-
-# Optimize automatically
-/optimize my_program.py training_data.jsonl
-```
-
-✅ AI-generated training data  
-✅ Automatic GEPA optimization  
-✅ 10-30% accuracy improvements  
-✅ Production-ready optimized code
-
-**Real results:** 75% → 92% accuracy automatically!
-
-[Learn GEPA Optimization →](guide/optimization.md){ .md-button }
 
 ---
 
@@ -320,7 +394,7 @@ Connect to any MCP (Model Context Protocol) server to supercharge your DSPy prog
 
 -   :material-rocket-launch-outline:{ .lg .middle style="color: #8b5cf6;" } **Real GEPA Optimization**
 
-    Not mocked. Real genetic prompt evolution that improves your programs by 10-30% automatically.
+    Not mocked. Real GEPA (Genetic Pareto) optimization that improves your programs by 10-30% automatically.
 
     **Production-grade results.**
 
@@ -469,7 +543,7 @@ Result: Deep understanding through hands-on building
     **Any!** Ollama (local), OpenAI, Anthropic, Gemini. Connect with one command: `/connect ollama llama3.1:8b`
 
 !!! question "Is the optimization real or mocked?"
-    **Real GEPA optimization!** Actual genetic prompt evolution that improves accuracy by 10-30%.
+    **Real GEPA optimization!** Actual Genetic Pareto optimization that improves accuracy by 10-30%.
 
 !!! question "Do I need to read documentation?"
     **No!** Just ask DSPy Code. It answers questions using your actual installed DSPy version.

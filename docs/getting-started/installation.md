@@ -36,9 +36,12 @@ cd my-dspy-project
 python -m venv .venv
 
 # Activate it
-source .venv/bin/activate  # On macOS/Linux
-# OR
-.venv\Scripts\activate  # On Windows
+# For bash/zsh (macOS/Linux):
+source .venv/bin/activate
+# For fish shell:
+source .venv/bin/activate.fish
+# On Windows:
+.venv\Scripts\activate
 ```
 
 !!! success "Why .venv in the Project?"
@@ -88,7 +91,7 @@ pip install dspy
 DSPy Code works with any version of DSPy you have installed:
 
 ```bash
-pip install dspy-ai
+pip install dspy
 ```
 
 !!! info "DSPy Version"
@@ -103,7 +106,7 @@ Check that everything is installed correctly:
 cd my-dspy-project
 
 # Activate your virtual environment if not already active
-source .venv/bin/activate
+source .venv/bin/activate  # For fish: source .venv/bin/activate.fish
 
 # Check DSPy Code
 dspy-code --help
@@ -190,7 +193,7 @@ If you see this error:
 
 ```bash
 # Make sure your virtual environment is activated
-source .venv/bin/activate
+source .venv/bin/activate  # For fish: source .venv/bin/activate.fish
 
 # Verify installation
 pip list | grep dspy-code
@@ -212,7 +215,7 @@ You are running dspy-code from your home directory!
 
 ```bash
 cd my-dspy-project
-source .venv/bin/activate
+source .venv/bin/activate  # For fish: source .venv/bin/activate.fish
 dspy-code
 ```
 
@@ -251,7 +254,7 @@ If you get permission errors, **don't use --user or sudo**. Use a virtual enviro
 ```bash
 cd my-dspy-project
 python -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate  # For fish: source .venv/bin/activate.fish
 pip install dspy-code
 ```
 

@@ -1,12 +1,12 @@
 # Optimize with GEPA
 
-Learn how to optimize your DSPy programs using the Genetic Prompt Evolution Algorithm (GEPA).
+Learn how to optimize your DSPy programs using GEPA (Genetic Pareto).
 
 ---
 
 ## Overview
 
-GEPA (Genetic Prompt Evolution Algorithm) is a powerful optimization technique that evolves prompts to improve your DSPy program's performance.
+GEPA (Genetic Pareto) is a powerful optimization technique that evolves prompts to improve your DSPy program's performance.
 
 ---
 

@@ -238,7 +238,7 @@ Yes! Code runs in a sandbox with:
 
 ### What is GEPA?
 
-GEPA (Genetic Prompt Evolution Algorithm) is a DSPy optimizer that uses reflection to evolve better prompts automatically.
+GEPA (Genetic Pareto) is a DSPy optimizer that uses reflection to evolve better prompts automatically.
 
 ### Is GEPA optimization real or simulated?
 

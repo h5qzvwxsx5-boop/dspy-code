@@ -17,6 +17,27 @@ from rich.text import Text
 console = Console()
 
 
+def create_safe_spinner(spinner_name: str, text: str = "", style: str = "cyan") -> Spinner:
+    """
+    Safely create a Rich Spinner with fallback to 'dots' if spinner name is invalid.
+    
+    This ensures compatibility across different Rich versions and PyPI installations.
+    
+    Args:
+        spinner_name: Name of the spinner to create
+        text: Text to display with the spinner
+        style: Style for the spinner
+        
+    Returns:
+        A valid Spinner instance (always succeeds, falls back to 'dots' if needed)
+    """
+    try:
+        return Spinner(spinner_name, text=text, style=style)
+    except (ValueError, KeyError):
+        # Invalid spinner name - fallback to safe default
+        return Spinner("dots", text=text, style=style)
+
+
 # Enhanced thinking messages with stages
 THINKING_MESSAGES_STAGE_1 = [
     "🧠 Analyzing your request...",
@@ -210,15 +231,12 @@ class EnhancedThinkingAnimation:
             "point",
             "layer",
             "betaWave",
-            "fingerDance",
-            "fistBump",
-            "soccerHeader",
-            "mindblown",
-            "speaker",
         ]
 
         self.spinner_type = random.choice(spinner_types)
-        self.spinner = Spinner(self.spinner_type, text=self.current_message, style="cyan")
+        # Use safe spinner creation (handles PyPI package compatibility)
+        # This will always succeed, falling back to "dots" if spinner_type is invalid
+        self.spinner = create_safe_spinner(self.spinner_type, text=self.current_message, style="cyan")
         self.live = None
         self.update_thread = None
         self.running = False
@@ -354,7 +372,7 @@ class ProgressiveThinkingAnimation:
                 stage_text.append("✓ ", style="green bold")
                 stage_text.append(stage, style="green dim")
             elif i == self.current_stage:
-                spinner = Spinner("dots", style="cyan")
+                spinner = create_safe_spinner("dots", style="cyan")
                 stage_text.append("⟳ ", style="cyan bold")
                 stage_text.append(stage, style="cyan")
             else:

@@ -1,6 +1,6 @@
 # Optimization with GEPA
 
-Learn how to optimize your DSPy programs using GEPA (Genetic Prompt Evolution Algorithm) for better performance.
+Learn how to optimize your DSPy programs using GEPA (Genetic Pareto) for better performance.
 
 ## Quick Start with Natural Language
 

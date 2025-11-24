@@ -685,7 +685,7 @@ class SlashCommandHandler:
             /optimize                    - List available optimizers
             /optimize list               - List available optimizers
             /optimize <optimizer>        - Generate optimization script
-            /optimize gepa               - GEPA (Genetic Evolution)
+            /optimize gepa               - GEPA (Genetic Pareto)
             /optimize bootstrap          - BootstrapFewShot (most common)
             /optimize mipro              - MIPROv2 (instruction optimization)
             /optimize bootstrap-rs       - Bootstrap with Random Search
@@ -1494,7 +1494,7 @@ a model gives you much better, context-aware code generation![/dim]
 
 DSPy Code is your AI-powered assistant for building DSPy programs. It helps you:
 • Generate DSPy signatures, modules, and complete programs
-• Optimize your code with GEPA (Genetic Evolution of Prompting Algorithms)
+• Optimize your code with GEPA (Genetic Pareto)
 • Validate and test your DSPy code
 • Integrate with external tools via MCP (Model Context Protocol)
 • Manage sessions and export your work
@@ -3960,7 +3960,7 @@ print(result.result)''',
             # Optimizers
             "GEPA": {
                 "category": "optimizer",
-                "title": "GEPA - Genetic Prompt Optimization",
+                "title": "GEPA - Genetic Pareto",
                 "description": "Uses genetic algorithms to evolve and optimize prompts for better performance.",
                 "when_to_use": [
                     "General purpose optimization",
@@ -4334,8 +4334,32 @@ answer = rag(question="What is quantum computing?")""",
         elif len(args) == 1:
             # Explain specific topic
             topic = args[0].lower()
-            if topic in [k.lower() for k in explanations]:
+            
+            # Handle plural/singular variations
+            topic_aliases = {
+                "signatures": "signature",
+                "signature": "signature",
+                "modules": "module",
+                "module": "module",
+                "predictors": "predictor",
+                "predictor": "predictor",
+                "optimizers": "optimizer",
+                "optimizer": "optimizer",
+                "adapters": "adapter",
+                "adapter": "adapter",
+                "retrievers": "retriever",
+                "retriever": "retriever",
+            }
+            
+            # Check if topic has an alias
+            normalized_topic = topic_aliases.get(topic, topic)
+            
+            if normalized_topic in [k.lower() for k in explanations]:
                 # Find case-insensitive match
+                actual_key = next(k for k in explanations if k.lower() == normalized_topic)
+                self._show_explanation(actual_key, explanations[actual_key])
+            elif topic in [k.lower() for k in explanations]:
+                # Direct match (case-insensitive)
                 actual_key = next(k for k in explanations if k.lower() == topic)
                 self._show_explanation(actual_key, explanations[actual_key])
             else:

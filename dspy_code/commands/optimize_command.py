@@ -340,7 +340,7 @@ GEPA has evolved the prompts and reasoning patterns for better performance.
 # ============================================================================
 # GEPA OPTIMIZATION RESULTS
 # ============================================================================
-# This program has been optimized using GEPA (Genetic Prompt Evolution Algorithm)
+# This program has been optimized using GEPA (Genetic Pareto)
 # The optimized prompts and demonstrations are stored in the DSPy cache
 # Make sure to keep your DSPy cache directory when deploying this program
 '''

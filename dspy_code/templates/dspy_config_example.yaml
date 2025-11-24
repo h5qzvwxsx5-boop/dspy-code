@@ -62,7 +62,7 @@ default_model: null
 # ============================================================================
 # OPTIMIZATION CONFIGURATION (GEPA)
 # ============================================================================
-# Configure the GEPA (Genetic Evolution of Prompts and Architectures) optimizer
+# Configure the GEPA (Genetic Pareto) optimizer
 # Used when running: dspy-cli optimize
 
 gepa_config:

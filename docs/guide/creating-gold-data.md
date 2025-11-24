@@ -23,7 +23,7 @@ Complete guide to creating high-quality training data for DSPy optimization usin
 
 ## Data Requirements for GEPA
 
-GEPA (Genetic Prompt Evolution Algorithm) requires:
+GEPA (Genetic Pareto) requires:
 
 **Minimum:**
 - 10-20 examples for simple tasks

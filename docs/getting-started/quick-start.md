@@ -19,9 +19,12 @@ If you haven't done this yet, see [Installation Guide](installation.md).
 cd my-dspy-project
 
 # Activate your virtual environment
-source .venv/bin/activate  # macOS/Linux
-# OR
-.venv\Scripts\activate  # Windows
+# For bash/zsh (macOS/Linux):
+source .venv/bin/activate
+# For fish shell:
+source .venv/bin/activate.fish
+# On Windows:
+.venv\Scripts\activate
 ```
 
 !!! tip "Always Activate Your Venv"

@@ -1,20 +1,20 @@
 <div align="center">
 
-<img src="docs/resource/dspy-code.png" alt="DSPy Code Logo" width="140"/>
+<img src="https://raw.githubusercontent.com/SuperagenticAI/dspy-code/main/docs/resource/dspy-code.png" alt="DSPy Code Logo" width="140"/>
 
 <br/>
 
-<img src="docs/resource/dspy-code-banner.png" alt="DSPy Code" width="600"/>
+<img src="https://raw.githubusercontent.com/SuperagenticAI/dspy-code/main/docs/resource/dspy-code-banner.png" alt="DSPy Code" width="600"/>
 
 <br/>
 
-<img src="docs/resource/dspy-code-text.svg" alt="DSPy Code" width="400"/>
+<img src="https://raw.githubusercontent.com/SuperagenticAI/dspy-code/main/docs/resource/dspy-code-text.svg" alt="DSPy Code" width="400"/>
 
 <br/>
 
-### 🚀 Your AI-Powered DSPy Development Assistant
+### 🚀 Your AI-Powered DSPy Development & Optimization Assistant
 
-**Build, Optimize, and Deploy DSPy Applications with Natural Language. Think of it as Claude Code for DSPy**
+**Develop DSPy Applications • Optimize with GEPA • Deploy with Confidence. Think of it as Claude Code for DSPy**
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -33,12 +33,26 @@
 
 ### ⚡ Claude Code for DSPy
 
+<div align="center">
+
+**🚀 Get Started in 30 Seconds**
+
+<div style="background: linear-gradient(90deg, #9333ea, #ec4899, #f97316); padding: 1.5em; border-radius: 12px; margin: 1.5em 0; box-shadow: 0 4px 20px rgba(147, 51, 234, 0.3);">
+
+<div align="center" style="margin-bottom: 1em; color: white; font-weight: bold;">
+✨ Always install the latest version for best experience ✨
+</div>
+
 ```bash
-pip install dspy-code
+pip install --upgrade dspy-code
 dspy-code
 ```
 
-**Ask in natural language** → **Get working DSPy code** → **Optimize with GEPA** → **Deploy**
+</div>
+
+**Develop DSPy Code** → **Optimize with GEPA** → **Deploy Production-Ready Apps**
+
+</div>
 
 </div>
 
@@ -50,21 +64,34 @@ dspy-code
 
 <div align="center">
 
-**The First Purpose-Built CLI for DSPy Development**
+**The Complete DSPy Development & Optimization Platform**
 
 </div>
 
-DSPy Code is an **interactive development environment** that transforms how you learn and build with DSPy. Built as an intelligent CLI tool, it provides natural language interactions, code generation, optimization workflows, and comprehensive validation, all designed specifically for DSPy development.
+DSPy Code is a **dual-purpose CLI** that empowers you to:
 
-> 💡 **Learn as you build.** doesn't matter, you're a complete beginner or a DSPy expert, the CLI adapts to your level and guides you through every step.
+### 🏗️ Develop DSPy Applications
+Build, learn, and create DSPy programs with natural language. Generate signatures, modules, and complete applications with AI-powered assistance.
+
+### 🧬 Optimize with GEPA
+Transform your DSPy code into production-ready applications using GEPA (Genetic Pareto). Automatically improve accuracy, evolve prompts, and achieve better performance.
+
+**The Complete Workflow:**
+```
+Develop → Validate → Optimize with GEPA → Deploy
+```
+
+> 💡 **Learn as you build.** Whether you're a complete beginner or a DSPy expert, the CLI adapts to your level and guides you through every step.
 
 ### 🎯 Perfect For:
 
-| 🎓 **Learning DSPy** | 🚀 **Building Projects** | ⚡ **Optimizing Code** |
-|---------------------|------------------------|----------------------|
-| Interactive Q&A about DSPy concepts | Generate complete DSPy applications | Real GEPA optimization workflows |
-| Built-in examples and templates | Natural language to code | Automated metric evaluation |
-| Step-by-step guidance | Code validation & best practices | Progress tracking & resumption |
+| 🏗️ **Development** | 🧬 **Optimization** |
+|-------------------|---------------------|
+| 🎓 Learning DSPy concepts | ⚡ GEPA optimization workflows |
+| 🚀 Building new projects | 📊 Automated metric evaluation |
+| 📝 Code generation | 🔄 Prompt evolution |
+| ✅ Validation & best practices | 📈 Performance improvement |
+| 📚 Codebase understanding | 🎯 Production-ready code |
 
 ## 🎯 Why DSPy Code?
 
@@ -103,41 +130,139 @@ While general AI assistants can help with DSPy, they lack the deep specializatio
 DSPy Code is a **purpose-built development environment** that embeds DSPy expertise into every interaction, automates tedious workflows, and accelerates your development from hours to minutes.
 
 
+## 🔄 Two Core Workflows
+
+### Workflow 1: Develop DSPy Applications
+
+**From idea to working code in minutes:**
+
+1. **Start** - `/init` to create or scan your project
+2. **Describe** - Tell DSPy Code what you want in natural language
+3. **Generate** - Get working DSPy code (signatures, modules, programs)
+4. **Validate** - Ensure code follows DSPy best practices
+5. **Iterate** - Refine and improve with interactive Q&A
+
+**Example:**
+```bash
+dspy-code
+/init
+→ "Create a sentiment analyzer for customer reviews"
+/validate
+```
+
+### Workflow 2: Optimize with GEPA
+
+**From working code to production-ready in hours:**
+
+1. **Prepare** - Have your DSPy program ready
+2. **Generate Data** - Create training examples with `/data`
+3. **Optimize** - Run GEPA optimization with `/optimize`
+4. **Evaluate** - Test performance improvements
+5. **Deploy** - Export optimized, production-ready code
+
+**Example:**
+```bash
+dspy-code
+/data sentiment 20  # Generate 20 training examples
+/optimize my_program.py  # Run GEPA optimization
+/eval  # Evaluate performance
+/export  # Package for deployment
+```
+
+### The Complete Journey
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Development Phase                                      │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐            │
+│  │   Init   │→ │  Generate │→ │ Validate │            │
+│  └──────────┘  └──────────┘  └──────────┘            │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│  Optimization Phase                                     │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐            │
+│  │   Data   │→ │ Optimize  │→ │  Deploy  │            │
+│  └──────────┘  └──────────┘  └──────────┘            │
+└─────────────────────────────────────────────────────────┘
+```
+
+**Result:** Production-ready DSPy applications with optimized performance
+
 ## 🎯 Key Features
 
+### 🏗️ Development Features
 - 🗣️ **Natural Language Interface** - Describe your DSPy task in plain English
-- 🔗 **Built-in MCP Client** - Connect to any MCP server for external tools and services
 - 🧠 **Version-Aware Intelligence** - Adapts to your installed DSPy version
-- 🧬 **GEPA Optimization** - Real Genetic Prompt Evolution Algorithm integration
 - 📚 **Codebase RAG** - Understands your project with intelligent indexing
 - ✅ **Smart Validation** - Ensures code follows DSPy best practices
 - 🚀 **Code Generation** - Generate signatures, modules, and complete programs
-- 💾 **Session Management** - Save and resume your work across sessions
-- 📦 **Export/Import** - Package and share your DSPy projects
+- 🔗 **Built-in MCP Client** - Connect to any MCP server for external tools
+- 📋 **20+ Templates** - Pre-built patterns for RAG, QA, classification
+
+### 🧬 Optimization Features
+- 🧬 **GEPA Optimization** - Real Genetic Pareto integration
+- 📊 **Automated Metrics** - Built-in evaluation (Accuracy, F1, ROUGE, BLEU)
+- 🔄 **Prompt Evolution** - Automatically improve instructions and examples
+- 📈 **Performance Tracking** - Monitor optimization progress in real-time
+- 💾 **Session Management** - Save and resume optimization workflows
+- 🎯 **Production Ready** - Export optimized code for deployment
+- 📦 **Export/Import** - Package and share optimized DSPy projects
 
 ## 🚀 Quick Start
 
 ### Installation
 
+<div align="center">
+
 **⚠️ CRITICAL: Always create your virtual environment INSIDE your project directory!**
 
+**✨ Always install the latest version for the best experience! ✨**
+
+</div>
+
+<div style="background: linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%); padding: 2em; border-radius: 12px; border-left: 4px solid #9333ea; margin: 1.5em 0;">
+
+**📁 Step 1:** Create a project directory
 ```bash
-# 1. Create a project directory
 mkdir my-dspy-project
 cd my-dspy-project
+```
 
-# 2. Create virtual environment IN this directory (not elsewhere!)
+**🐍 Step 2:** Create virtual environment IN this directory (not elsewhere!)
+```bash
 python -m venv .venv
+```
 
-# 3. Activate it
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+**⚡ Step 3:** Activate it
+```bash
+# For bash/zsh:
+source .venv/bin/activate
 
-# 4. Install dspy-code (installs into .venv/ in your project)
-pip install dspy-code
+# For fish shell:
+source .venv/bin/activate.fish
 
-# 5. Run dspy-code (everything stays in this directory!)
+# On Windows:
+.venv\Scripts\activate
+```
+
+**🚀 Step 4:** Install latest dspy-code (always upgrade to get newest features!)
+```bash
+pip install --upgrade dspy-code
+```
+
+**🎯 Step 5:** Run dspy-code (everything stays in this directory!)
+```bash
 dspy-code
 ```
+
+</div>
+
+<div align="center">
+
+> 💡 **Pro Tip:** Always use `pip install --upgrade dspy-code` to get the latest features, bug fixes, and improvements!
+
+</div>
 
 **Why virtual environment IN your project directory?**
 - 🔒 **Security**: All file scanning stays within your project directory
@@ -279,40 +404,81 @@ DSPy Code is **interactive-only** - all commands are slash commands. Here are th
 - `/history` - Show conversation history
 - `/clear` - Clear current context
 
-## 💡 Use Cases
+## 💡 Primary Use Cases
 
-### 🆕 Starting a New DSPy Project
+### 1. 🏗️ Developing New DSPy Applications
+
+**Perfect for:**
+- Building new AI applications from scratch
+- Prototyping ideas quickly
+- Learning DSPy fundamentals
+
 ```bash
 dspy-code
 /init
 /connect ollama llama3.1:8b
 Create a RAG system for document Q&A
 /save rag_system.py
+/validate
 ```
 
-### 🔧 Optimizing Existing Code
+✅ Complete project structure  
+✅ Code generation with natural language  
+✅ Validation & best practices  
+✅ Ready to code in minutes
+
+### 2. 🧬 Optimizing Existing DSPy Programs with GEPA
+
+**Perfect for:**
+- Improving accuracy of existing programs
+- Automatic prompt engineering
+- Production optimization
+
 ```bash
 dspy-code
 /init
-/optimize-start my_module.py training_data.jsonl
+/data sentiment 20  # Generate training examples
+/optimize my_program.py training_data.jsonl
 /optimize-status
+/eval
 ```
 
-### 🔗 Using MCP for External Tools
-```bash
-dspy-code
-/mcp-connect filesystem
-/mcp-tools
-/mcp-call read_file {"path": "data.json"}
-```
+✅ Real GEPA execution (not just code generation)  
+✅ Automated metric functions  
+✅ Progress tracking & resumption  
+✅ Production-ready optimized code  
+✅ Performance improvements documented
 
-### 📖 Learning DSPy
+**Real results:** 75% → 92% accuracy automatically!
+
+### 3. 📚 Learning DSPy (No Docs Required!)
+
+**Perfect for:**
+- First time using DSPy
+- Understanding DSPy concepts
+- Exploring different patterns
+
 ```bash
 dspy-code
 /intro
 /examples
 /explain ChainOfThought
 /predictors
+```
+
+Just ask questions in natural language - the CLI answers using YOUR installed DSPy version!
+
+### 4. 🔗 Using MCP for External Tools
+
+**Perfect for:**
+- Connecting to external APIs and services
+- Building powerful, connected AI applications
+
+```bash
+dspy-code
+/mcp-connect filesystem
+/mcp-tools
+/mcp-call read_file {"path": "data.json"}
 ```
 
 ## 🔌 Model Connection
@@ -335,7 +501,7 @@ Connect to any LLM provider:
 
 ## 🧬 GEPA Optimization
 
-DSPy Code includes real Genetic Prompt Evolution Algorithm optimization:
+DSPy Code includes real GEPA (Genetic Pareto) optimization:
 
 ```bash
 # Start optimization workflow
@@ -357,9 +523,29 @@ DSPy Code includes real Genetic Prompt Evolution Algorithm optimization:
 
 ### From PyPI (Recommended)
 
+<div align="center">
+
+<div style="background: linear-gradient(90deg, #9333ea, #ec4899, #f97316); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 1.2em; font-weight: bold; margin: 1em 0;">
+
+**✨ Always install the latest version! ✨**
+
+</div>
+
+</div>
+
+<div style="background: rgba(147, 51, 234, 0.05); padding: 1.5em; border-radius: 10px; border: 2px dashed #9333ea; margin: 1em 0;">
+
 ```bash
-pip install dspy-code
+pip install --upgrade dspy-code
 ```
+
+</div>
+
+<div align="center">
+
+> 💡 **Why upgrade?** We're actively developing and releasing new features, bug fixes, and improvements regularly. Always use `--upgrade` to get the best experience!
+
+</div>
 
 ### From Source
 
@@ -372,7 +558,8 @@ pip install -e .
 ### With uv (Faster)
 
 ```bash
-uv pip install dspy-code
+# Always get the latest version
+uv pip install --upgrade dspy-code
 ```
 
 ## 🏗️ Architecture
@@ -421,13 +608,13 @@ cd dspy-code
 
 # Using uv (recommended)
 uv venv
-source .venv/bin/activate
+source .venv/bin/activate  # For fish: source .venv/bin/activate.fish
 uv pip install -e ".[dev,test,docs]"
 pre-commit install
 
 # Or using pip
 python -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate  # For fish: source .venv/bin/activate.fish
 pip install -e ".[dev,test,docs]"
 pre-commit install
 
@@ -484,7 +671,7 @@ It helps others discover the project and motivates us to keep improving it.
 
 ---
 
-<img src="docs/resource/dspy-code.png" alt="DSPy Code" width="100"/>
+<img src="https://raw.githubusercontent.com/SuperagenticAI/dspy-code/main/docs/resource/dspy-code.png" alt="DSPy Code" width="100"/>
 
 **Made with 💜 for the DSPy community**
 

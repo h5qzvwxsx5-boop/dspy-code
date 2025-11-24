@@ -31,7 +31,7 @@ DSPy Code is **purpose-built** for DSPy development with deep, specialized knowl
 - **Natural Language Interface** - Describe your DSPy task in plain English
 - **Built-in MCP Client** - Connect to any MCP server
 - **Version-Aware Intelligence** - Adapts to YOUR installed DSPy version
-- **Real GEPA Optimization** - Actual Genetic Prompt Evolution Algorithm integration
+- **Real GEPA Optimization** - Actual Genetic Pareto integration
 - **Codebase Knowledge** - Understands your codebase and DSPy concepts
 - **Smart Validation** - Ensures best practices and correctness
 

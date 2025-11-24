@@ -635,7 +635,7 @@ eval_dataset = [
     ).with_inputs("question"),
     dspy.Example(
         question="What is GEPA?",
-        answer="Genetic Evolution of Prompts and Architectures"
+        answer="Genetic Pareto"
     ).with_inputs("question"),
     # ... more examples
 ]
@@ -689,7 +689,7 @@ but could improve on analytical reasoning.[/dim]""",
     with ThinkingAnimation("Setting up GEPA optimization..."):
         time.sleep(0.8)
 
-    gepa_code = """# GEPA Optimization (Genetic Evolution of Prompts and Architectures)
+    gepa_code = """# GEPA Optimization (Genetic Pareto)
 from dspy_cli.optimization import OptimizationWorkflowManager, WorkflowState
 
 # Configure GEPA optimization
