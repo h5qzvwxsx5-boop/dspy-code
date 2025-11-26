@@ -265,7 +265,7 @@ class LLMConnector:
         except ImportError as exc:
             raise ModelError(
                 "OpenAI SDK not installed!\n"
-                "Install it with: pip install \"openai>=2.8.1\"  # or newer 2.x version\n"
+                'Install it with: pip install "openai>=2.8.1"  # or newer 2.x version\n'
                 "DSPy Code doesn't include provider SDKs by default - install only what you need."
             ) from exc
 
@@ -357,7 +357,7 @@ class LLMConnector:
         except ImportError as exc:
             raise ModelError(
                 "Google Gemini SDK not installed!\n"
-                "Install the official SDK with: pip install \"google-genai>=1.52.0\" \n"
+                'Install the official SDK with: pip install "google-genai>=1.52.0" \n'
                 "DSPy Code doesn't include provider SDKs by default - install only what you need."
             ) from exc
 

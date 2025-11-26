@@ -238,7 +238,9 @@ class SlashCommandHandler:
             console.print()
             console.print("[bold cyan]🧠 Model Selector[/bold cyan]")
             console.print("  [1] Local models via [bold]Ollama[/bold]")
-            console.print("  [2] Cloud provider ([bold]OpenAI[/bold], [bold]Anthropic[/bold], [bold]Gemini[/bold])")
+            console.print(
+                "  [2] Cloud provider ([bold]OpenAI[/bold], [bold]Anthropic[/bold], [bold]Gemini[/bold])"
+            )
             console.print("  [q] Cancel")
             choice = console.input("[cyan]Select model source [1/2/q]: [/cyan]").strip().lower()
 
@@ -282,9 +284,13 @@ class SlashCommandHandler:
             console.print(f"  [cyan]{idx}.[/cyan] {model_name}")
 
         console.print()
-        selection = console.input(
-            "[cyan]Enter the number of the model to connect (or q to cancel): [/cyan]"
-        ).strip().lower()
+        selection = (
+            console.input(
+                "[cyan]Enter the number of the model to connect (or q to cancel): [/cyan]"
+            )
+            .strip()
+            .lower()
+        )
 
         if selection in {"q", "quit", "exit"}:
             show_info_message("Model selection cancelled.")

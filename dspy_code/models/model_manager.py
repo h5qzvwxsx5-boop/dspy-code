@@ -211,7 +211,7 @@ class ModelManager:
 
         except ImportError:
             raise ModelError(
-                "Google Gen AI SDK not installed. Run: pip install \"google-genai>=1.52.0\""
+                'Google Gen AI SDK not installed. Run: pip install "google-genai>=1.52.0"'
             )
         except Exception as e:
             raise ModelError(f"Failed to create Gemini client: {e}")

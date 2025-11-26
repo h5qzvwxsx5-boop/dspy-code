@@ -1072,7 +1072,7 @@ Your AI-powered DSPy development assistant. Build, optimize, and learn DSPy with
                 " configure DSPy like:[/dim]"
             )
             console.print(
-                f"[cyan]lm = dspy.LM(model=\"ollama/{model_name}\", api_base=\"http://localhost:11434\")[/cyan]"
+                f'[cyan]lm = dspy.LM(model="ollama/{model_name}", api_base="http://localhost:11434")[/cyan]'
             )
             console.print("[cyan]dspy.configure(lm=lm)[/cyan]\n")
         elif model_type == "openai":
@@ -1081,7 +1081,7 @@ Your AI-powered DSPy development assistant. Build, optimize, and learn DSPy with
                 " configure DSPy like:[/dim]"
             )
             console.print(
-                f"[cyan]lm = dspy.LM(model=\"openai/{model_name}\")[/cyan]\n[cyan]dspy.configure(lm=lm)[/cyan]\n"
+                f'[cyan]lm = dspy.LM(model="openai/{model_name}")[/cyan]\n[cyan]dspy.configure(lm=lm)[/cyan]\n'
             )
         elif model_type == "anthropic":
             console.print(
@@ -1089,7 +1089,7 @@ Your AI-powered DSPy development assistant. Build, optimize, and learn DSPy with
                 " configure DSPy like:[/dim]"
             )
             console.print(
-                f"[cyan]lm = dspy.LM(model=\"anthropic/{model_name}\")[/cyan]\n[cyan]dspy.configure(lm=lm)[/cyan]\n"
+                f'[cyan]lm = dspy.LM(model="anthropic/{model_name}")[/cyan]\n[cyan]dspy.configure(lm=lm)[/cyan]\n'
             )
         elif model_type == "gemini":
             console.print(
@@ -1097,7 +1097,7 @@ Your AI-powered DSPy development assistant. Build, optimize, and learn DSPy with
                 " configure DSPy like:[/dim]"
             )
             console.print(
-                f"[cyan]lm = dspy.LM(model=\"gemini/{model_name}\")[/cyan]\n[cyan]dspy.configure(lm=lm)[/cyan]\n"
+                f'[cyan]lm = dspy.LM(model="gemini/{model_name}")[/cyan]\n[cyan]dspy.configure(lm=lm)[/cyan]\n'
             )
 
     def _extract_data_generation_params(self, user_input: str) -> tuple[str, int]:

@@ -513,9 +513,7 @@ class NLCommandRouter:
 
         # If the user mentions a specific slash command in natural language,
         # allow the LLM router to decide whether to dispatch it.
-        logger.debug(
-            f"Using LLM reasoning for explicit slash command reference: '{user_input}'"
-        )
+        logger.debug(f"Using LLM reasoning for explicit slash command reference: '{user_input}'")
         return self._route_with_llm(user_input, context, pattern_matches=None)
 
     def _route_with_llm(
