@@ -225,7 +225,7 @@ from typing import List, Optional
 import dspy
 
 class Analyzer(dspy.Module):
-    def __init__(self, model_name: str = "gpt-3.5-turbo"):
+    def __init__(self, model_name: str = "gpt-5-nano"):
         super().__init__()
         self.model_name: str = model_name
         self.predictor: dspy.Predict = dspy.Predict(AnalysisSignature)
@@ -242,7 +242,7 @@ class Analyzer(dspy.Module):
 
 ```python
 class Analyzer(dspy.Module):
-    def __init__(self, model_name="gpt-3.5-turbo"):  # ✗ No type
+    def __init__(self, model_name="gpt-5-nano"):  # ✗ No type
         super().__init__()
         self.model_name = model_name
         self.predictor = dspy.Predict(AnalysisSignature)

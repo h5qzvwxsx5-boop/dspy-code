@@ -330,9 +330,9 @@ def _create_export_requirements(package_dir: Path) -> None:
 
     requirements = [
         "dspy>=3.0.4",
-        "openai>=1.0.0",
-        "anthropic>=0.25.0",
-        "google-generativeai>=0.3.0",
+        "openai>=2.8.1,<3.0.0",
+        "anthropic>=0.39.0,<1.0.0",
+        "google-genai>=1.52.0,<2.0.0",
     ]
 
     (package_dir / "requirements.txt").write_text("\n".join(requirements))

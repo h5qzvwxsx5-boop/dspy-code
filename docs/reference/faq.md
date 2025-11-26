@@ -182,7 +182,7 @@ export OPENAI_API_KEY=sk-...
 Then connect:
 
 ```
-/connect openai gpt-4
+/connect openai gpt-5-nano
 ```
 
 ### Can I switch models?
@@ -191,7 +191,7 @@ Yes! Disconnect and connect to a different model:
 
 ```
 /disconnect
-/connect anthropic claude-3-sonnet
+/connect anthropic claude-sonnet-4.5
 ```
 
 ### Do I need an API key for Ollama?

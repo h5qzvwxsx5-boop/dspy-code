@@ -211,13 +211,13 @@ models:
       timeout: 60
 
   openai:
-    gpt-4:
+    gpt-4o:
       api_key: ${OPENAI_API_KEY}
       max_tokens: 2000
       temperature: 0.7
 
   anthropic:
-    claude-3-sonnet:
+    claude-sonnet-4.5:
       api_key: ${ANTHROPIC_API_KEY}
       max_tokens: 4000
 
@@ -285,31 +285,31 @@ models:
 
   # OpenAI
   openai:
-    gpt-4:
+    gpt-4o:
       api_key: ${OPENAI_API_KEY}
       max_tokens: 2000
       temperature: 0.7
       organization: ${OPENAI_ORG}  # Optional
 
-    gpt-3.5-turbo:
+    gpt-5-nano:
       api_key: ${OPENAI_API_KEY}
       max_tokens: 1000
-      temperature: 0.7
+      temperature: 1.0
 
   # Anthropic
   anthropic:
-    claude-3-sonnet:
+    claude-sonnet-4.5:
       api_key: ${ANTHROPIC_API_KEY}
       max_tokens: 4000
-      temperature: 0.7
+      temperature: 1.0
 
-    claude-3-opus:
+    claude-opus-4.5:
       api_key: ${ANTHROPIC_API_KEY}
       max_tokens: 4000
 
   # Google Gemini
   gemini:
-    gemini-pro:
+    gemini-2.5-flash:
       api_key: ${GOOGLE_API_KEY}
       max_tokens: 2048
 
@@ -878,7 +878,7 @@ Never commit API keys!
 # dspy_config.yaml
 models:
   openai:
-    gpt-4:
+    gpt-4o:
       api_key: ${OPENAI_API_KEY}  # From environment
 ```
 

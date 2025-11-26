@@ -83,9 +83,10 @@ Connect to a language model for code generation and execution.
 **Examples:**
 ```
 /connect ollama llama3.1:8b
-/connect openai gpt-4o
-/connect anthropic claude-3-5-sonnet-20251022
-/connect gemini gemini-pro
+/connect openai gpt-5-nano
+/connect anthropic claude-sonnet-4.5
+/connect anthropic claude-opus-4.5
+/connect gemini gemini-2.5-flash
 ```
 
 **Note:** You may need to install provider SDKs separately. DSPy Code will guide you if needed.

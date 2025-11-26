@@ -75,6 +75,11 @@ GEPA is a powerful optimization technique that automatically improves your DSPy 
 - Keeps top performers
 - Eliminates poor performers
 
+!!! warning "Optimization Cost & Hardware Considerations"
+    - **Cloud models (OpenAI, Anthropic, Gemini)**: GEPA can issue **many LLM calls** during optimization. Only run optimization when you understand the potential API cost and have appropriate billing/quotas configured.
+    - **Local hardware**: For comfortable optimization runs on local models (especially larger ones), we recommend at least **32 GB RAM**.
+    - Start with a **small budget** and a **small dataset** when experimenting; scale up gradually once you're happy with results and cost.
+
 ## Quick Start
 
 ### Step 1: Prepare Your Program
@@ -231,8 +236,8 @@ gepa_optimizer = GEPA(
 # Create unoptimized program
 program = SentimentAnalyzer()
 
-# Configure DSPy
-dspy.settings.configure(lm=dspy.OpenAI(model="gpt-3.5-turbo"))
+# Configure DSPy (example small OpenAI model)
+dspy.settings.configure(lm=dspy.OpenAI(model="gpt-5-nano"))
 
 # Optimize!
 optimized_program = gepa_optimizer.compile(
@@ -600,8 +605,8 @@ optimized = gepa.compile(
     num_batches=5  # Fewer batches
 )
 
-# Use faster model for optimization
-dspy.settings.configure(lm=dspy.OpenAI(model="gpt-3.5-turbo"))
+# Use a faster/cheaper model for optimization
+dspy.settings.configure(lm=dspy.OpenAI(model="gpt-5-nano"))
 ```
 
 ### Out of Memory
@@ -668,7 +673,7 @@ def email_metric(gold, pred, trace=None):
     return {'score': 0.0, 'feedback': feedback}
 
 # 4. Configure DSPy
-dspy.settings.configure(lm=dspy.OpenAI(model="gpt-3.5-turbo"))
+dspy.settings.configure(lm=dspy.OpenAI(model="gpt-5-nano"))
 
 # 5. Optimize
 gepa = GEPA(

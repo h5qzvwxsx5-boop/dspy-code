@@ -199,14 +199,15 @@ class ModelManager:
     def _create_gemini_client(self, config: dict[str, Any]):
         """Create Gemini client."""
         try:
-            import google.generativeai as genai
+            # Prefer the official Google Gen AI SDK (google-genai)
+            from google import genai  # type: ignore[import-not-found]
 
-            genai.configure(api_key=config["api_key"])
-            return genai
+            client = genai.Client(api_key=config["api_key"])
+            return client
 
         except ImportError:
             raise ModelError(
-                "Google Generative AI library not installed. Run: pip install google-generativeai"
+                "Google Gen AI SDK not installed. Run: pip install \"google-genai>=1.52.0\""
             )
         except Exception as e:
             raise ModelError(f"Failed to create Gemini client: {e}")

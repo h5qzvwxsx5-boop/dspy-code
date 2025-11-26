@@ -120,7 +120,7 @@ class FeedbackClassifierModule(dspy.Module):
 # Configure DSPy
 import dspy
 dspy.settings.configure(
-    lm=dspy.OpenAI(model="gpt-3.5-turbo")
+    lm=dspy.OpenAI(model="gpt-5-nano")
 )
 
 # Create and use the classifier
@@ -258,6 +258,9 @@ Generate GEPA optimization code:
 ```
 /optimize
 ```
+
+!!! warning "Optimization on Cloud Models"
+    GEPA optimization can make **a large number of LLM calls**. If you're connected to a cloud provider (OpenAI, Anthropic, Gemini), be sure you understand the potential API cost and have your quotas/billing configured before running `/optimize`.
 
 This creates a complete GEPA optimization script!
 

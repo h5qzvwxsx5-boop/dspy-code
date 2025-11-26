@@ -210,23 +210,23 @@ Connect to a language model.
 ```
 
 ```
-/connect openai gpt-3.5-turbo
+/connect openai gpt-5-nano
 ```
 
 **Anthropic Claude:**
 
 ```
-/connect anthropic claude-3-sonnet
+/connect anthropic claude-sonnet-4.5
 ```
 
 ```
-/connect anthropic claude-3-opus
+/connect anthropic claude-opus-4.5
 ```
 
 **Google Gemini:**
 
 ```
-/connect gemini gemini-pro
+/connect gemini gemini-2.5-flash
 ```
 
 !!! info "API Keys"
@@ -354,6 +354,9 @@ Generate GEPA optimization code.
 ```
 /optimize
 ```
+
+!!! warning "Be Aware of Optimization Cost"
+    GEPA optimization can issue **many LLM calls**, especially when using cloud providers (OpenAI, Anthropic, Gemini). Make sure you understand your API pricing and quotas before running `/optimize`, and prefer small budgets when starting out. For local models, we recommend at least **32 GB RAM** for comfortable optimization runs.
 
 **What it creates:**
 

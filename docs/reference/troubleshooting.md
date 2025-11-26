@@ -173,7 +173,7 @@ Error: Failed to save session
 ### Slow Response
 
 **Solutions:**
-1. Use faster model (gpt-3.5-turbo vs gpt-4)
+1. Use a faster/cheaper model (for example gpt-5-nano vs gpt-4o)
 2. Use local model (Ollama)
 3. Reduce example count
 4. Check internet connection

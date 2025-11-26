@@ -484,15 +484,17 @@ Connect to any LLM provider:
 # Ollama (local, free)
 /connect ollama llama3.1:8b
 
-# OpenAI
-/connect openai gpt-4
+# OpenAI (example small model)
+/connect openai gpt-5-nano
 
-# Anthropic
+# Anthropic (paid key required)
 /connect anthropic claude-3-5-sonnet-20241022
 
-# Google Gemini
-/connect gemini gemini-2.0-flash-exp
+# Google Gemini (example model)
+/connect gemini gemini-2.5-flash
 ```
+
+> 💡 **Tip:** These are just starting points. Check your provider docs for the **latest models** (for example gpt-4o / gpt‑5 family, Gemini 2.5, latest Claude Sonnet/Opus) and plug them into `/connect`.
 
 ## 🧬 GEPA Optimization
 
@@ -640,7 +642,7 @@ DSPy Code is currently in **Beta** and under active development. While it's func
 
 <div align="center">
 
-Built with ❤️ by **[Superagentic AI](https://super-agentic.ai)**
+Brought to you by **[Superagentic AI](https://super-agentic.ai)**
 
 Special thanks to the DSPy community and all contributors!
 
@@ -668,6 +670,6 @@ It helps others discover the project and motivates us to keep improving it.
 
 <img src="https://raw.githubusercontent.com/SuperagenticAI/dspy-code/main/docs/resource/dspy-code.png" alt="DSPy Code" width="100"/>
 
-**Made with 💜 for the DSPy community**
+**Made for the DSPy community**
 
 </div>

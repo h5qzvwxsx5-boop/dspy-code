@@ -240,17 +240,27 @@ class LLMConnector:
     ) -> str:
         """Generate response from OpenAI."""
         try:
-            import openai
-        except ImportError:
+            # Prefer the modern OpenAI client (openai>=1.0)
+            try:
+                from openai import OpenAI
+
+                client = OpenAI(api_key=self.api_key)
+                use_new_client = True
+            except Exception:
+                # Fallback to legacy interface for openai<1.0
+                import openai  # type: ignore[import-not-found]
+
+                openai.api_key = self.api_key
+                client = openai
+                use_new_client = False
+        except ImportError as exc:
             raise ModelError(
                 "OpenAI SDK not installed!\n"
-                "Install it with: pip install openai\n"
-                "DSPy Code doesn't include provider SDKs - install only what you need."
-            )
+                "Install it with: pip install \"openai>=2.8.1\"  # or newer 2.x version\n"
+                "DSPy Code doesn't include provider SDKs by default - install only what you need."
+            ) from exc
 
-        openai.api_key = self.api_key
-
-        messages = []
+        messages: list[dict[str, str]] = []
 
         # Add system prompt with context
         if system_prompt or context:
@@ -260,13 +270,29 @@ class LLMConnector:
         messages.append({"role": "user", "content": prompt})
 
         try:
-            response = openai.ChatCompletion.create(
-                model=self.current_model, messages=messages, temperature=0.7, max_tokens=2000
+            if use_new_client:
+                # New style client for openai>=1.0
+                # NOTE:
+                # - Some newer models (e.g., gpt-5-nano) no longer accept `max_tokens`
+                #   and instead expect `max_completion_tokens`.
+                # - Some also only support the default temperature.
+                # - To stay compatible across the whole model family, we omit
+                #   these tuning params and let the API use its defaults.
+                response = client.chat.completions.create(
+                    model=self.current_model,
+                    messages=messages,
+                )
+                return response.choices[0].message.content or ""
+
+            # Legacy interface for openai<1.0
+            response = client.ChatCompletion.create(
+                model=self.current_model,
+                messages=messages,
+                temperature=0.7,
             )
+            return response.choices[0].message.content  # type: ignore[no-any-return]
 
-            return response.choices[0].message.content
-
-        except Exception as e:
+        except Exception as e:  # pragma: no cover - depends on external SDK behaviour
             logger.error(f"OpenAI generation error: {e}")
             raise ModelError(f"Failed to generate response: {e}")
 
@@ -306,21 +332,42 @@ class LLMConnector:
     ) -> str:
         """Generate response from Gemini."""
         try:
-            import google.generativeai as genai
-        except ImportError:
+            # Prefer the modern Google Gen AI SDK (google-genai)
+            try:
+                from google import genai  # type: ignore[import-not-found]
+
+                client = genai.Client(api_key=self.api_key)
+                use_genai = True
+            except Exception:
+                # Fallback to legacy google-generativeai if present
+                import google.generativeai as genai  # type: ignore[import-not-found]
+
+                genai.configure(api_key=self.api_key)
+                model = genai.GenerativeModel(self.current_model)
+                use_genai = False
+        except ImportError as exc:
             raise ModelError(
                 "Google Gemini SDK not installed!\n"
-                "Install it with: pip install google-generativeai\n"
-                "DSPy Code doesn't include provider SDKs - install only what you need."
-            )
-
-        genai.configure(api_key=self.api_key)
-        model = genai.GenerativeModel(self.current_model)
+                "Install the official SDK with: pip install \"google-genai>=1.52.0\" \n"
+                "DSPy Code doesn't include provider SDKs by default - install only what you need."
+            ) from exc
 
         # Build full prompt with context
         full_prompt = self._build_prompt_with_context(prompt, system_prompt, context)
 
         try:
+            if use_genai:
+                # google-genai client API:
+                #   from google import genai
+                #   client = genai.Client(api_key=...)
+                #   response = client.models.generate_content(model="...", contents="...")
+                response = client.models.generate_content(
+                    model=self.current_model,
+                    contents=full_prompt,
+                )
+                return getattr(response, "text", "") or ""
+
+            # Legacy google-generativeai behaviour
             response = model.generate_content(full_prompt)
             return response.text
 

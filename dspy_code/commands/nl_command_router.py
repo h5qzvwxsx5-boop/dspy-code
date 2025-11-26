@@ -230,18 +230,6 @@ class NLCommandRouter:
                 "command": "/data",
                 "extract_args": self._extract_data_args,
             },
-            # Explanation and help
-            "explain": {
-                "patterns": [
-                    r"explain",
-                    r"what (?:is |are )",
-                    r"how (?:does |do )",
-                    r"tell me (?:about )",
-                    r"describe",
-                ],
-                "command": "/explain",
-                "extract_args": self._extract_explain_args,
-            },
             "help": {
                 "patterns": [
                     r"help",
@@ -485,6 +473,13 @@ class NLCommandRouter:
         """
         Route natural language input to a slash command using LLM reasoning.
 
+        NOTE: For now we only use this router to handle *explicit* routing
+        requests (e.g. \"run /init\" or \"call /connect\"), and we do not
+        automatically convert generic natural language like \"explain X\"
+        into slash commands. If this router can't confidently decide, it
+        returns None and the main interactive loop treats the input as a
+        normal LLM request instead of failing with a command usage error.
+
         Strategy:
         1. Try pattern matching to gather context (fast, deterministic hints)
         2. Always use LLM reasoning with pattern matching results as context
@@ -499,43 +494,29 @@ class NLCommandRouter:
         """
         if not self.llm_connector or not self.llm_connector.current_model:
             logger.debug(
-                f"No LLM available, falling back to pattern matching only for: '{user_input}'"
+                f"No LLM available for NL routing, treating as normal LLM input: '{user_input}'"
             )
-            # Fallback to pattern matching if no LLM
-            return self._route_with_pattern_only(user_input)
+            # Don't auto-route to commands if no LLM; let interactive loop
+            # handle this as a regular natural language request.
+            return None
 
         user_input_lower = user_input.lower().strip()
 
-        # STEP 1: Try pattern matching to gather context (hints for LLM)
-        pattern_matches = []
-        for cmd_name, cmd_info in self.command_mappings.items():
-            for pattern in cmd_info["patterns"]:
-                match = re.search(pattern, user_input_lower, re.IGNORECASE)
-                if match:
-                    try:
-                        # Try to extract arguments as a hint
-                        args_hint = cmd_info["extract_args"](user_input, match)
-                        pattern_matches.append(
-                            {
-                                "command": cmd_info["command"],
-                                "command_name": cmd_name,
-                                "confidence": "high",  # Pattern matched
-                                "args_hint": args_hint,
-                                "description": self._get_command_description(cmd_name),
-                                "pattern": pattern,
-                            }
-                        )
-                        logger.debug(
-                            f"Pattern match hint: '{user_input}' -> {cmd_info['command']} {args_hint}"
-                        )
-                    except Exception as e:
-                        logger.debug(f"Error extracting args for pattern match: {e}")
+        # For now, we are conservative: only attempt NL routing when the
+        # user *explicitly* references slash commands (\"/\"), otherwise
+        # we treat the input as a normal LLM request.
+        if "/" not in user_input_lower:
+            logger.debug(
+                f"No explicit slash command reference in NL input, treating as normal LLM input: '{user_input}'"
+            )
+            return None
 
-        # STEP 2: Always use LLM reasoning with pattern matching results as context
+        # If the user mentions a specific slash command in natural language,
+        # allow the LLM router to decide whether to dispatch it.
         logger.debug(
-            f"Using LLM reasoning for: '{user_input}' (with {len(pattern_matches)} pattern hints)"
+            f"Using LLM reasoning for explicit slash command reference: '{user_input}'"
         )
-        return self._route_with_llm(user_input, context, pattern_matches=pattern_matches)
+        return self._route_with_llm(user_input, context, pattern_matches=None)
 
     def _route_with_llm(
         self,

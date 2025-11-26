@@ -32,11 +32,13 @@ theme:
     code: Roboto Mono
 
   features:
-    - navigation.instant
+    # Keep sidebar items stable and highlight current page
     - navigation.tracking
-    - navigation.tabs
-    - navigation.sections
+    # Always show full tree of pages for the active top-level section
     - navigation.expand
+    - navigation.sections
+    # Show top-level groups (Getting Started, User Guide, etc.) as tabs
+    - navigation.tabs
     - navigation.top
     - search.suggest
     - search.highlight
@@ -108,6 +110,7 @@ nav:
   - 🚀 Getting Started:
     - 📦 Installation: getting-started/installation.md
     - ⚡ Quick Start: getting-started/quick-start.md
+    - 🔌 Model Connection (Cloud & Local): guide/model-connection.md
     - 🎯 First Program: getting-started/first-program.md
     - 💡 Understanding DSPy Code: getting-started/understanding.md
 
@@ -118,7 +121,7 @@ nav:
     - ✨ Generating Code: guide/generating-code.md
     - 🔌 Adapters: guide/adapters.md
     - 🔍 Retrievers: guide/retrievers.md
-    - 🔌 Model Connection: guide/model-connection.md
+    # Model connection is linked under Getting Started to avoid duplication
     - ✅ Code Validation: guide/validation.md
     - 📊 Evaluation: guide/evaluation.md
     - ⚡ Async & Streaming: guide/async-streaming.md

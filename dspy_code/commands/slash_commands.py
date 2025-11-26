@@ -174,17 +174,19 @@ class SlashCommandHandler:
         Connect to a model.
 
         Usage:
-            /connect ollama llama2
-            /connect openai gpt-4 [api-key]
-            /connect anthropic claude-3-sonnet [api-key]
-            /connect gemini gemini-pro [api-key]
+            /connect ollama llama3.2
+            /connect openai gpt-5 [api-key]
+            /connect anthropic claude-sonnet-4.5 [api-key]
+            /connect anthropic claude-opus-4.5 [api-key]
+            /connect gemini gemini-3 [api-key]
         """
         if len(args) < 2:
             show_error_message("Usage: /connect <type> <model> [api-key]")
             console.print("\nExamples:")
-            console.print("  /connect ollama llama2")
-            console.print("  /connect openai gpt-4")
-            console.print("  /connect anthropic claude-3-sonnet sk-ant-...")
+            console.print("  /connect ollama llama3.2")
+            console.print("  /connect openai gpt-5")
+            console.print("  /connect anthropic claude-sonnet-4.5 sk-ant-...")
+            console.print("  /connect gemini gemini-3")
             return
 
         model_type = args[0].lower()
@@ -313,9 +315,10 @@ class SlashCommandHandler:
             console.print(table)
             console.print()
             console.print("[dim]Examples:[/dim]")
-            console.print("  /connect openai gpt-4")
-            console.print("  /connect anthropic claude-3-5-sonnet-20241022")
-            console.print("  /connect gemini gemini-2.0-flash-exp")
+            console.print("  /connect openai gpt-5")
+            console.print("  /connect anthropic claude-sonnet-4.5")
+            console.print("  /connect anthropic claude-opus-4.5")
+            console.print("  /connect gemini gemini-3")
             console.print()
             console.print("[dim]💡 Tip: Check provider docs for latest model names[/dim]")
 
@@ -4619,7 +4622,9 @@ answer = rag(question="What is quantum computing?")""",
             console.print("[bold cyan]🎯 Next steps:[/bold cyan]")
             console.print("  1. Review DSPy.md and update project description")
             console.print("  2. Configure your LM in dspy_config.yaml")
-            console.print("  3. Start building: /generate signature")
+            console.print(
+                '  3. Start building: type a request like "Create a signature for email classification"'
+            )
             console.print("  4. View project info: /project info")
             console.print()
 

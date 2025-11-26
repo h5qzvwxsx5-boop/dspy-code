@@ -61,6 +61,10 @@ This creates a `training_data.jsonl` file with examples like:
 /optimize sentiment_analyzer.py training_data.jsonl
 ```
 
+!!! warning "Optimization Cost (Cloud & Local)"
+    - **Cloud providers (OpenAI, Anthropic, Gemini)**: GEPA may perform **many optimization calls**. Only run `/optimize` if you're aware of the potential API cost and have a billing plan/quotas that can support it.
+    - **Local hardware**: For smoother optimization with local models, we recommend at least **32 GB RAM**.
+
 ---
 
 ## What Happens During Optimization

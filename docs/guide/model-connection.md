@@ -1,15 +1,19 @@
 # Model Connection
 
-Connect DSPy Code to any LLM provider for code generation and optimization.
+Connect DSPy Code to local and cloud LLM providers for code generation and optimization.
 
-## Supported Providers
+## Provider Overview
 
-DSPy Code supports all major LLM providers:
+DSPy Code supports both **local** and **cloud** LLMs:
 
-- **Ollama** - Local models (free, private)
-- **OpenAI** - GPT-4, GPT-3.5-turbo
-- **Anthropic** - Claude 3 (Opus, Sonnet, Haiku)
-- **Gemini** - Google's Gemini Pro
+- **Ollama (Local)** – Runs models on your machine (free, private)
+- **OpenAI (Cloud)** – GPT‑4o, gpt‑5 family (e.g. gpt‑5‑nano)
+- **Anthropic (Cloud)** – Claude Sonnet/Opus 4.5 (paid only)
+- **Google Gemini (Cloud)** – Gemini 2.5 family (via `google-genai`)
+
+!!! info "Local vs Cloud"
+    - **Local (Ollama)**: Best for experimentation, zero API cost, but uses your CPU/GPU and RAM.
+    - **Cloud (OpenAI, Anthropic, Gemini)**: Best quality and scale, but **billed per token**. Optimization workflows can generate *many* calls.
 
 ## Quick Connect
 
@@ -29,35 +33,46 @@ DSPy Code supports all major LLM providers:
 - Ollama installed
 - Model downloaded: `ollama pull llama3.1:8b`
 
-### OpenAI
+### OpenAI (Cloud)
 
-```
-/connect openai gpt-4
-```
-
-**Requirements:**
-- OpenAI API key
-- Set environment variable: `export OPENAI_API_KEY=sk-...`
-
-### Anthropic
-
-```
-/connect anthropic claude-3-sonnet
+```bash
+/connect openai gpt-5-nano
 ```
 
 **Requirements:**
-- Anthropic API key
-- Set environment variable: `export ANTHROPIC_API_KEY=sk-ant-...`
 
-### Gemini
+- OpenAI Python SDK (installed via `dspy-code[openai]`)
+- OpenAI API key: `export OPENAI_API_KEY=sk-...`
 
-```
-/connect gemini gemini-pro
+!!! tip "Use the Best Model You Have"
+    `gpt-5-nano` is a good starter model. For higher quality, switch to **gpt‑4o** or newer gpt‑5 family models your account supports.
+
+### Anthropic (Cloud, Paid Only)
+
+```bash
+/connect anthropic claude-sonnet-4.5
 ```
 
 **Requirements:**
-- Google API key
-- Set environment variable: `export GOOGLE_API_KEY=...`
+
+- Anthropic Python SDK (installed via `dspy-code[anthropic]`)
+- Anthropic API key: `export ANTHROPIC_API_KEY=sk-ant-...`
+
+> Anthropic no longer offers free API keys. DSPy Code fully supports Claude if you have a paid key; otherwise, just skip Anthropic.
+
+### Google Gemini (Cloud)
+
+```bash
+/connect gemini gemini-2.5-flash
+```
+
+**Requirements:**
+
+- Google Gen AI SDK (`google-genai`, installed via `dspy-code[gemini]`)
+- API key: `export GEMINI_API_KEY=...` (or `GOOGLE_API_KEY=...`)
+
+!!! tip "Check Your Quotas"
+    All cloud providers enforce quotas and rate limits. If you see 429 or quota errors during optimization, check your usage dashboards and billing settings.
 
 ## Connection Status
 

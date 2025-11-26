@@ -55,47 +55,40 @@ source .venv/bin/activate.fish
 
 ### Step 3: Install DSPy Code
 
-```bash
-# This installs into .venv/ in your project
-pip install dspy-code
-```
+=== "pip"
+
+    ```bash
+    # This installs into .venv/ in your project
+    pip install --upgrade dspy-code
+    ```
+
+=== "uv"
+
+    ```bash
+    # If you use uv, you can install dspy-code like this
+    uv pip install --upgrade dspy-code
+    ```
 
 That's it! DSPy Code is now installed in your project.
 
-### From Source
-
-If you want the latest development version:
-
-```bash
-# Clone the repository
-git clone https://github.com/superagentic-ai/dspy-code.git
-cd dspy-code
-
-# Install in development mode
-pip install -e .
-```
-
-## Install DSPy
-
-DSPy Code requires DSPy to be installed. If you don't have it yet:
-
-```bash
-pip install dspy
-```
-
-!!! info "DSPy Version"
-    DSPy Code works with any DSPy version (2.x, 3.x, or newer). It adapts to YOUR installed version!
-
 ### Step 4: Install DSPy (Optional)
 
-DSPy Code works with any version of DSPy you have installed:
+DSPy Code will install DSPy automatically if needed, but you can install/upgrade it explicitly:
 
-```bash
-pip install dspy
-```
+=== "pip"
+
+    ```bash
+    pip install --upgrade dspy
+    ```
+
+=== "uv"
+
+    ```bash
+    uv pip install --upgrade dspy
+    ```
 
 !!! info "DSPy Version"
-    DSPy Code adapts to YOUR installed DSPy version! It indexes your specific version for accurate code generation and Q&A.
+    DSPy Code adapts to YOUR installed DSPy version and indexes it for accurate code generation and Q&A.
 
 ## Verify Installation
 
@@ -156,27 +149,47 @@ my-dspy-project/
 
 ## Optional Dependencies
 
-DSPy Code has optional dependencies for different features. Install only what you need:
+DSPy Code has optional dependencies for different features. Install only what you need.
 
-### For OpenAI Models
+### Cloud Model Providers (via dspy-code extras)
 
-```bash
-pip install openai
-```
+Use extras so versions stay aligned with dspy-code’s tested matrix.
 
-### For Anthropic Claude
+=== "pip"
 
-```bash
-pip install anthropic
-```
+    ```bash
+    # OpenAI support
+    pip install "dspy-code[openai]"
 
-### For Google Gemini
+    # Google Gemini support
+    pip install "dspy-code[gemini]"
 
-```bash
-pip install google-generativeai
-```
+    # Anthropic (paid key required)
+    pip install "dspy-code[anthropic]"
 
-### For Semantic Similarity Metrics
+    # Or install all cloud providers at once
+    pip install "dspy-code[llm-all]"
+    ```
+
+=== "uv"
+
+    ```bash
+    # OpenAI support
+    uv pip install "dspy-code[openai]"
+
+    # Google Gemini support
+    uv pip install "dspy-code[gemini]"
+
+    # Anthropic (paid key required)
+    uv pip install "dspy-code[anthropic]"
+
+    # Or install all cloud providers at once
+    uv pip install "dspy-code[llm-all]"
+    ```
+
+> **Note:** Anthropic has discontinued free API keys. DSPy Code fully supports Claude **if you already have a paid API key**, but Anthropic integration will simply not work without one.
+
+### Semantic Similarity Metrics
 
 ```bash
 pip install sentence-transformers scikit-learn

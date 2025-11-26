@@ -58,7 +58,7 @@ For better code generation, connect to a model:
 **If you have OpenAI:**
 
 ```
-/connect openai gpt-3.5-turbo
+/connect openai gpt-5-nano
 ```
 
 !!! info "Without a Model?"
@@ -121,8 +121,8 @@ class SentimentAnalyzer(dspy.Module):
 ### Example Usage
 
 ```python
-# Configure DSPy
-dspy.settings.configure(lm=dspy.OpenAI(model="gpt-3.5-turbo"))
+# Configure DSPy (example small OpenAI model)
+dspy.settings.configure(lm=dspy.OpenAI(model="gpt-5-nano"))
 
 # Create analyzer
 analyzer = SentimentAnalyzer()
@@ -219,6 +219,10 @@ Now let's optimize your analyzer using GEPA:
 ```
 /optimize
 ```
+
+!!! warning "Optimization Cost (Cloud & Local)"
+    - **Cloud providers (OpenAI, Anthropic, Gemini)**: GEPA may perform **many optimization calls**. Only run `/optimize` if you're aware of the potential API cost and have a billing plan/quotas that can support it.
+    - **Local hardware**: For smoother optimization with local models, we recommend at least **32 GB RAM**.
 
 This generates a complete GEPA optimization script!
 

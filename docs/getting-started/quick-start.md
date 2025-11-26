@@ -2,15 +2,47 @@
 
 Get started with DSPy Code in 5 minutes! This guide will walk you through creating your first DSPy program.
 
-## Prerequisites
+## Prerequisites (One‑Time Setup)
 
-Before starting, make sure you have:
+You only need to do this once for each new DSPy project.
 
-1. **Created your project directory**
-2. **Set up virtual environment INSIDE the project**
-3. **Installed dspy-code**
+```bash
+# 1. Create a project directory
+mkdir my-dspy-project
+cd my-dspy-project
 
-If you haven't done this yet, see [Installation Guide](installation.md).
+# 2. Create a virtual environment INSIDE this directory
+python -m venv .venv
+
+# 3. Activate the virtual environment
+# For bash/zsh (macOS/Linux):
+source .venv/bin/activate
+# For fish:
+source .venv/bin/activate.fish
+# On Windows:
+.venv\Scripts\activate
+
+# 4. Install dspy-code (always upgrade for latest features)
+pip install --upgrade dspy-code
+
+# 5. (Optional but recommended) Install provider SDKs via dspy-code extras
+
+# If you ONLY want local models (Ollama), you can skip this step.
+
+# OpenAI support
+pip install "dspy-code[openai]"
+
+# Google Gemini support
+pip install "dspy-code[gemini]"
+
+# Anthropic (paid key required)
+pip install "dspy-code[anthropic]"
+
+# Or install all cloud providers at once
+pip install "dspy-code[llm-all]"
+```
+
+For more details, see the [Installation Guide](installation.md).
 
 ## Step 1: Navigate to Your Project
 
@@ -56,7 +88,30 @@ You'll see a beautiful welcome screen with the DSPy version and helpful tips.
     💬 Or just describe what you want to build!
     ```
 
-## Step 2: Initialize Your Project
+## Step 3: Connect a Model (Required)
+
+Before you do anything else in the CLI, you **must connect to a model**. DSPy Code relies on an LLM for code generation and understanding.
+
+```bash
+# Ollama (local, free)
+/connect ollama llama3.1:8b
+
+# Or OpenAI (example small model)
+/connect openai gpt-5-nano
+
+# Or Google Gemini (example model)
+/connect gemini gemini-2.5-flash
+```
+
+> 💡 **Tip:** These are just starting points. Use the latest models your account supports (for example gpt‑4o / gpt‑5 family, Gemini 2.5, latest Claude Sonnet/Opus) for best quality.
+
+!!! warning "Cloud Cost & Optimization"
+    - When you're connected to **cloud providers** (OpenAI, Anthropic, Gemini), remember that API usage is **billed per token**.
+    - GEPA **optimization** (via `/optimize` or generated optimization scripts) can make a *lot* of LLM calls. Only run optimization if you understand the potential cost and have quotas/billing configured.
+    - For local optimization runs with larger models, we recommend at least **32 GB RAM**.
+    - For more details, see [Model Connection (Cloud & Local)](../guide/model-connection.md) and the [Optimization Guide](../guide/optimization.md).
+
+## Step 4: Initialize Your Project
 
 Inside the CLI, type:
 
@@ -73,7 +128,7 @@ This will:
 !!! tip "What's Happening?"
     The `/init` command scans your installed DSPy version and your project code. This lets DSPy Code answer questions about DSPy and understand your project!
 
-## Step 3: Generate Your First Program
+## Step 5: Generate Your First Program
 
 Now for the fun part! Just describe what you want in plain English:
 
@@ -106,7 +161,7 @@ DSPy Code will:
             return self.predictor(text=text)
     ```
 
-## Step 4: Save Your Code
+## Step 6: Save Your Code
 
 Save the generated code to a file:
 
@@ -121,7 +176,7 @@ The file will be saved to your `generated/` directory.
     ✓ Code saved to: generated/sentiment.py
     ```
 
-## Step 5: Validate Your Code
+## Step 7: Validate Your Code
 
 Check if your code follows DSPy best practices:
 
@@ -139,7 +194,7 @@ DSPy Code will check for:
 !!! tip "Quality Checks"
     The validator catches common mistakes and suggests improvements. It's like having an expert review your code!
 
-## Step 6: Run Your Program
+## Step 8: Run Your Program
 
 Test your program:
 
@@ -154,30 +209,17 @@ DSPy Code will execute your code in a safe sandbox and show you the results.
 You just:
 
 1. ✅ Started DSPy Code
-2. ✅ Initialized a project
-3. ✅ Generated a DSPy program
-4. ✅ Saved it to a file
-5. ✅ Validated the code
-6. ✅ Ran it successfully
+2. ✅ Connected a model
+3. ✅ Initialized a project
+4. ✅ Generated a DSPy program
+5. ✅ Saved it to a file
+6. ✅ Validated the code
+7. ✅ Ran it successfully
 
 ## What's Next?
 
-### Connect a Model (Optional but Recommended)
-
-For better code generation, connect to an LLM:
-
-```
-/connect ollama llama3.1:8b
-```
-
-Or use OpenAI:
-
-```
-/connect openai gpt-4
-```
-
-!!! info "Why Connect a Model?"
-    Without a model, DSPy Code uses templates. With a model, it can understand your specific requirements and generate more customized code!
+!!! info "Why Model Connection is Required"
+    DSPy Code needs an LLM to understand your requests and generate DSPy code. Without a connected model, most interactive features will not work.
 
 ### Try More Examples
 

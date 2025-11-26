@@ -345,6 +345,11 @@ GEPA (Genetic Pareto) optimizes DSPy programs by:
 4. **Selection**: Keep best versions
 5. **Iteration**: Repeat until optimal
 
+!!! warning "Optimization Cost & Resource Considerations"
+    - **Cloud models (OpenAI, Anthropic, Gemini)**: GEPA can trigger **many LLM calls**. Only run optimization if you understand the potential API cost and have billing/quotas configured appropriately.
+    - **Local runs**: For smooth optimization on local hardware, we recommend at least **32 GB RAM**, especially with larger models.
+    - Start with small budgets and fewer examples when experimenting.
+
 ### Optimization Process
 
 **1. Prepare Data:**
@@ -411,22 +416,24 @@ This feedback helps GEPA learn!
 /connect ollama llama3.1:8b
 ```
 
-**2. OpenAI:**
+**2. OpenAI (modern SDK, example small model):**
 
 ```
-/connect openai gpt-4
+/connect openai gpt-5-nano
 ```
 
-**3. Anthropic:**
+**3. Anthropic (paid only, optional):**
 
 ```
-/connect anthropic claude-3-sonnet
+/connect anthropic claude-sonnet-4.5
 ```
 
-**4. Gemini:**
+> Anthropic no longer offers free API keys. If you have a paid key, DSPy Code will work with Claude; otherwise, just skip Anthropic and use another provider.
+
+**4. Gemini (via google-genai):**
 
 ```
-/connect gemini gemini-pro
+/connect gemini gemini-2.5-flash
 ```
 
 ### Connection Process

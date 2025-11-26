@@ -251,7 +251,14 @@ class InteractiveSession:
                         # If it routed to /data but doesn't match explicit patterns, it's likely a false positive
                         if command == "/data" and not is_explicit_data_gen:
                             logger.debug(f"Ignoring false positive /data route for: {user_input}")
-                            # Fall through to code generation
+                            # Fall through to code generation / general LLM handling
+                        # If it routed to /explain with no topic, treat as a natural-language question
+                        # about the current code/session instead of forcing the slash command.
+                        elif command == "/explain" and not args:
+                            logger.debug(
+                                "Routing generic 'explain' follow-up to LLM instead of /explain slash command"
+                            )
+                            # Fall through to general LLM handling below
                         else:
                             # Execute the routed slash command
                             full_command = f"{command} {' '.join(args)}" if args else command
@@ -266,7 +273,7 @@ class InteractiveSession:
                                 logger.debug(
                                     f"Command execution failed, treating as code generation: {e}"
                                 )
-                                # Fall through to code generation
+                                # Fall through to general LLM handling
 
                     # If no slash command match, process as natural language for code generation
                     # But first check if model is connected
@@ -1597,30 +1604,6 @@ Your AI-powered DSPy development assistant. Build, optimize, and learn DSPy with
             console.print("  • Or use: [yellow]/predictors[/yellow] to see comparison table")
             console.print("  • Or use: [yellow]/predictors <name>[/yellow] for specific details")
             return
-
-        # Original explanations
-        if "signature" in user_input_lower:
-            console.print(Markdown(explanations["signature"]))
-        elif "module" in user_input_lower:
-            console.print(Markdown(explanations["module"]))
-        elif "gepa" in user_input_lower or "optim" in user_input_lower:
-            console.print(Markdown(explanations["gepa"]))
-        else:
-            console.print("I can explain:")
-            console.print("- DSPy Signatures")
-            console.print("- DSPy Modules")
-            console.print("- DSPy Predictors (all 10 types)")
-            console.print("- GEPA Optimization")
-            console.print()
-            console.print("[bold]Examples:[/bold]")
-            console.print("  • 'What is ChainOfThought?'")
-            console.print("  • 'Explain ReAct predictor'")
-            console.print("  • 'Tell me about all predictors'")
-            console.print("  • 'What is a DSPy signature?'")
-            console.print()
-            console.print(
-                "[dim]Or use:[/dim] [yellow]/predictors[/yellow] or [yellow]/explain[/yellow]"
-            )
 
     def _handle_general_query(self, user_input: str):
         """Handle general queries by using LLM with rich context (Claude Code style)."""
