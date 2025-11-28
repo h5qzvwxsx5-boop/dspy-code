@@ -25,9 +25,45 @@
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 
 [📖 Documentation](https://superagenticai.github.io/dspy-code/) •
-[🚀 Quick Start](#-quick-start) •
-[💡 Examples](#-use-cases) •
 [🤝 Contributing](CONTRIBUTING.md)
+
+---
+
+## 🎯 What is DSPy Code?
+
+**DSPy Code** is an AI-powered interactive development environment for building and optimizing DSPy applications. Think of it as **Claude Code for DSPy** - a specialized CLI that understands DSPy deeply and helps you:
+
+- 🏗️ **Develop** DSPy applications with natural language
+- 🧬 **Optimize** with real GEPA (Genetic Pareto) workflows
+- 📚 **Learn** DSPy concepts as you build
+- ✅ **Validate** code against best practices
+- 🚀 **Deploy** production-ready applications
+
+**Perfect for beginners and experts alike** - whether you're learning DSPy or optimizing production systems, DSPy Code adapts to your needs.
+
+---
+
+## 📑 Table of Contents
+
+- [What is DSPy Code?](#-what-is-dspy-code) *(Overview above)*
+- [What is DSPy Code? (Detailed)](#-what-is-dspy-code-detailed)
+- [Why DSPy Code?](#-why-dspy-code)
+- [Quick Start](#-quick-start)
+- [Code Examples](#-code-examples)
+- [Key Features](#-key-features)
+- [What's New](#-whats-new)
+- [Two Core Workflows](#-two-core-workflows)
+- [Available Commands](#-available-commands)
+- [Primary Use Cases](#-primary-use-cases)
+- [Model Connection](#-model-connection)
+- [GEPA Optimization](#-gepa-optimization)
+- [Installation Options](#-installation-options)
+- [Architecture](#-architecture)
+- [Documentation](#-documentation)
+- [Contributing](#-contributing)
+- [Roadmap](#-roadmap)
+- [Need Help?](#-need-help)
+- [Community](#-community)
 
 ---
 
@@ -55,7 +91,7 @@ pip install --upgrade dspy-code
 
 ---
 
-## ✨ What is DSPy Code?
+## ✨ What is DSPy Code? (Detailed)
 
 <div align="center">
 
@@ -95,16 +131,16 @@ While general AI assistants can help with DSPy, they lack the deep specializatio
 
 ### What Makes DSPy Code Special?
 
-| **Generic AI Assistants** | **DSPy Code** |
-|---------------------------|---------------|
-| 📖 Generic coding help | 🎓 **DSPy-Native Intelligence** - Built-in knowledge of all 10 predictors, 11 optimizers, 4 adapters, and DSPy patterns |
-| 🔄 Unaware of your setup | 📦 **Version-Aware** - Indexes YOUR installed DSPy version and generates compatible code |
-| 💭 Code suggestions only | 🧬 **Real GEPA Execution** - Actually runs optimization workflows, not just code generation |
-| 📁 Basic file reading | 📚 **Codebase RAG** - Deeply understands your entire project structure and patterns |
-| ✏️ Syntax checking | ✅ **DSPy Validation** - Enforces signatures, modules, predictors, and best practices |
-| 🤷 Generic workflows | ⚙️ **Complete Automation** - End-to-end workflows from `/init` to `/export` |
-| 🔌 No tool integration | 🔗 **MCP Client Built-in** - Connect to external tools and services seamlessly |
-| 📝 Start from scratch | 📋 **20+ Templates** - Pre-built patterns for RAG, QA, classification, and more |
+| Feature | Generic AI Assistants | DSPy Code |
+|---------|----------------------|-----------|
+| **DSPy Knowledge** | ❌ Generic | ✅ **Deep, comprehensive** - All 10 predictors, 11 optimizers, 4 adapters |
+| **Version Awareness** | ❌ None | ✅ **Adapts to your version** - Indexes YOUR installed DSPy version |
+| **GEPA Optimization** | ❌ Code only | ✅ **Real execution** - Actually runs optimization workflows |
+| **Codebase Understanding** | ❌ File reading | ✅ **Full RAG indexing** - Deeply understands your project |
+| **Validation** | ❌ Syntax only | ✅ **DSPy-specific** - Enforces signatures, modules, best practices |
+| **Workflow Automation** | ❌ Manual | ✅ **Complete automation** - End-to-end workflows from `/init` to `/export` |
+| **MCP Integration** | ❌ None | ✅ **Built-in client** - Connect to external tools seamlessly |
+| **Templates** | ❌ None | ✅ **20+ templates** - Pre-built patterns for RAG, QA, classification |
 
 ### Real-World Impact
 
@@ -184,6 +220,51 @@ dspy-code
 
 **Result:** Production-ready DSPy applications with optimized performance
 
+## 💻 Code Examples
+
+### Example 1: Creating a Sentiment Analyzer
+
+```bash
+dspy-code
+/init
+/model  # Interactive model selection (or use /connect ollama llama3.1:8b)
+→ Create a sentiment analyzer that takes text and outputs positive or negative
+/save sentiment.py
+/validate
+/run
+```
+
+**Result:** Complete, validated sentiment analyzer in minutes!
+
+### Example 2: GEPA Optimization Workflow
+
+```bash
+dspy-code
+/init
+→ Generate 50 examples for sentiment analysis
+/optimize sentiment_analyzer.py training_data.jsonl
+/optimize-status
+/eval
+/export
+```
+
+**Result:** Optimized program with improved accuracy (e.g., 75% → 92%)!
+
+### Example 3: Building a RAG System with MCP
+
+```bash
+dspy-code
+/init
+/mcp-connect filesystem
+→ Create a RAG system that uses MCP to read documents and answer questions
+/save rag_system.py
+/validate
+```
+
+**Result:** Production-ready RAG system with external tool integration!
+
+---
+
 ## 🎯 Key Features
 
 ### 🏗️ Development Features
@@ -203,6 +284,17 @@ dspy-code
 - 💾 **Session Management** - Save and resume optimization workflows
 - 🎯 **Production Ready** - Export optimized code for deployment
 - 📦 **Export/Import** - Package and share optimized DSPy projects
+
+---
+
+## 🆕 What's New
+
+### Latest Release (v0.1.1)
+- ✨ **UV Support**: Full support for `uv` as an alternative to `python -m venv` for creating virtual environments (recommended for faster setup)
+- ⚡ **Performance Toggles**: New `/fast-mode [on|off]`, `/disable-rag`, and `/enable-rag` commands for controlling RAG indexing and response speed
+- 🔍 **Venv Detection**: Automatic detection of virtual environment in project root with startup warnings if missing
+
+**View Full Changelog:** [CHANGELOG.md](CHANGELOG.md)
 
 ## 🚀 Quick Start
 
@@ -225,6 +317,13 @@ cd my-dspy-project
 ```
 
 **🐍 Step 2:** Create virtual environment IN this directory (not elsewhere!)
+
+**Recommended: Using `uv` (faster)**
+```bash
+uv venv
+```
+
+**Or using standard Python:**
 ```bash
 python -m venv .venv
 ```
@@ -242,6 +341,13 @@ source .venv/bin/activate.fish
 ```
 
 **🚀 Step 4:** Install latest dspy-code (always upgrade to get newest features!)
+
+**Recommended: Using `uv` (faster)**
+```bash
+uv pip install --upgrade dspy-code
+```
+
+**Or using pip:**
 ```bash
 pip install --upgrade dspy-code
 ```
@@ -299,8 +405,7 @@ my-dspy-project/          # Your CWD
 cd ~/
 python -m venv my_global_venv
 
-# ❌ DON'T: System-wide installation
-pip install dspy-code
+
 ```
 
 ### Your First Program (5 minutes)
@@ -312,8 +417,9 @@ dspy-code
 # Initialize your project (creates config and scans your environment)
 /init
 
-# Connect to a model (example with Ollama)
-/connect ollama llama3.1:8b
+# Connect to a model (interactive selection recommended)
+/model
+# Or connect directly: /connect ollama llama3.1:8b
 
 # Generate your first program using natural language
 Create a sentiment analyzer that takes text and outputs positive or negative
@@ -411,7 +517,7 @@ DSPy Code is **interactive-only** - all commands are slash commands. Here are th
 ```bash
 dspy-code
 /init
-/connect ollama llama3.1:8b
+/model  # Interactive model selection (or use /connect directly)
 Create a RAG system for document Q&A
 /save rag_system.py
 /validate
@@ -478,16 +584,36 @@ dspy-code
 
 ## 🔌 Model Connection
 
-Connect to any LLM provider. The easiest way is to use the interactive selector:
+Connect to any LLM provider. **The easiest way is to use the interactive `/model` command:**
 
 ```bash
-# Recommended: interactive model selection
+# Recommended: Interactive model selection
 /model
 ```
 
-Then follow the prompts to:
-- **Pick a provider** (Ollama, OpenAI, Anthropic, Gemini)
-- **Choose a model** (for Ollama we auto‑list local models; for cloud you type the model name)
+This will guide you through:
+- **Picking a provider** (Ollama, OpenAI, Anthropic, Gemini)
+- **Choosing a model** (for Ollama we auto-list local models; for cloud providers you can type the model name)
+
+**Alternative: Direct connection with `/connect`**
+
+If you prefer to connect directly without the interactive prompt:
+
+```bash
+# Ollama (local, free)
+/connect ollama llama3.1:8b
+
+# OpenAI
+/connect openai gpt-4o
+
+# Anthropic (requires API key)
+/connect anthropic claude-sonnet-4-5
+
+# Google Gemini
+/connect gemini gemini-2.0-flash-exp
+```
+
+**API Keys Required (for cloud providers):**
 
 Make sure the right API keys are set in your environment before starting `dspy-code`:
 
@@ -495,21 +621,7 @@ Make sure the right API keys are set in your environment before starting `dspy-c
 - **Anthropic**: `ANTHROPIC_API_KEY`
 - **Gemini**: `GEMINI_API_KEY`
 
-```bash
-# Ollama (local, free)
-/connect ollama llama3.1:8b
-
-# OpenAI (example small model)
-/connect openai gpt-5-nano
-
-# Anthropic (paid key required)
-/connect anthropic claude-4-5-sonnet
-
-# Google Gemini (example model)
-/connect gemini gemini-2.5-flash
-```
-
-> 💡 **Tip:** These are just starting points. Check your provider docs for the **latest models** (for example gpt-4o / gpt‑5 family, Gemini 2.5, latest Claude Sonnet/Opus) and either pick them via `/model` or plug them into `/connect`.
+> 💡 **Tip:** Use `/model` for the easiest experience - it guides you through everything interactively. For automation or scripts, use `/connect` directly. Check your provider docs for the latest model names.
 
 ## 🧬 GEPA Optimization
 
@@ -533,7 +645,7 @@ DSPy Code includes real GEPA (Genetic Pareto) optimization:
 
 ## 🛠️ Installation Options
 
-### From PyPI (Recommended)
+### With uv (Recommended - Faster)
 
 <div align="center">
 
@@ -548,16 +660,22 @@ DSPy Code includes real GEPA (Genetic Pareto) optimization:
 <div style="background: rgba(147, 51, 234, 0.05); padding: 1.5em; border-radius: 10px; border: 2px dashed #9333ea; margin: 1em 0;">
 
 ```bash
-pip install --upgrade dspy-code
+uv pip install --upgrade dspy-code
 ```
 
 </div>
 
 <div align="center">
 
-> 💡 **Why upgrade?** We're actively developing and releasing new features, bug fixes, and improvements regularly. Always use `--upgrade` to get the best experience!
+> 💡 **Why `uv`?** `uv` is significantly faster than pip and is now the recommended installation method. Always use `--upgrade` to get the latest features, bug fixes, and improvements!
 
 </div>
+
+### With pip (Alternative)
+
+```bash
+pip install --upgrade dspy-code
+```
 
 ### From Source
 
@@ -567,11 +685,22 @@ cd dspy-code
 pip install -e .
 ```
 
-### With uv (Faster)
+### Optional: Install with Model Provider Extras
+
+For cloud providers, install optional dependencies:
 
 ```bash
-# Always get the latest version
-uv pip install --upgrade dspy-code
+# OpenAI support
+pip install --upgrade "dspy-code[openai]"
+
+# Anthropic support
+pip install --upgrade "dspy-code[anthropic]"
+
+# Gemini support
+pip install --upgrade "dspy-code[gemini]"
+
+# All providers
+pip install --upgrade "dspy-code[llm-all]"
 ```
 
 ## 🏗️ Architecture
@@ -601,16 +730,32 @@ DSPy Code is built with a modular architecture:
 - [🔗 MCP Integration](https://superagenticai.github.io/dspy-code/advanced/mcp-integration/)
 - [🎯 Optimization Guide](https://superagenticai.github.io/dspy-code/guide/optimization/)
 
+---
+
+## 🆘 Need Help?
+
+- 🐛 [Report a Bug](https://github.com/SuperagenticAI/dspy-code/issues) - Found an issue? Let us know!
+- 💬 [Ask a Question](https://github.com/SuperagenticAI/dspy-code/discussions) - Need help? Start a discussion!
+- 📖 [Full Documentation](https://superagenticai.github.io/dspy-code/) - Complete guides and reference
+- ❓ [FAQ](https://superagenticai.github.io/dspy-code/reference/faq/) - Common questions answered
+- 🔧 [Troubleshooting](https://superagenticai.github.io/dspy-code/reference/troubleshooting/) - Fix common issues
+
 ## 🤝 Contributing
 
-Contributions are welcome! We follow modern Python best practices:
+<div style="background: linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%); padding: 2em; border-radius: 12px; border-left: 4px solid #9333ea; margin: 1.5em 0;">
+
+**Contributions are welcome!** We're building DSPy Code for the community, and your help makes it better.
+
+We follow modern Python best practices:
 
 - **Code Quality**: Ruff for linting and formatting
 - **Testing**: pytest with coverage
 - **CI/CD**: GitHub Actions
 - **Pre-commit**: Automated quality checks
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+**First time contributing?** Check out our [Contributing Guide](CONTRIBUTING.md) for detailed guidelines and best practices.
+
+</div>
 
 ### Quick Development Setup
 
@@ -644,6 +789,17 @@ ruff format .
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## 🗺️ Roadmap
+
+### Coming Soon
+- **Plan / Code modes** in interactive CLI (explicit "planning" vs "coding" flows for complex tasks)
+- **Open-source model support** via third-party providers (OpenRouter, Groq and similar gateways)
+- Improved intent routing to further reduce/eliminate duplicate code generation
+
+**View planned features and contribute:** [GitHub Issues](https://github.com/SuperagenticAI/dspy-code/issues)
+
+---
+
 ## ⚠️ Development Status
 
 DSPy Code is currently in **Beta** and under active development. While it's functional and ready for experimentation, it's **not yet production-ready**. We're actively adding features to make it production-worthy so you can use it in real projects to enhance your workflow.
@@ -652,6 +808,24 @@ DSPy Code is currently in **Beta** and under active development. While it's func
 
 - 🐛 [Report issues](https://github.com/SuperagenticAI/dspy-code/issues)
 - ⭐ [Star the repo](https://github.com/SuperagenticAI/dspy-code) to show your support
+
+## 🌟 Community
+
+<div style="background: rgba(147, 51, 234, 0.05); padding: 2em; border-radius: 12px; margin: 2em 0;">
+
+**Join the DSPy Code community!**
+
+- ⭐ **Star us on GitHub** - Help others discover DSPy Code
+- 🐛 **Report Issues** - Found a bug? Let us know!
+- 💡 **Request Features** - Have an idea? Share it!
+- 🤝 **Contribute** - Help make DSPy Code better
+- 📢 **Share** - Tell others about DSPy Code
+
+**Your support helps us build better tools for the DSPy community!**
+
+</div>
+
+---
 
 ## 🙏 Acknowledgments
 
