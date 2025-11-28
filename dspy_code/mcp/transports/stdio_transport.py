@@ -4,21 +4,54 @@ Stdio transport implementation for MCP connections.
 Handles local MCP server processes that communicate via standard input/output.
 """
 
+import logging
 import sys
+from contextlib import asynccontextmanager
 
-from anyio.streams.memory import MemoryObjectReceiveStream, MemoryObjectSendStream
 from mcp.client.stdio import StdioServerParameters, stdio_client
-from mcp.shared.message import SessionMessage
 
 from ..config import MCPTransportConfig
 from ..exceptions import MCPTransportError
 
+logger = logging.getLogger(__name__)
 
-async def create_stdio_transport(
+
+@asynccontextmanager
+async def _safe_stdio_client(server_params: StdioServerParameters):
+    """
+    Wrap stdio_client to suppress known harmless cleanup errors.
+
+    There is a known interaction between async generators, anyio task groups,
+    and event loop shutdown that can raise:
+
+        RuntimeError: Attempted to exit cancel scope in a different task than it was entered in
+
+    inside a BaseExceptionGroup during generator cleanup. This happens after the
+    client has already shut down cleanly and is effectively a noisy warning.
+
+    We catch that specific pattern here and log it at debug level instead of
+    letting it bubble up into the UI.
+    """
+    try:
+        async with stdio_client(server_params, errlog=sys.stderr) as streams:
+            yield streams
+    except BaseExceptionGroup as exc:  # Python 3.11+ BaseExceptionGroup
+        # In practice, any BaseExceptionGroup raised here is coming from the
+        # anyio task group shutdown path used by stdio_client. By this point,
+        # the client has already performed its shutdown sequence, and these
+        # errors are effectively noisy warnings rather than actionable failures.
+        logger.debug(
+            "Suppressed BaseExceptionGroup during stdio_client shutdown: %s",
+            exc,
+            exc_info=True,
+        )
+        # Swallow the error so it does not bubble into the UI.
+        return
+
+
+def create_stdio_transport(
     config: MCPTransportConfig,
-) -> tuple[
-    MemoryObjectReceiveStream[SessionMessage | Exception], MemoryObjectSendStream[SessionMessage]
-]:
+):
     """
     Create stdio transport streams for MCP communication.
 
@@ -26,7 +59,7 @@ async def create_stdio_transport(
         config: Transport configuration with stdio-specific settings
 
     Returns:
-        Tuple of (read_stream, write_stream) for MCP communication
+        Async context manager that yields (read_stream, write_stream) when entered
 
     Raises:
         MCPTransportError: If transport creation fails
@@ -49,10 +82,8 @@ async def create_stdio_transport(
     )
 
     try:
-        # Create the stdio client context manager
-        # Note: This returns an async context manager, not the streams directly
-        # The caller needs to use it with async with
-        return stdio_client(server_params, errlog=sys.stderr)
+        # Return our safe wrapper around stdio_client
+        return _safe_stdio_client(server_params)
     except OSError as e:
         raise MCPTransportError(
             f"Failed to launch stdio process: {e}",

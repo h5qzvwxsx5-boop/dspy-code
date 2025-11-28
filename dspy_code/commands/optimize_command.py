@@ -43,7 +43,7 @@ def execute(
     config_manager = ConfigManager()
     if not config_manager.is_project_initialized():
         console.print("[red]Error:[/red] No dspy_config.yaml found in current directory.")
-        console.print("Run 'dspy-cli init' to create a configuration file.")
+        console.print("Run 'dspy-code init' to create a configuration file.")
         return
 
     try:
@@ -63,7 +63,7 @@ def execute(
         if not examples:
             console.print("[yellow]Warning:[/yellow] No gold examples found.")
             console.print("Optimization works best with example input/output pairs.")
-            console.print("Create examples with: [cyan]dspy-cli create --examples[/cyan]")
+            console.print("Create examples with: [cyan]dspy-code create --examples[/cyan]")
             return
 
         console.print(f"[blue]Found {len(examples)} gold examples[/blue]")
@@ -427,10 +427,10 @@ def _show_optimization_results(
     # Next steps
     console.print("\n[bold]Next Steps:[/bold]")
     console.print("1. Test the optimized program:")
-    console.print(f"   [cyan]dspy-cli run {optimized_file} --interactive[/cyan]")
+    console.print(f"   [cyan]dspy-code run {optimized_file} --interactive[/cyan]")
     console.print("\n2. Compare with original:")
     console.print(
-        f"   [cyan]dspy-cli run {optimization_result['program_file']} --interactive[/cyan]"
+        f"   [cyan]dspy-code run {optimization_result['program_file']} --interactive[/cyan]"
     )
     console.print("\n3. Export the optimized version:")
-    console.print(f"   [cyan]dspy-cli export {optimized_file}[/cyan]")
+    console.print(f"   [cyan]dspy-code export {optimized_file}[/cyan]")

@@ -4,8 +4,6 @@ WebSocket transport implementation for MCP connections.
 Handles remote MCP servers that require bidirectional real-time communication.
 """
 
-from anyio.streams.memory import MemoryObjectReceiveStream, MemoryObjectSendStream
-
 try:
     from mcp.client.websocket import websocket_client
 
@@ -13,17 +11,14 @@ try:
 except ImportError:
     WEBSOCKET_AVAILABLE = False
 
-from mcp.shared.message import SessionMessage
 
 from ..config import MCPTransportConfig
 from ..exceptions import MCPTransportError
 
 
-async def create_websocket_transport(
+def create_websocket_transport(
     config: MCPTransportConfig,
-) -> tuple[
-    MemoryObjectReceiveStream[SessionMessage | Exception], MemoryObjectSendStream[SessionMessage]
-]:
+):
     """
     Create WebSocket transport streams for MCP communication.
 
@@ -39,7 +34,7 @@ async def create_websocket_transport(
     if not WEBSOCKET_AVAILABLE:
         raise MCPTransportError(
             "WebSocket transport requires 'websockets' package. "
-            "Install with: pip install dspy-cli[mcp-ws]",
+            "Install with: pip install dspy-code[mcp-ws]",
             transport_type="websocket",
             details={"missing_package": "websockets"},
         )

@@ -18,7 +18,6 @@ from .exceptions import (
     MCPOperationError,
 )
 from .session_wrapper import MCPSessionWrapper
-from .transports.factory import MCPTransportFactory
 
 
 class MCPClientManager:
@@ -174,18 +173,36 @@ class MCPClientManager:
                 self._exit_stack = AsyncExitStack()
                 await self._exit_stack.__aenter__()
 
-            # Create transport
-            transport_cm = MCPTransportFactory.create_transport(
-                config.transport, timeout=config.timeout_seconds
-            )
+            # Validate transport configuration
+            config.transport.validate()
 
-            # Enter transport context
+            # Create transport directly (bypass factory wrapper to avoid nested context managers)
+            from .transports.sse_transport import create_sse_transport
+            from .transports.stdio_transport import create_stdio_transport
+            from .transports.websocket_transport import create_websocket_transport
+
+            if config.transport.type == "stdio":
+                transport_cm = create_stdio_transport(config.transport)
+            elif config.transport.type == "sse":
+                timeout = config.timeout_seconds
+                sse_read_timeout = 300.0
+                transport_cm = create_sse_transport(config.transport, timeout, sse_read_timeout)
+            elif config.transport.type == "websocket":
+                transport_cm = create_websocket_transport(config.transport)
+            else:
+                raise MCPConnectionError(
+                    f"Unsupported transport type: {config.transport.type}",
+                    server_name=server_name,
+                    transport_type=config.transport.type,
+                )
+
+            # Enter transport context directly
             read_stream, write_stream = await self._exit_stack.enter_async_context(transport_cm)
 
             # Create client session
             session = ClientSession(read_stream, write_stream)
-            session_cm = session.__aenter__()
-            await self._exit_stack.enter_async_context(session_cm)
+            # ClientSession is an async context manager, use it directly
+            await self._exit_stack.enter_async_context(session)
 
             # Wrap session
             wrapper = MCPSessionWrapper(server_name, config, session)
@@ -215,8 +232,16 @@ class MCPClientManager:
         """
         if server_name in self.sessions:
             session = self.sessions[server_name]
-            await session.close()
-            del self.sessions[server_name]
+            try:
+                await session.close()
+            except Exception as e:
+                # Log but don't fail - cleanup errors can occur with anyio task groups
+                import logging
+
+                logger = logging.getLogger(__name__)
+                logger.debug(f"Error closing session for {server_name}: {e}", exc_info=True)
+            finally:
+                del self.sessions[server_name]
 
     async def get_session(self, server_name: str) -> MCPSessionWrapper | None:
         """
@@ -370,12 +395,35 @@ class MCPClientManager:
         """Cleanup all connections and resources."""
         # Close all sessions
         for server_name in list(self.sessions.keys()):
-            await self.disconnect(server_name)
+            try:
+                await self.disconnect(server_name)
+            except Exception as e:
+                # Log but don't fail on disconnect errors
+                # This can happen with anyio task groups when cleanup happens
+                # in a different task context
+                import logging
+
+                logger = logging.getLogger(__name__)
+                logger.debug(f"Error disconnecting from {server_name}: {e}", exc_info=True)
 
         # Cleanup exit stack
         if self._exit_stack:
-            await self._exit_stack.__aexit__(None, None, None)
-            self._exit_stack = None
+            try:
+                await self._exit_stack.__aexit__(None, None, None)
+            except (RuntimeError, BaseExceptionGroup) as e:
+                # Suppress task context errors from anyio task groups
+                # These occur when cleanup happens in a different task context
+                # but don't affect functionality since the connection is already closed
+                import logging
+
+                logger = logging.getLogger(__name__)
+                if "cancel scope" in str(e) or "TaskGroup" in str(type(e).__name__):
+                    logger.debug(f"Suppressed task context cleanup error: {e}", exc_info=True)
+                else:
+                    # Re-raise if it's a different error
+                    raise
+            finally:
+                self._exit_stack = None
 
     async def _get_connected_session(self, server_name: str) -> MCPSessionWrapper:
         """

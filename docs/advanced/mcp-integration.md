@@ -126,6 +126,22 @@ Create a module that searches the web and summarizes results
 
 DSPy Code generates code with MCP integration!
 
+---
+
+## 🧪 Real-World MCP Recipes
+
+Looking for concrete, copy-pasteable workflows? Start with these:
+
+- 📂 **Project Files Assistant (Filesystem MCP)**  
+  Turn your local project into a browsable, explainable knowledge base.  
+  See: [MCP Filesystem Assistant](../tutorials/mcp-filesystem-assistant.md)
+
+- 🐙 **GitHub Triage Copilot (GitHub MCP)**  
+  Pull issues/PRs via MCP and generate a morning triage summary.  
+  See: [MCP GitHub Triage Copilot](../tutorials/mcp-github-triage.md)
+
+---
+
 ## MCP Server Types
 
 ### 1. stdio Transport

@@ -1,3 +1,3 @@
 """
-Tests for DSPy CLI.
+Tests for DSPy Code.
 """

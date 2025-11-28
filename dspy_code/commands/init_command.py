@@ -119,7 +119,7 @@ def _create_minimal_project(
     Create a minimal DSPy project with only the configuration file.
 
     This is the default initialization mode that creates only what's necessary
-    to start using dspy-cli. Additional directories will be created on-demand
+    to start using dspy-code. Additional directories will be created on-demand
     when commands need them.
 
     Args:
@@ -314,17 +314,17 @@ A DSPy project created with DSPy Code.
 
 1. Create your first DSPy component:
    ```bash
-   dspy-cli create
+   dspy-code create
    ```
 
 2. Test your component:
    ```bash
-   dspy-cli run generated/your_program.py --interactive
+   dspy-code run generated/your_program.py --interactive
    ```
 
 3. Optimize your component:
    ```bash
-   dspy-cli optimize generated/your_program.py
+   dspy-code optimize generated/your_program.py
    ```
 
 ## Project Structure
@@ -343,7 +343,7 @@ Edit `dspy_config.yaml` to configure models and settings.
 ## Learn More
 
 - [DSPy Documentation](https://dspy-docs.vercel.app/)
-- [DSPy Code Guide](https://github.com/dspy-cli/dspy-cli)
+- [DSPy Code Guide](https://github.com/dspy-code/dspy-code)
 """
 
     (project_dir / "README.md").write_text(readme_content)
@@ -534,10 +534,10 @@ def _show_next_steps(project_name: str, fresh: bool = False) -> None:
     console.print("   [dim]See dspy_config_example.yaml for all available options[/dim]")
 
     console.print("\n2. Create your first DSPy component:")
-    console.print("   [cyan]dspy-cli create[/cyan]")
+    console.print("   [cyan]dspy-code create[/cyan]")
 
     console.print("\n3. Test model connectivity:")
-    console.print("   [cyan]dspy-cli models test <model-name>[/cyan]")
+    console.print("   [cyan]dspy-code models test <model-name>[/cyan]")
 
     if fresh:
         console.print("\n4. Explore the project structure:")
@@ -547,4 +547,4 @@ def _show_next_steps(project_name: str, fresh: bool = False) -> None:
         console.print("   - generated/ - DSPy Code generated components")
 
     console.print("\n4. Learn more:" if not fresh else "\n5. Learn more:")
-    console.print("   [cyan]dspy-cli --help[/cyan]")
+    console.print("   [cyan]dspy-code --help[/cyan]")

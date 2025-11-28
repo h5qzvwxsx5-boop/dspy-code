@@ -23,7 +23,6 @@ from ..core.logging import get_logger
 from ..execution import ExecutionEngine
 from ..export import ExportImportHandler, PackageBuilder, PackageMetadata
 from ..mcp import MCPClientManager
-from ..mcp.exceptions import MCPError, format_mcp_error
 from ..models.dspy_reference_loader import DSPyReferenceLoader
 from ..models.llm_connector import LLMConnector
 from ..optimization import OptimizationWorkflowManager, WorkflowState
@@ -1194,6 +1193,33 @@ class SlashCommandHandler:
 
     # MCP Commands
 
+    def _run_mcp_async(self, coro):
+        """
+        Safely run async MCP operations, suppressing cleanup errors.
+
+        These errors occur when anyio task groups are cleaned up in a different
+        task context, but don't affect functionality.
+        """
+        try:
+            asyncio.run(coro)
+        except (RuntimeError, BaseExceptionGroup) as e:
+            # Suppress task context cleanup errors from anyio task groups
+            error_str = str(e)
+            if (
+                "cancel scope" in error_str
+                or "TaskGroup" in error_str
+                or "different task" in error_str
+            ):
+                # These are harmless cleanup warnings - suppress them
+                logger.debug(f"Suppressed MCP cleanup error: {e}", exc_info=True)
+                return
+            else:
+                # Re-raise if it's a different error
+                raise
+        except Exception:
+            # Re-raise other exceptions
+            raise
+
     def cmd_mcp_connect(self, args: list):
         """
         Connect to an MCP server.
@@ -1216,32 +1242,29 @@ class SlashCommandHandler:
         show_info_message(f"Connecting to MCP server '{server_name}'...")
 
         try:
-            asyncio.run(self._mcp_connect_async(server_name))
+            self._run_mcp_async(self._mcp_connect_async(server_name))
         except Exception as e:
             show_error_message(f"Connection failed: {e}")
 
     async def _mcp_connect_async(self, server_name: str):
         """Async helper for MCP connect."""
-        try:
-            session = await self.mcp_manager.connect(server_name)
-            show_success_message(f"Connected to '{server_name}'!")
+        session = await self.mcp_manager.connect(server_name)
+        show_success_message(f"Connected to '{server_name}'!")
 
-            # Show capabilities
-            status = session.get_status()
-            if status.get("capabilities"):
-                caps = status["capabilities"]
-                console.print("\n[bold]Server Capabilities:[/bold]")
-                if caps.get("tools"):
-                    console.print("  • Tools")
-                if caps.get("resources"):
-                    console.print("  • Resources")
-                if caps.get("prompts"):
-                    console.print("  • Prompts")
+        # Show capabilities
+        status = session.get_status()
+        if status.get("capabilities"):
+            caps = status["capabilities"]
+            console.print("\n[bold]Server Capabilities:[/bold]")
+            if caps.get("tools"):
+                console.print("  • Tools")
+            if caps.get("resources"):
+                console.print("  • Resources")
+            if caps.get("prompts"):
+                console.print("  • Prompts")
 
-            console.print(f"\n[dim]Try:[/dim] /mcp-tools {server_name}")
-            console.print()
-        except MCPError as e:
-            raise Exception(format_mcp_error(e, verbose=False))
+        console.print(f"\n[dim]Try:[/dim] /mcp-tools {server_name}")
+        console.print()
 
     def cmd_mcp_disconnect(self, args: list):
         """
@@ -1261,7 +1284,7 @@ class SlashCommandHandler:
         server_name = args[0]
 
         try:
-            asyncio.run(self.mcp_manager.disconnect(server_name))
+            self._run_mcp_async(self.mcp_manager.disconnect(server_name))
             show_success_message(f"Disconnected from '{server_name}'")
         except Exception as e:
             show_error_message(f"Disconnect failed: {e}")
@@ -1281,10 +1304,11 @@ class SlashCommandHandler:
 
         try:
             servers = asyncio.run(self.mcp_manager.list_servers())
+            # Note: list_servers doesn't create connections, so cleanup errors are less likely
 
             if not servers:
                 show_warning_message("No MCP servers configured")
-                console.print("\n[dim]Add a server with CLI:[/dim] dspy-cli mcp add")
+                console.print("\n[dim]Add a server with CLI:[/dim] dspy-code mcp add")
                 console.print()
                 return
 
@@ -1334,6 +1358,21 @@ class SlashCommandHandler:
                     table.add_row(tool.name, tool.description or "")
 
                 console.print(table)
+                console.print()
+
+                # Show detailed schema for each tool
+                console.print("[bold]Tool Schemas:[/bold]")
+                for tool in tools:
+                    console.print(f"\n[cyan]{tool.name}[/cyan]")
+                    if tool.description:
+                        console.print(f"  Description: {tool.description}")
+                    if hasattr(tool, "inputSchema") and tool.inputSchema:
+                        import json
+
+                        schema_str = json.dumps(tool.inputSchema, indent=2)
+                        console.print("  Schema:")
+                        console.print(f"  [dim]{schema_str}[/dim]")
+                    console.print()
 
             console.print()
         except Exception as e:
@@ -1399,7 +1438,43 @@ class SlashCommandHandler:
 
             console.print()
         except Exception as e:
-            show_error_message(f"Tool call failed: {e}")
+            # Show full error details for debugging
+            import traceback
+
+            from ..mcp.exceptions import MCPOperationError, format_mcp_error
+
+            # Build comprehensive error message
+            error_parts = [f"Tool call failed: {str(e) or type(e).__name__}"]
+
+            # If it's an MCP error, use the formatted error
+            if isinstance(e, MCPOperationError):
+                error_parts.append(format_mcp_error(e, verbose=True))
+            else:
+                # For other exceptions, show details
+                if hasattr(e, "details") and e.details:
+                    import json
+
+                    error_parts.append("\n[dim]Details:[/dim]")
+                    error_parts.append(json.dumps(e.details, indent=2))
+                if hasattr(e, "server_name"):
+                    error_parts.append(f"\n[dim]Server: {e.server_name}[/dim]")
+                if hasattr(e, "operation"):
+                    error_parts.append(f"\n[dim]Operation: {e.operation}[/dim]")
+
+            show_error_message("\n".join(error_parts))
+            console.print(f"\n[dim]Tool name used: '{tool_name}'[/dim]")
+            console.print(f"[dim]Arguments: {tool_args}[/dim]")
+            console.print(
+                f"[dim]Tip: Run /mcp-tools {server_name} to see available tools and their schemas[/dim]"
+            )
+
+            # Always show traceback for debugging (can be removed later if too verbose)
+            import logging
+
+            logger = logging.getLogger(__name__)
+            if logger.isEnabledFor(logging.DEBUG):
+                console.print("\n[dim]Full traceback:[/dim]")
+                console.print(traceback.format_exc())
 
     def cmd_mcp_resources(self, args: list):
         """
@@ -3164,7 +3239,7 @@ DSPy Code is your AI-powered assistant for building DSPy programs. It helps you:
             console.print(f"[cyan]Examples:[/cyan] {len(examples)}")
             console.print()
             show_info_message("Use this data for GEPA optimization:")
-            console.print(f"  dspy-cli optimize --data {filepath}")
+            console.print(f"  dspy-code optimize --data {filepath}")
 
         except Exception as e:
             show_error_message(f"Failed to save data: {e}")

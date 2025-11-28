@@ -2,7 +2,7 @@
 RAG (Retrieval-Augmented Generation) system for codebase knowledge.
 
 This package provides functionality to index, search, and retrieve source code
-from installed packages (dspy-cli, dspy, gepa, mcp) to enhance LLM responses
+from installed packages (dspy-code, dspy, gepa, mcp) to enhance LLM responses
 with real code examples.
 """
 

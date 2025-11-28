@@ -119,6 +119,7 @@ nav:
     - 🗣️ Natural Language Commands: guide/natural-language-commands.md
     - ⌨️ Slash Commands: guide/slash-commands.md
     - ✨ Generating Code: guide/generating-code.md
+    - 🔗 MCP Overview: guide/mcp-overview.md
     - 🔌 Adapters: guide/adapters.md
     - 🔍 Retrievers: guide/retrievers.md
     # Model connection is linked under Getting Started to avoid duplication
@@ -135,6 +136,8 @@ nav:
     - 🔍 Create a RAG System: tutorials/rag-system.md
     - ❓ Question Answering: tutorials/question-answering.md
     - 🧬 Optimize with GEPA: tutorials/gepa-optimization.md
+    - 📂 MCP Filesystem Assistant: tutorials/mcp-filesystem-assistant.md
+    - 🐙 MCP GitHub Triage Copilot: tutorials/mcp-github-triage.md
 
   - 📖 Reference:
     - 📝 Command Reference: reference/commands.md

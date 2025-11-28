@@ -78,22 +78,51 @@ def create_training_examples() -> list[dspy.Example]:
     return examples
 
 
-# Step 4: Define Evaluation Metric
-# ---------------------------------
+# Step 4: Define Evaluation Metric with Feedback (Required for GEPA)
+# -------------------------------------------------------------------
+# GEPA requires a metric that returns (score, feedback) tuple
+# The feedback helps GEPA understand why predictions fail and improve prompts
 
 
-def sentiment_accuracy(example, prediction, trace=None):
+def sentiment_accuracy_with_feedback(gold, pred, trace=None, pred_name=None, pred_trace=None):
     """
-    Evaluate if the predicted sentiment matches the gold standard.
+    Evaluate sentiment prediction and provide feedback for GEPA.
 
-    Returns 1.0 for correct, 0.0 for incorrect.
+    GEPA requires a metric with 5 arguments:
+    - gold: The gold standard example
+    - pred: The prediction
+    - trace: Optional trace
+    - pred_name: Optional prediction name
+    - pred_trace: Optional prediction trace
+
+    GEPA uses the feedback to evolve better prompts through reflection.
+
+    Returns:
+        (score, feedback) tuple where:
+        - score: 1.0 for correct, 0.0 for incorrect
+        - feedback: Textual explanation for GEPA to learn from
     """
-    return float(prediction.sentiment.lower() == example.sentiment.lower())
+    predicted = pred.sentiment.lower().strip()
+    expected = gold.sentiment.lower().strip()
+
+    # Calculate score
+    correct = predicted == expected
+    score = 1.0 if correct else 0.0
+
+    # Generate feedback for GEPA
+    if correct:
+        feedback = f"Correct! Predicted '{predicted}' matches expected '{expected}'."
+    else:
+        feedback = f"Incorrect. Expected '{expected}' but got '{predicted}'. "
+        feedback += "Consider analyzing the text more carefully for sentiment indicators."
+
+    return score, feedback
 
 
-# Step 5: Optimize with GEPA
-# ---------------------------
+# Step 5: Optimize with GEPA (Genetic Pareto)
+# ---------------------------------------------
 # In the CLI: "optimize my_program.py --examples-file examples.jsonl"
+# GEPA uses genetic algorithms and reflection to evolve better prompts
 
 
 def optimize_with_gepa(module: dspy.Module, examples: list[dspy.Example]):
@@ -101,15 +130,16 @@ def optimize_with_gepa(module: dspy.Module, examples: list[dspy.Example]):
     Optimize the module using GEPA (Genetic Pareto).
 
     GEPA will:
-    - Analyze the module structure
-    - Generate variations of prompts
-    - Test them on your examples
+    - Create a population of prompt variations
+    - Evaluate each on training data
+    - Use reflection to understand failures
+    - Evolve better prompts through genetic algorithms
     - Select the best performing version
     """
 
     print("🔧 Starting GEPA Optimization...")
     print(f"   Training examples: {len(examples)}")
-    print("   Metric: sentiment_accuracy")
+    print("   Metric: sentiment_accuracy_with_feedback")
     print()
 
     # Split into train and validation
@@ -117,18 +147,33 @@ def optimize_with_gepa(module: dspy.Module, examples: list[dspy.Example]):
     train_examples = examples[:train_size]
     val_examples = examples[train_size:]
 
-    # Configure GEPA optimizer
-    from dspy.teleprompt import BootstrapFewShot
+    # Import GEPA optimizer
+    from dspy.teleprompt import GEPA
 
-    # Note: In a real scenario, you'd use GEPA
-    # For this example, we use BootstrapFewShot as a simpler alternative
-    optimizer = BootstrapFewShot(
-        metric=sentiment_accuracy, max_bootstrapped_demos=3, max_labeled_demos=3
-    )
+    # Configure reflection LM (can be same as main LM for local use)
+    # GEPA uses this to generate feedback and evolve prompts
+    reflection_lm = dspy.LM(model="ollama/llama3.1:8b", api_base="http://localhost:11434")
+
+    # Configure GEPA optimizer
+    # GEPA uses genetic algorithms to evolve better prompts
+    # The metric must return (score, feedback) tuple for GEPA to work
+    optimizer = GEPA(metric=sentiment_accuracy_with_feedback, reflection_lm=reflection_lm)
+
+    print("⚙️  GEPA Configuration:")
+    print("   • Using GEPA (Genetic Pareto) optimizer")
+    print("   • Reflection LM: ollama/llama3.1:8b")
+    print("   • Metric: sentiment_accuracy_with_feedback (returns score + feedback)")
+    print("   • Estimated time: 5-15 minutes")
+    print()
 
     # Compile (optimize) the module
-    print("⚙️  Compiling optimized module...")
-    optimized_module = optimizer.compile(module, trainset=train_examples)
+    print("🚀 Running GEPA optimization...")
+    print("   This will evolve prompts through genetic algorithms...")
+    print()
+
+    optimized_module = optimizer.compile(
+        student=module, trainset=train_examples, valset=val_examples
+    )
 
     print("✅ Optimization complete!")
     print()
@@ -138,7 +183,8 @@ def optimize_with_gepa(module: dspy.Module, examples: list[dspy.Example]):
     correct = 0
     for example in val_examples:
         prediction = optimized_module(text=example.text)
-        if sentiment_accuracy(example, prediction) == 1.0:
+        score, _ = sentiment_accuracy_with_feedback(example, prediction, None, None, None)
+        if score == 1.0:
             correct += 1
 
     accuracy = correct / len(val_examples) if val_examples else 0
@@ -168,12 +214,14 @@ def main():
     # Configure DSPy with your language model
     # In the CLI, this is done through: /connect <provider> <model>
     print("📝 Step 1: Configure Language Model")
-    print("   (In CLI: start dspy-cli, then run /connect openai gpt-4)")
+    print("   (In CLI: start dspy-code, then run /connect ollama llama3.1:8b)")
+    print("   💡 Using Ollama locally (no API keys needed)")
 
-    # For this example, we'll use a dummy LM
-    # In production, you'd use: dspy.OpenAI(model="gpt-4")
-    lm = dspy.OpenAI(model="gpt-3.5-turbo", max_tokens=150)
-    dspy.settings.configure(lm=lm)
+    # Using Ollama locally - no API keys required
+    # Make sure Ollama is running: ollama serve
+    # Pull model: ollama pull llama3.1:8b
+    lm = dspy.LM(model="ollama/llama3.1:8b", api_base="http://localhost:11434")
+    dspy.configure(lm=lm)
     print("   ✓ Model configured")
     print()
 
@@ -202,7 +250,7 @@ def main():
 
     # Optimize with GEPA
     print("🚀 Step 5: Optimize with GEPA")
-    print("   (In CLI: dspy-cli optimize sentiment_analyzer.py)")
+    print("   (In CLI: dspy-code optimize sentiment_analyzer.py)")
     optimized_analyzer = optimize_with_gepa(analyzer, examples)
     print()
 
@@ -238,8 +286,9 @@ def main():
 
 
 if __name__ == "__main__":
-    # Note: This example requires an OpenAI API key
-    # Set it with: export OPENAI_API_KEY=your-key-here
+    # Note: This example uses Ollama locally (no API keys needed)
+    # Make sure Ollama is running: ollama serve
+    # Pull model: ollama pull llama3.1:8b
 
     try:
         main()
@@ -247,6 +296,8 @@ if __name__ == "__main__":
         print(f"❌ Error: {e}")
         print()
         print("To run this example:")
-        print("1. Set your OpenAI API key: export OPENAI_API_KEY=your-key")
-        print("2. Install DSPy: pip install dspy")
-        print("3. Run: python examples/complete_workflow_example.py")
+        print("1. Install Ollama: https://ollama.ai")
+        print("2. Start Ollama: ollama serve")
+        print("3. Pull model: ollama pull llama3.1:8b")
+        print("4. Install DSPy: pip install dspy")
+        print("5. Run: python examples/complete_workflow_example.py")

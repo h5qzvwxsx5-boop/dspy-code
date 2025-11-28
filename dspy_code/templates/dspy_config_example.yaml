@@ -63,7 +63,7 @@ default_model: null
 # OPTIMIZATION CONFIGURATION (GEPA)
 # ============================================================================
 # Configure the GEPA (Genetic Pareto) optimizer
-# Used when running: dspy-cli optimize
+# Used when running: dspy-code optimize
 
 gepa_config:
   # Maximum number of optimization iterations
@@ -265,9 +265,9 @@ codebase_rag:
   enabled: true
 
   # Codebases to index
-  # Options: dspy-cli, dspy, gepa, mcp
+  # Options: dspy-code, dspy, gepa, mcp
   codebases:
-    - dspy-cli
+    - dspy-code
     - dspy
     - gepa
 

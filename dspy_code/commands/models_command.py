@@ -54,7 +54,7 @@ def list_models(verbose: bool = False) -> None:
     config_manager = ConfigManager()
     if not config_manager.is_project_initialized():
         console.print("[red]Error:[/red] Not in a DSPy project directory.")
-        console.print("Run 'dspy-cli init' to initialize a new project.")
+        console.print("Run 'dspy-code init' to initialize a new project.")
         return
 
     try:
@@ -126,7 +126,7 @@ def test_model(model_name: str, verbose: bool = False) -> None:
     config_manager = ConfigManager()
     if not config_manager.is_project_initialized():
         console.print("[red]Error:[/red] Not in a DSPy project directory.")
-        console.print("Run 'dspy-cli init' to initialize a new project.")
+        console.print("Run 'dspy-code init' to initialize a new project.")
         return
 
     try:
@@ -170,7 +170,7 @@ def set_default_model(model_name: str, verbose: bool = False) -> None:
     config_manager = ConfigManager()
     if not config_manager.is_project_initialized():
         console.print("[red]Error:[/red] Not in a DSPy project directory.")
-        console.print("Run 'dspy-cli init' to initialize a new project.")
+        console.print("Run 'dspy-code init' to initialize a new project.")
         return
 
     try:

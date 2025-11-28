@@ -29,7 +29,7 @@ def show_config(verbose: bool = False) -> None:
     config_manager = ConfigManager()
     if not config_manager.is_project_initialized():
         console.print("[red]Error:[/red] Not in a DSPy project directory.")
-        console.print("Run 'dspy-cli init' to initialize a new project.")
+        console.print("Run 'dspy-code init' to initialize a new project.")
         return
 
     try:
@@ -150,7 +150,7 @@ def reset_config(skip_confirmation: bool = False, verbose: bool = False) -> None
     config_manager = ConfigManager()
     if not config_manager.is_project_initialized():
         console.print("[red]Error:[/red] Not in a DSPy project directory.")
-        console.print("Run 'dspy-cli init' to initialize a new project.")
+        console.print("Run 'dspy-code init' to initialize a new project.")
         return
 
     try:
@@ -184,7 +184,7 @@ def reset_config(skip_confirmation: bool = False, verbose: bool = False) -> None
             "   Edit dspy_config.yaml or run '/connect <provider> <model>' in interactive mode"
         )
         console.print("\n2. View configuration:")
-        console.print("   [cyan]dspy-cli config show[/cyan]")
+        console.print("   [cyan]dspy-code config show[/cyan]")
 
     except Exception as e:
         logger.error(f"Failed to reset configuration: {e}")

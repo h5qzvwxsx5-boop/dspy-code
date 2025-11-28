@@ -1,5 +1,5 @@
 """
-Integration tests for DSPy CLI.
+Integration tests for DSPy Code.
 
 Tests end-to-end workflows and feature interactions.
 """

@@ -41,12 +41,14 @@ models:
 mcp_servers:
   - name: filesystem
     transport: stdio
-    command: uvx
+    command: npx
     args:
-      - mcp-server-filesystem
+      - -y
+      - "@modelcontextprotocol/server-filesystem"
+      - /path/to/root
     env:
-      - name: MCP_SERVER_FILESYSTEM_ROOT
-        value: /path/to/root
+      - name: NODE_ENV
+        value: production
 
 rag:
   enabled: true
@@ -197,12 +199,14 @@ List of MCP server configurations.
 ```yaml
 - name: filesystem
   transport: stdio
-  command: uvx
+  command: npx
   args:
-    - mcp-server-filesystem
+    - -y
+    - "@modelcontextprotocol/server-filesystem"
+    - /path/to/root
   env:
-    - name: MCP_SERVER_FILESYSTEM_ROOT
-      value: /path/to/root
+    - name: NODE_ENV
+      value: production
 ```
 
 #### sse (Server-Sent Events)

@@ -223,7 +223,7 @@ Exported: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 To import this session:
 
 ```bash
-dspy-cli interactive
+dspy-code interactive
 /import session session.json
 ```
 """)

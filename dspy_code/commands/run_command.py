@@ -44,7 +44,7 @@ def execute(
     config_manager = ConfigManager()
     if not config_manager.is_project_initialized():
         console.print("[red]Error:[/red] No dspy_config.yaml found in current directory.")
-        console.print("Run 'dspy-cli init' to create a configuration file.")
+        console.print("Run 'dspy-code init' to create a configuration file.")
         return
 
     try:
@@ -375,11 +375,11 @@ def _show_usage_and_prompt(program_class, program_file: Path) -> None:
     console.print("3. Test file - Run with a test dataset")
 
     console.print("\n[bold]Examples:[/bold]")
-    console.print(f"[cyan]dspy-cli run {program_file} --interactive[/cyan]")
+    console.print(f"[cyan]dspy-code run {program_file} --interactive[/cyan]")
     console.print(
-        f"[cyan]dspy-cli run {program_file} --input key1=value1 --input key2=value2[/cyan]"
+        f"[cyan]dspy-code run {program_file} --input key1=value1 --input key2=value2[/cyan]"
     )
-    console.print(f"[cyan]dspy-cli run {program_file} --test-file examples/test_data.jsonl[/cyan]")
+    console.print(f"[cyan]dspy-code run {program_file} --test-file examples/test_data.jsonl[/cyan]")
 
     # Offer to run interactively
     from rich.prompt import Confirm

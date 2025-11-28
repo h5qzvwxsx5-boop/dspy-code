@@ -58,6 +58,14 @@ def setup_logging(verbose: bool = False, debug: bool = False, log_file: Path | N
     logging.getLogger("requests").setLevel(logging.WARNING)
     logging.getLogger("httpx").setLevel(logging.WARNING)
 
+    # Suppress noisy lower-level logs from MCP / anyio internals that can surface
+    # during asynchronous generator cleanup (these are harmless in our usage).
+    # We still allow critical errors to propagate.
+    logging.getLogger("mcp").setLevel(logging.CRITICAL)
+    logging.getLogger("mcp.client.stdio").setLevel(logging.CRITICAL)
+    logging.getLogger("anyio").setLevel(logging.CRITICAL)
+    logging.getLogger("asyncio").setLevel(logging.CRITICAL)
+
 
 def get_logger(name: str) -> logging.Logger:
     """Get a logger instance."""

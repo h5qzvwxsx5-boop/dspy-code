@@ -132,8 +132,8 @@ async def add_server_async(
 
         console.print(f"[green]✓[/green] Server '{name}' added successfully")
         console.print("\nNext steps:")
-        console.print(f"  1. Connect to the server: [cyan]dspy-cli mcp connect {name}[/cyan]")
-        console.print(f"  2. List available tools: [cyan]dspy-cli mcp tools {name}[/cyan]")
+        console.print(f"  1. Connect to the server: [cyan]dspy-code mcp connect {name}[/cyan]")
+        console.print(f"  2. List available tools: [cyan]dspy-code mcp tools {name}[/cyan]")
 
     except MCPError as e:
         console.print(f"[red]{format_mcp_error(e, verbose)}[/red]")
@@ -180,7 +180,7 @@ async def list_servers_async(verbose: bool) -> None:
 
         if not servers:
             console.print("[yellow]No MCP servers configured[/yellow]")
-            console.print("\nAdd a server with: [cyan]dspy-cli mcp add[/cyan]")
+            console.print("\nAdd a server with: [cyan]dspy-code mcp add[/cyan]")
             return
 
         display_server_table(servers)
@@ -228,7 +228,7 @@ async def connect_server_async(name: str, verbose: bool) -> None:
             if caps.get("prompts"):
                 console.print("  • Prompts")
 
-        console.print(f"\nTry: [cyan]dspy-cli mcp tools {name}[/cyan]")
+        console.print(f"\nTry: [cyan]dspy-code mcp tools {name}[/cyan]")
 
     except MCPError as e:
         console.print(f"[red]{format_mcp_error(e, verbose)}[/red]")

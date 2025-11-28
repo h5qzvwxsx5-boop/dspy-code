@@ -7,21 +7,17 @@ Handles remote MCP servers accessible via HTTP with Server-Sent Events.
 from typing import Any
 
 import httpx
-from anyio.streams.memory import MemoryObjectReceiveStream, MemoryObjectSendStream
 from mcp.client.sse import sse_client
-from mcp.shared.message import SessionMessage
 
 from ..config import MCPTransportConfig
 from ..exceptions import MCPTransportError
 
 
-async def create_sse_transport(
+def create_sse_transport(
     config: MCPTransportConfig,
     timeout: float = 5.0,
     sse_read_timeout: float = 300.0,
-) -> tuple[
-    MemoryObjectReceiveStream[SessionMessage | Exception], MemoryObjectSendStream[SessionMessage]
-]:
+):
     """
     Create SSE transport streams for MCP communication.
 

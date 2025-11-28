@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 class CodeIndexer:
     """Indexes source code from installed packages.
 
-    This class discovers installed packages (dspy-cli, dspy, gepa, mcp),
+    This class discovers installed packages (dspy-code, dspy, gepa, mcp),
     parses Python files using AST, extracts code elements, and caches
     the results for fast retrieval.
     """

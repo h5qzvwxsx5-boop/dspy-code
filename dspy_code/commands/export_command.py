@@ -44,7 +44,7 @@ def execute(
     config_manager = ConfigManager()
     if not config_manager.is_project_initialized():
         console.print("[red]Error:[/red] No dspy_config.yaml found in current directory.")
-        console.print("Run 'dspy-cli init' to create a configuration file.")
+        console.print("Run 'dspy-code init' to create a configuration file.")
         return
 
     try:
@@ -105,10 +105,10 @@ def _export_as_json(
     # Create export data
     export_data = {
         "export_info": {
-            "format": "dspy-cli-json",
+            "format": "dspy-code-json",
             "version": "1.0",
             "exported_at": datetime.now().isoformat(),
-            "exported_by": "dspy-cli",
+            "exported_by": "dspy-code",
         },
         "component": {
             "name": component_file.stem,
@@ -312,7 +312,7 @@ This package contains a DSPy component exported from DSPy Code.
 
 This component was created using DSPy Code, a command-line interface for the DSPy framework.
 
-- Learn more: https://github.com/dspy-cli/dspy-cli
+- Learn more: https://github.com/dspy-code/dspy-code
 - DSPy Documentation: https://dspy-docs.vercel.app/
 
 ## Export Information
@@ -346,7 +346,7 @@ def _show_sharing_instructions(output_file: Path, export_format: str) -> None:
     if export_format == "json":
         console.print("1. Share the JSON file with others")
         console.print("2. Recipients can import with:")
-        console.print("   [cyan]dspy-cli import component.json[/cyan]")
+        console.print("   [cyan]dspy-code import component.json[/cyan]")
     else:
         console.print("1. Share the ZIP file with others")
         console.print("2. Recipients can extract and use:")

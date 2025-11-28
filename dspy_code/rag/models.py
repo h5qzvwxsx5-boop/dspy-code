@@ -24,7 +24,7 @@ class CodeElement:
         file_path: Path to the source file
         line_start: Starting line number
         line_end: Ending line number
-        codebase: Source codebase ('dspy-cli', 'dspy', 'gepa', 'mcp')
+        codebase: Source codebase ('dspy-code', 'dspy', 'gepa', 'mcp')
         imports: List of import statements in the file
         decorators: List of decorators applied to the element
     """
@@ -126,7 +126,7 @@ class CodebaseInfo:
     """Information about an indexed codebase.
 
     Attributes:
-        name: Name of the codebase ('dspy-cli', 'dspy', etc.)
+        name: Name of the codebase ('dspy-code', 'dspy', etc.)
         path: Path to the codebase root
         version: Version string if available
         file_count: Number of Python files indexed

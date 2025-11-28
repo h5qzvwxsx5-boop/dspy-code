@@ -12,6 +12,7 @@ mcp_servers:
 
   # Example 1: Filesystem Server (stdio transport)
   # Provides access to local files and directories
+  # Requires Node.js (for npx)
   filesystem:
     name: filesystem
     description: "Local filesystem access"
@@ -19,14 +20,14 @@ mcp_servers:
     auto_connect: false
     transport:
       type: stdio
-      command: uvx
+      command: npx
       args:
-        - mcp-server-filesystem
-        - --allowed-directories
+        - -y
+        - "@modelcontextprotocol/server-filesystem"
         - /Users/username/projects
         - /Users/username/data
       env:
-        LOG_LEVEL: INFO
+        NODE_ENV: production
     timeout_seconds: 30
     retry_attempts: 3
 
@@ -123,13 +124,13 @@ mcp_servers:
 # Usage Examples:
 #
 # 1. Add a server:
-#    dspy-cli mcp add filesystem --transport stdio --command uvx --args mcp-server-filesystem
+#    dspy-code mcp add filesystem --transport stdio --command npx --args -y "@modelcontextprotocol/server-filesystem" /path/to/directory
 #
 # 2. Connect to a server:
-#    dspy-cli mcp connect filesystem
+#    dspy-code mcp connect filesystem
 #
 # 3. List tools:
-#    dspy-cli mcp tools filesystem
+#    dspy-code mcp tools filesystem
 #
 # 4. In interactive mode:
 #    /mcp-connect filesystem

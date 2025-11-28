@@ -239,7 +239,7 @@ Add an MCP server configuration.
 
 **Examples:**
 ```
-/mcp-add filesystem --transport stdio --command uvx --args mcp-server-filesystem
+/mcp-add filesystem --transport stdio --command npx --args -y "@modelcontextprotocol/server-filesystem" /path/to/directory
 /mcp-add github --transport sse --url https://api.github.com/mcp
 ```
 

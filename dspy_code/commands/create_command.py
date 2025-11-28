@@ -48,7 +48,7 @@ def execute(
     config_manager = ConfigManager()
     if not config_manager.is_project_initialized():
         console.print("[red]Error:[/red] No dspy_config.yaml found in current directory.")
-        console.print("Run 'dspy-cli init' to create a configuration file.")
+        console.print("Run 'dspy-code init' to create a configuration file.")
         return
 
     try:
@@ -245,10 +245,10 @@ def _show_next_steps(output_file: Path) -> None:
     """Show next steps to the user."""
     console.print("\n[bold]Next Steps:[/bold]")
     console.print("1. Test your component:")
-    console.print(f"   [cyan]dspy-cli run {output_file} --interactive[/cyan]")
+    console.print(f"   [cyan]dspy-code run {output_file} --interactive[/cyan]")
     console.print("\n2. Optimize performance:")
-    console.print(f"   [cyan]dspy-cli optimize {output_file}[/cyan]")
+    console.print(f"   [cyan]dspy-code optimize {output_file}[/cyan]")
     console.print("\n3. Export for sharing:")
-    console.print(f"   [cyan]dspy-cli export {output_file}[/cyan]")
+    console.print(f"   [cyan]dspy-code export {output_file}[/cyan]")
     console.print("\n4. View the generated code:")
     console.print(f"   [cyan]cat {output_file}[/cyan]")

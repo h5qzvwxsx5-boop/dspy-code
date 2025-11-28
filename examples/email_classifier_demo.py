@@ -165,7 +165,7 @@ def classification_accuracy(example, prediction, trace=None) -> float:
 # ============================================================================
 # PART 5: OPTIMIZATION
 # ============================================================================
-# In CLI: "dspy-cli optimize email_classifier.py"
+# In CLI: "dspy-code optimize email_classifier.py"
 
 
 def optimize_classifier(classifier: EmailClassifier, examples: list[dspy.Example]):
@@ -260,12 +260,15 @@ def demo_classifier():
     print()
 
     # Note: This requires a configured language model
-    # In the CLI, you'd do: run `dspy-cli` and then `/connect openai gpt-4`
+    # In the CLI, you'd do: run `dspy-code` and then `/connect ollama llama3.1:8b`
+    # 💡 Using Ollama locally (no API keys needed)
 
     try:
-        # Configure DSPy (requires API key)
-        lm = dspy.OpenAI(model="gpt-3.5-turbo", max_tokens=200)
-        dspy.settings.configure(lm=lm)
+        # Configure DSPy using Ollama locally
+        # Make sure Ollama is running: ollama serve
+        # Pull model: ollama pull llama3.1:8b
+        lm = dspy.LM(model="ollama/llama3.1:8b", api_base="http://localhost:11434")
+        dspy.configure(lm=lm)
 
         # Create classifier
         classifier = EmailClassifier()
@@ -307,9 +310,9 @@ def demo_classifier():
         print("3. Run: python examples/email_classifier_demo.py")
         print()
         print("Or use the CLI:")
-        print("1. dspy-cli init")
+        print("1. dspy-code init")
         print("2. Inside interactive mode run: /connect openai gpt-4")
-        print("3. dspy-cli")
+        print("3. dspy-code")
         print("4. 'Create an email classifier with chain of thought'")
 
 

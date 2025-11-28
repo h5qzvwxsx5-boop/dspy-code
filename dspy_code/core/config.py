@@ -46,7 +46,7 @@ class CodebaseRAGConfig:
     # Performance options
     fast_mode: bool = False  # Skip RAG context building for faster responses
     skip_pattern_searches: bool = False  # Skip additional pattern-specific searches
-    codebases: list[str] = field(default_factory=lambda: ["dspy-cli", "dspy", "gepa"])
+    codebases: list[str] = field(default_factory=lambda: ["dspy-code", "dspy", "gepa"])
     cache_dir: str | None = None  # Defaults to .dspy_code/cache/codebase_index in CWD
     max_cache_size_mb: int = 100
     index_refresh_days: int = 7
@@ -294,7 +294,7 @@ models:
 # Default model (e.g., "gpt-4", "llama2")
 default_model: {self.default_model or "null"}
 
-# Optimization settings (used by 'dspy-cli optimize')
+# Optimization settings (used by 'dspy-code optimize')
 gepa_config:
   max_iterations: {self.gepa_config.max_iterations}
   population_size: {self.gepa_config.population_size}
