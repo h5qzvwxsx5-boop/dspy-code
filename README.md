@@ -62,22 +62,26 @@
 - [What is DSPy Code?](#-what-is-dspy-code) *(Overview above)*
 - [What is DSPy Code? (Detailed)](#-what-is-dspy-code-detailed)
 - [Why DSPy Code?](#-why-dspy-code)
-- [Quick Start](#-quick-start)
+- [Two Core Workflows](#-two-core-workflows)
 - [Code Examples](#-code-examples)
 - [Key Features](#-key-features)
 - [What's New](#-whats-new)
-- [Two Core Workflows](#-two-core-workflows)
+- [Quick Start](#-quick-start)
 - [Available Commands](#-available-commands)
 - [Primary Use Cases](#-primary-use-cases)
 - [Model Connection](#-model-connection)
 - [GEPA Optimization](#-gepa-optimization)
+- [Requirements](#-requirements)
 - [Installation Options](#-installation-options)
 - [Architecture](#-architecture)
 - [Documentation](#-documentation)
-- [Contributing](#-contributing)
-- [Roadmap](#-roadmap)
 - [Need Help?](#-need-help)
-- [Community](#-community)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Roadmap](#-roadmap)
+- [Development Status](#-development-status)
+- [Show Support](#-show-support)
+- [Acknowledgments](#-acknowledgments)
 
 ---
 
@@ -95,7 +99,7 @@ pip install --upgrade dspy-code
 
 </div>
 
-**Develop DSPy Code** → **Optimize with GEPA** → **Deploy Production-Ready Apps**
+**Develop DSPy Applications** → **Optimize with GEPA** → **Deploy Production-Ready Apps**
 
 </div>
 
@@ -262,7 +266,7 @@ dspy-code
 /export
 ```
 
-**Result:** Optimized program with improved accuracy (e.g., 75% → 92%)!
+**Result:** Optimized program with improved accuracy
 
 ### Example 3: Building a RAG System with MCP
 
@@ -564,7 +568,6 @@ dspy-code
 ✅ Production-ready optimized code  
 ✅ Performance improvements documented
 
-**Real results:** 75% → 92% accuracy automatically!
 
 ### 3. 📚 Learning DSPy (No Docs Required!)
 
