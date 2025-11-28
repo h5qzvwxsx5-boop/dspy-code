@@ -27,6 +27,8 @@
 [📖 Documentation](https://superagenticai.github.io/dspy-code/) •
 [🤝 Contributing](CONTRIBUTING.md)
 
+</div>
+
 ---
 
 ## 🎯 What is DSPy Code?
@@ -39,7 +41,19 @@
 - ✅ **Validate** code against best practices
 - 🚀 **Deploy** production-ready applications
 
-**Perfect for beginners and experts alike** - whether you're learning DSPy or optimizing production systems, DSPy Code adapts to your needs.
+**Perfect for beginners and experts alike** - No matter if you just started learning DSPy or optimizing production systems, DSPy Code adapts to your needs.
+
+---
+
+<div style="background: linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%); padding: 1.5em; border-radius: 12px; margin: 1.5em 0; text-align: left;">
+
+**📚 New to DSPy Code?** You have two options:
+- **📖 View Full Documentation** - Comprehensive guides, tutorials, and reference at [superagenticai.github.io/dspy-code](https://superagenticai.github.io/dspy-code/)
+- **⚡ Continue Reading Below** - Explore more sections in this README
+
+**Choose what works best for you!** 👇
+
+</div>
 
 ---
 
@@ -809,11 +823,11 @@ DSPy Code is currently in **Beta** and under active development. While it's func
 - 🐛 [Report issues](https://github.com/SuperagenticAI/dspy-code/issues)
 - ⭐ [Star the repo](https://github.com/SuperagenticAI/dspy-code) to show your support
 
-## 🌟 Community
+## 🌟 Show Support
 
 <div style="background: rgba(147, 51, 234, 0.05); padding: 2em; border-radius: 12px; margin: 2em 0;">
 
-**Join the DSPy Code community!**
+**Show your support for DSPy Code!**
 
 - ⭐ **Star us on GitHub** - Help others discover DSPy Code
 - 🐛 **Report Issues** - Found a bug? Let us know!
@@ -821,7 +835,7 @@ DSPy Code is currently in **Beta** and under active development. While it's func
 - 🤝 **Contribute** - Help make DSPy Code better
 - 📢 **Share** - Tell others about DSPy Code
 
-**Your support helps us build better tools for the DSPy community!**
+**Your support helps us build better tools for the DSPy Code!**
 
 </div>
 
@@ -833,7 +847,7 @@ DSPy Code is currently in **Beta** and under active development. While it's func
 
 Brought to you by **[Superagentic AI](https://super-agentic.ai)**
 
-Special thanks to the DSPy community and all contributors!
+Special thanks to the DSPy community and awesome GEPA project and all contributors so far!
 
 </div>
 
@@ -848,12 +862,6 @@ Special thanks to the DSPy community and all contributors!
 **[🤝 Contributing](CONTRIBUTING.md)**
 
 ---
-
-### ⭐ Show Your Support
-
-If DSPy Code helps your workflow, give us a star! ⭐
-
-It helps others discover the project and motivates us to keep improving it.
 
 ---
 
