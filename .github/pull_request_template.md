@@ -67,6 +67,7 @@ pytest tests/
 ## Additional Notes
 
 <!-- Any additional information that reviewers should know -->
+<!-- If you used AI tools, see CONTRIBUTING.md for disclosure requirements -->
 
 ## Reviewer Notes
 

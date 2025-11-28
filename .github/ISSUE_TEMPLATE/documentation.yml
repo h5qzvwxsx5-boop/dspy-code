@@ -30,7 +30,7 @@ body:
     attributes:
       label: Documentation Location
       description: Where is the documentation issue? (URL or file path)
-      placeholder: https://dspy-code.super-agentic.ai/guide/...
+      placeholder: https://superagenticai.github.io/dspy-code/guide/...
     validations:
       required: true
 
