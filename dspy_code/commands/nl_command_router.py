@@ -505,7 +505,7 @@ class NLCommandRouter:
         # Check if user explicitly references a slash command (e.g., "/save", "/mcp-read")
         # We need to distinguish between actual commands (like "/save") and file paths (like "/tmp/city")
         # Slash commands typically appear as "/command" at word boundaries or standalone
-        slash_command_pattern = r'\b/(?:save|run|validate|connect|mcp-|init|help|status|clear|exit|optimize|eval|explain|model|models|data|examples|adapters|retrievers|demo|session)'
+        slash_command_pattern = r"\b/(?:save|run|validate|connect|mcp-|init|help|status|clear|exit|optimize|eval|explain|model|models|data|examples|adapters|retrievers|demo|session)"
         has_slash_command = re.search(slash_command_pattern, user_input_lower) is not None
 
         # Also check for natural language command patterns (without "/")
@@ -531,9 +531,13 @@ class NLCommandRouter:
         # If the user mentions a command (either slash or natural language),
         # allow the LLM router to decide whether to dispatch it.
         if has_slash_command:
-            logger.debug(f"Using LLM reasoning for explicit slash command reference: '{user_input}'")
+            logger.debug(
+                f"Using LLM reasoning for explicit slash command reference: '{user_input}'"
+            )
         else:
-            logger.debug(f"Using LLM reasoning for natural language command pattern: '{user_input}'")
+            logger.debug(
+                f"Using LLM reasoning for natural language command pattern: '{user_input}'"
+            )
         return self._route_with_llm(user_input, context, pattern_matches=None)
 
     def _route_with_llm(
